@@ -8,8 +8,8 @@ Use this mod to make PlateUp easier or effectively play 'creative' mode.
 - Spawn any item using the configuration manager
 - Override the default shop settings: 
     - Set number of items to spawn per day
-    - Set change of getting upgraded shop settings
-- Add a custom shop which will spawn items daily
+    - Set the chance of getting an upgraded shop
+- Add a custom shop which will spawn additional items daily
     - Manually configure the spawn rate of items in the custom shop (by default this will mostly spawn automation based items)
 
 More incoming... (requests?)
