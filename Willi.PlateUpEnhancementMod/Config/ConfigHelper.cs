@@ -13,6 +13,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         // General
         public static ConfigEntry<bool> LogItemIdsOnStartup;
         public static ConfigEntry<float> MoneyRewardMultiplier;
+        public static ConfigEntry<float> NumberOfCustomersMultiplier;
+
 
         // Default shop
         public static ConfigEntry<int> DefaultShopNumberOfItems;
@@ -333,6 +335,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
         {
             MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
             LogItemIdsOnStartup = config.Bind("0. General", "ShouldLogItemIdsOnStartup", false, new ConfigDescription("Whether or not to log the item IDs in the console on startup", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;

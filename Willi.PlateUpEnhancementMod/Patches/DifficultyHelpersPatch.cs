@@ -40,5 +40,12 @@ namespace Willi.PlateUpEnhancementMod.Patches
         {
             __result = MoneyRewardMultiplier.Value;
         }
+
+        [HarmonyPatch("CustomerModifierRateModifier")]
+        [HarmonyPostfix]
+        public static void CustomerModifierRateModifierPrefix(ref float __result)
+        {
+            __result = NumberOfCustomersMultiplier.Value;
+        }
     }
 }
