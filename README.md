@@ -14,6 +14,10 @@ Use this mod to make PlateUp easier or effectively play 'creative' mode.
 
 More incoming... (requests?)
 
+<p align="center">
+  <img src="https://i.imgur.com/78G39tD.png" alt="PlateUp lots of conveyors img" width="300">
+</p>
+
 ## Install instructions
 
 - Download the zip folder from the releases. 
