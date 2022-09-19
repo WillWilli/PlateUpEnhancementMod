@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C50E4C5-C7D3-45D4-A13C-2961CCA06E00}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Willi.PlateUpEnhancementMod</RootNamespace>
+    <AssemblyName>Willi.PlateUpEnhancementMod</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>libs\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.Common">
+      <HintPath>libs\Kitchen.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.FranchiseBuilderMode">
+      <HintPath>libs\Kitchen.FranchiseBuilderMode.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.FranchiseMode">
+      <HintPath>libs\Kitchen.FranchiseMode.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.GameData">
+      <HintPath>libs\Kitchen.GameData.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.Layouts">
+      <HintPath>libs\Kitchen.Layouts.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.Networking">
+      <HintPath>libs\Kitchen.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.Persistence">
+      <HintPath>libs\Kitchen.Persistence.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.PostgameMode">
+      <HintPath>libs\Kitchen.PostgameMode.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.ResearchMode">
+      <HintPath>libs\Kitchen.ResearchMode.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.RestaurantMode">
+      <HintPath>libs\Kitchen.RestaurantMode.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.TutorialMode">
+      <HintPath>libs\Kitchen.TutorialMode.dll</HintPath>
+    </Reference>
+    <Reference Include="KitchenMode">
+      <HintPath>libs\KitchenMode.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Entities">
+      <HintPath>libs\Unity.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>libs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\ConfigHelper.cs" />
+    <Compile Include="Config\ConfigurationManagerAttributes.cs" />
+    <Compile Include="Patches\CreateShopOptionsPatch.cs" />
+    <Compile Include="Patches\DifficultyHelpersPatch.cs" />
+    <Compile Include="Patches\HandleNewShopPatch.cs" />
+    <Compile Include="PlateUpEnhancement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
