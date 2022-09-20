@@ -21,8 +21,13 @@ More incoming... (requests?)
 ## Install instructions
 
 - Download the zip folder from the releases. 
-- Extract the contents of the Willi.PlateUpEnhancementMod.XXX into your game folder. 
-Launch the game.
+- Extract the contents of the Willi.PlateUpEnhancementMod.XXX into your game folder ```\Steam\steamapps\common\PlateUp\PlateUp\``` 
+- Launch the game.
+
+Your game folder should look like this when done (without the log files which will be generated on first run)
+<p align="center">
+  <img src="https://i.imgur.com/0bnsYin.png" alt="PlateUp install folder" >
+</p>
 
 
 ## Usage: 

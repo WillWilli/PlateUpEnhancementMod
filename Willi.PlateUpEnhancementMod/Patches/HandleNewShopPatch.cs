@@ -36,25 +36,13 @@ namespace Willi.PlateUpEnhancementMod.Patches
 
                 var idList = GetCustomShopItemsIdList();
 
-                _logger.LogError("Spawning custom shop, choosing from:");
-                foreach(int id in idList)
-                {
-                    _logger.LogWarning(id);
-                }
-
                 for (int i = 0; i < CustomShopNumItemsToSpawn.Value; i++)
                 {
                     var randomIndex = UnityEngine.Random.Range(0, idList.Count - 1);
                     int randomApplianceId = idList[randomIndex];
+                    var position = __instance.FindTile(ref placedTile, floorTiles);
 
-                    if (__instance.FindTile(ref placedTile, floorTiles, out Vector3 position))
-                    {
-                        PostHelpers.CreateBlueprintLetter(__instance.EntityManager, position, randomApplianceId, CustomShopPriceMultiplier.Value);
-                    }
-                    else
-                    {
-                        _logger.LogWarning($"Failed to spawn appliance {randomApplianceId}, no available floor tile.");
-                    }
+                    PostHelpers.CreateBlueprintLetter(__instance.EntityManager, position, randomApplianceId, CustomShopPriceMultiplier.Value);
                 }
             }
 
