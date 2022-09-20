@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
+    <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\CreateShopOptionsPatch.cs" />
     <Compile Include="Patches\DifficultyHelpersPatch.cs" />
     <Compile Include="Patches\HandleNewShopPatch.cs" />
