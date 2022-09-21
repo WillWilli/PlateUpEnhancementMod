@@ -6,7 +6,7 @@ namespace Willi.PlateUpEnhancementMod.Config
 {
     public static class ConfigHelper
     {
-        public const string ModGuid = "Willi.ShopEnhancement";
+        public const string ModGuid = "Willi.PlateUpEnhancement";
         public const string ModName = "Shop & Item Enhancements by Willi";
         public const string ModVersion = "0.1";
 
@@ -16,9 +16,6 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<float> NumberOfCustomersMultiplier;
         public static ConfigEntry<int> MinTableSize;
         public static ConfigEntry<int> MaxTableSize;
-
-
-
 
         // Default shop
         public static ConfigEntry<int> DefaultShopNumberOfItems;
@@ -339,7 +336,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
         {
             MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
-            NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", new AcceptableValueRange<float>(0f, 10f), new ConfigurationManagerAttributes { Order = 90 }));
             MinTableSize = config.Bind("0. General", "MinTableSize", -1, new ConfigDescription("Override the minimum table size, set to -1 to ignore and use defaults", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxTableSize = config.Bind("0. General", "MaxTableSize", -1, new ConfigDescription("Override the maximum table size, set to -1 to ignore and use defaults", null, new ConfigurationManagerAttributes { Order = 88 }));
             LogItemIdsOnStartup = config.Bind("0. General", "ShouldLogItemIdsOnStartup", false, new ConfigDescription("Whether or not to log the item IDs in the console on startup", null, new ConfigurationManagerAttributes { Order = 80 }));

@@ -7,11 +7,11 @@ using Unity.Entities;
 
 namespace Willi.PlateUpEnhancementMod.Patches
 {
-    [HarmonyPatch(typeof(ManageParameters))]
+    //[HarmonyPatch(typeof(ManageParameters))]
     public static class CreateCustomerSchedulePatch
     {
-        [HarmonyPrefix]
-        [HarmonyPatch("OnUpdate")]
+        //[HarmonyPrefix]
+        //[HarmonyPatch("OnUpdate")]
         public static void Defaults_Prefix(ManageParameters __instance)
         {
             var logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);

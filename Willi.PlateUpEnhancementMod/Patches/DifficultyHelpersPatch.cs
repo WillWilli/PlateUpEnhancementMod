@@ -23,15 +23,12 @@ namespace Willi.PlateUpEnhancementMod.Patches
 
         [HarmonyPatch("BaseUpgradedShopChance")]
         [HarmonyPostfix]
-        public static bool UpgradedShopChance_Postfix(int day, ref float __result)
+        public static void UpgradedShopChance_Postfix(ref float __result, int day)
         {
             if (DefaultShopOverrideSettings.Value)
             {
-                __result = __result * DefaultShopUpgradedChance.Value;
-                return false;
+                __result = DefaultShopUpgradedChance.Value;
             }
-
-            return true;
         }
 
         [HarmonyPatch("MoneyRewardPlayerModifier")]
@@ -45,7 +42,10 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPostfix]
         public static void CustomerModifierRateModifierPrefix(ref float __result)
         {
-            __result *= NumberOfCustomersMultiplier.Value;
+            if (DefaultShopOverrideSettings.Value)
+            {
+                __result = NumberOfCustomersMultiplier.Value;
+            }
         }
     }
 }
