@@ -29,7 +29,7 @@ namespace Willi.PlateUpEnhancementMod.Patches
             ref EntityQuery ___ShopOptions
             )
         {
-            if (___Blockers.IsEmpty && (!___NewShops.IsEmpty || !___NewDecorShops.IsEmpty || !___Extras.IsEmpty))
+            if (___Blockers.IsEmpty && (!___NewShops.IsEmpty || !___NewDecorShops.IsEmpty))
             {
                 int placedTile = 0;
                 var floorTiles = GetPostTilesDummy(__instance);
