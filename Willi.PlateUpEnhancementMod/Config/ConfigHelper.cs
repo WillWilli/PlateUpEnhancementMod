@@ -6,9 +6,9 @@ namespace Willi.PlateUpEnhancementMod.Config
 {
     public static class ConfigHelper
     {
-        public const string ModGuid = "Willi.PlateUpEnhancement";
+        public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.1";
+        public const string ModVersion = "0.1.1";
 
         // General
         public static ConfigEntry<bool> LogItemIdsOnStartup;
@@ -28,7 +28,7 @@ namespace Willi.PlateUpEnhancementMod.Config
 
 
         // Spawn Items
-        public static ConfigEntry<int> SpawnItemId;
+        public static ConfigEntry<string> SpawnItemId;
         public static ConfigEntry<int> SpawnItemPrice;
         public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut;
 
@@ -310,8 +310,9 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
-            SpawnItemId = config.Bind("1. Spawn Any Item", "ItemIdToSpawn:", -571205127,
-                new ConfigDescription("Enter an item id to spawn it", null, new ConfigDescription("The price of the item when spawned", null, new ConfigurationManagerAttributes { CustomDrawer = PlateUpEnhancement.HandleSpawnItemConfigManager, Order = 100 })));
+            SpawnItemId = config.Bind("1. Spawn Any Item", "ItemIdToSpawn:", "-571205127",
+                new ConfigDescription("Enter an item id to spawn it", null, new ConfigurationManagerAttributes { CustomDrawer = PlateUpEnhancement.HandleSpawnItemConfigManager, Order = 100 })
+            );
             SpawnItemPrice = config.Bind("1. Spawn Any Item", "PriceOfItem", 10, new ConfigDescription("The price of the item when spawned", null, new ConfigurationManagerAttributes { Order = 90 }));
             SpawnItemKeyboardShortcut = config.Bind("1. Spawn Any Item", "KeyboardShortcut", new KeyboardShortcut(KeyCode.J), new ConfigDescription("Use this keyboard shortcut to spawn the item", null, new ConfigurationManagerAttributes { Order = 80 }));
 

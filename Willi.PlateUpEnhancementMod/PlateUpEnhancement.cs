@@ -19,7 +19,7 @@ namespace Willi.PlateUpEnhancementMod
     {
         private Harmony _harmony;
         private readonly static ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
-        static string SpawnItemInputField { get { return SpawnItemId.Value.ToString(); } set { SpawnItemInputField = value; } }
+        static string SpawnItemInputField { get { return SpawnItemId.Value; } set { SpawnItemId.Value = value; } }
 
         private void Awake()
         {
