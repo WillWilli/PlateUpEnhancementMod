@@ -6,9 +6,9 @@ namespace Willi.PlateUpEnhancementMod.Config
 {
     public static class ConfigHelper
     {
-        public const string ModGuid = "Willi.ShopEnhancement";
+        public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.1";
+        public const string ModVersion = "0.1.1";
 
         // General
         public static ConfigEntry<bool> LogItemIdsOnStartup;
