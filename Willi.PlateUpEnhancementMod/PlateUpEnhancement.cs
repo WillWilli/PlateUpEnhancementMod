@@ -73,7 +73,11 @@ namespace Willi.PlateUpEnhancementMod
         private static void SpawnItem(int itemId, int price)
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            var spawnPosition = new Vector3(-2, 0, -4);
+
+            if (!TryFindPlayerPosition(out Vector3 spawnPosition))
+            {
+                _logger.LogWarning("Unable to find player positon, reverting to default spawn position.");
+            }
 
             var entity = entityManager.CreateEntity();
             entityManager.AddComponentData<CCreateAppliance>(entity, new CCreateAppliance { ID = 1553046198 });
@@ -86,6 +90,33 @@ namespace Willi.PlateUpEnhancementMod
                 Price = price
             });
             entityManager.AddComponentData<CShopEntity>(entity, default(CShopEntity));
+        }
+
+        private static bool TryFindPlayerPosition(out Vector3 playerPosition)
+        {
+            var playerView = FindObjectOfType<PlayerView>();
+            if (playerView != null)
+            {
+                playerPosition = playerView.transform.position;
+                return true;
+            }
+
+            var playerClone = GameObject.Find("Player(Clone)");
+            if (playerClone != null)
+            {
+                playerPosition = playerClone.transform.position;
+                return true;
+            }
+
+            var player = GameObject.Find("Player");
+            if (player != null)
+            {
+                playerPosition = player.transform.position;
+                return true;
+            }
+
+            playerPosition = new Vector3(-2, 0, -4); // default to static positon
+            return false;
         }
     }
 }
