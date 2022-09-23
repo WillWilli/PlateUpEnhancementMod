@@ -37,15 +37,5 @@ namespace Willi.PlateUpEnhancementMod.Patches
         {
             __result *= MoneyRewardMultiplier.Value;
         }
-
-        [HarmonyPatch("CustomerModifierRateModifier")]
-        [HarmonyPostfix]
-        public static void CustomerModifierRateModifierPrefix(ref float __result)
-        {
-            if (DefaultShopOverrideSettings.Value)
-            {
-                __result = NumberOfCustomersMultiplier.Value;
-            }
-        }
     }
 }

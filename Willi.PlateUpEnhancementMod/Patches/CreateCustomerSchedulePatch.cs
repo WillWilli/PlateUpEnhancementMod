@@ -2,32 +2,36 @@
 using KitchenData;
 using Kitchen;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
-using System.Runtime.CompilerServices;
 using Unity.Entities;
+using BepInEx.Logging;
+using System;
 
 namespace Willi.PlateUpEnhancementMod.Patches
 {
-    //[HarmonyPatch(typeof(ManageParameters))]
+    [HarmonyPatch(typeof(CreateCustomerSchedule))]
     public static class CreateCustomerSchedulePatch
     {
-        //[HarmonyPrefix]
-        //[HarmonyPatch("OnUpdate")]
-        public static void Defaults_Prefix(ManageParameters __instance)
-        {
-            var logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
-            var kp = KitchenParameters.Defaults;
-            kp.MinimumGroupSize = MinTableSize.Value;
-            kp.MaximumGroupSize = MaxTableSize.Value;
+        private readonly static ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
-            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            //if (!__instance.HasSingleton<SKitchenParameters>())
-            //{
-                logger.LogWarning("Adding kitchen params");
-                entityManager.SetComponentData<SKitchenParameters>(entityManager.CreateEntity((ComponentType)typeof(SKitchenParameters)), new SKitchenParameters()
-                {
-                    Parameters = kp
-                });
-            //}
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(CreateCustomerSchedule.GetCustomersForDay))]
+        public static void GetCustomersForDay_Prefix(
+            CreateCustomerSchedule system,
+            ref KitchenParameters parameters,
+            int player_count,
+            int day,
+            Action<int, float, bool> group_callback)
+        {
+            parameters.MinimumGroupSize = MinTableSize.Value;
+            parameters.MaximumGroupSize = MaxTableSize.Value;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(CreateCustomerSchedule.DetermineTotalCustomers))]
+        public static void DetermineTotalCustomers_Postfix(ref float __result, KitchenParameters parameters, int player_count, int day, GameDifficultySettings difficulty_settings)
+        {
+            __result *= NumberOfCustomersMultiplier.Value;
         }
     }
+
 }
