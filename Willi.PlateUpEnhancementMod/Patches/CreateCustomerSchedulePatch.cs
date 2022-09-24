@@ -2,14 +2,12 @@
 using KitchenData;
 using Kitchen;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
-using BepInEx.Logging;
 
 namespace Willi.PlateUpEnhancementMod.Patches
 {
     [HarmonyPatch(typeof(CreateCustomerSchedule))]
     public static class CreateCustomerSchedulePatch
     {
-        private readonly static ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(CreateCustomerSchedule.DetermineTotalCustomers))]

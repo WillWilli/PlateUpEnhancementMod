@@ -8,9 +8,10 @@ namespace Willi.PlateUpEnhancementMod.Patches
     [HarmonyPatch(typeof(ManageParameters))]
     public static class ManageParametersPatch
     {
+        private const int MaximumConfigurableGroupSize = 20;
         private static EntityManager _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        private static int oldMaxGroupSize = MaxGroupSize.Value;
-        private static int oldMinGroupSize = MinGroupSize.Value;
+        private static int _oldMaxGroupSize = MaxGroupSize.Value;
+        private static int _oldMinGroupSize = MinGroupSize.Value;
 
         [HarmonyPostfix]
         [HarmonyPatch("OnUpdate")]
@@ -32,11 +33,11 @@ namespace Willi.PlateUpEnhancementMod.Patches
 
         private static bool hasKitchenParametersUpdated()
         {
-            if (oldMaxGroupSize != MaxGroupSize.Value ||
-                oldMinGroupSize != MinGroupSize.Value)
+            if (_oldMaxGroupSize != MaxGroupSize.Value ||
+                _oldMinGroupSize != MinGroupSize.Value)
             {
-                oldMinGroupSize = MinGroupSize.Value;
-                oldMaxGroupSize = MaxGroupSize.Value;
+                _oldMinGroupSize = MinGroupSize.Value;
+                _oldMaxGroupSize = MaxGroupSize.Value;
                 return true;
             }
             return false;
@@ -47,7 +48,8 @@ namespace Willi.PlateUpEnhancementMod.Patches
             return
                 MaxGroupSize.Value > 0 &&
                 MinGroupSize.Value > 0 &&
-                MaxGroupSize.Value >= MinGroupSize.Value;
+                MaxGroupSize.Value >= MinGroupSize.Value &&
+                MaxGroupSize.Value <= MaximumConfigurableGroupSize;
         }
 
         private static void UpdateKitchenParameters()
