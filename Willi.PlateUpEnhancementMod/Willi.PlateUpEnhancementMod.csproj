@@ -104,6 +104,7 @@
     <Compile Include="Patches\ManageParametersPatch.cs" />
     <Compile Include="PlateUpEnhancement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\HandleSpawnItems.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
