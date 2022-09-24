@@ -17,25 +17,39 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPatch("OnUpdate")]
         public static void OnUpdate_Prefix()
         {
-            if (_entityManager == null)
+            if (hasKitchenParametersUpdated())
             {
-                _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            }
-            if (_entityManager != null)
-            {
-
-                if (oldMaxGroupSize != MaxGroupSize.Value)
+                if (_entityManager == null)
+                {
+                    _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+                }
+                if (_entityManager != null && ValidateGroupSizes())
                 {
                     UpdateKitchenParameters();
-                    oldMaxGroupSize = MaxGroupSize.Value;
-                }
-                else if (oldMinGroupSize != MinGroupSize.Value)
-                {
-                    UpdateKitchenParameters();
-                    oldMinGroupSize = MinGroupSize.Value;
                 }
             }
+            
         }
+
+        private static bool hasKitchenParametersUpdated()
+        {
+            if (oldMaxGroupSize != MaxGroupSize.Value || 
+                oldMinGroupSize != MinGroupSize.Value)
+            {
+                oldMinGroupSize = MinGroupSize.Value;
+                oldMaxGroupSize = MaxGroupSize.Value;
+                return true;
+            }
+            return false;
+        }
+
+        private static bool ValidateGroupSizes()
+        {
+            return 
+                MaxGroupSize.Value > 0 &&
+                MinGroupSize.Value > 0 &&
+                MaxGroupSize.Value >= MinGroupSize.Value;
+        } 
 
         private static void UpdateKitchenParameters()
         {
