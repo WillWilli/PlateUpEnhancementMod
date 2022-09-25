@@ -30,6 +30,15 @@ namespace Willi.PlateUpEnhancementMod.Patches
             }
 
         }
+        private static void UpdateKitchenParameters()
+        {
+            var kitchenParametersEQ = _entityManager.CreateEntityQuery(typeof(SKitchenParameters));
+            var newKitchenParameters = kitchenParametersEQ.GetSingleton<SKitchenParameters>();
+            newKitchenParameters.Parameters.MaximumGroupSize = MaxGroupSize.Value;
+            newKitchenParameters.Parameters.MinimumGroupSize = MinGroupSize.Value;
+
+            kitchenParametersEQ.SetSingleton<SKitchenParameters>(newKitchenParameters);
+        }
 
         private static bool hasKitchenParametersUpdated()
         {
@@ -50,17 +59,6 @@ namespace Willi.PlateUpEnhancementMod.Patches
                 MinGroupSize.Value > 0 &&
                 MaxGroupSize.Value >= MinGroupSize.Value &&
                 MaxGroupSize.Value <= MaximumConfigurableGroupSize;
-        }
-
-        private static void UpdateKitchenParameters()
-        {
-            Log.LogError("Updating kitchen params");
-            var kitchenParametersEQ = _entityManager.CreateEntityQuery(typeof(SKitchenParameters));
-            var newKitchenParameters = kitchenParametersEQ.GetSingleton<SKitchenParameters>();
-            newKitchenParameters.Parameters.MaximumGroupSize = MaxGroupSize.Value;
-            newKitchenParameters.Parameters.MinimumGroupSize = MinGroupSize.Value;
-
-            kitchenParametersEQ.SetSingleton<SKitchenParameters>(newKitchenParameters);
         }
     }
 }

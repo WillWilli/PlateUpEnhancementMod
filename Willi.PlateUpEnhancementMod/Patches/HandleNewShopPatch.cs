@@ -12,8 +12,6 @@ namespace Willi.PlateUpEnhancementMod.Patches
     [HarmonyPatch]
     public static class HandleNewShopPatch
     {
-        private readonly static ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
-
         [HarmonyReversePatch]
         [HarmonyPatch(typeof(GenericSystemBase), "GetPostTiles")]
         [MethodImpl(MethodImplOptions.NoInlining)]
