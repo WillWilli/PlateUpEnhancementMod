@@ -37,5 +37,12 @@ namespace Willi.PlateUpEnhancementMod.Patches
         {
             __result *= MoneyRewardMultiplier.Value;
         }
+
+        [HarmonyPatch("PatiencePlayerCountModifier")]
+        [HarmonyPostfix]
+        public static void PatiencePlayerCountModifier_Postfix(ref float __result, int player_count)
+        {
+            __result *= PatienceMultiplier.Value;
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         // General
         public static ConfigEntry<bool> LogItemIdsOnStartup;
         public static ConfigEntry<float> MoneyRewardMultiplier;
+        public static ConfigEntry<float> PatienceMultiplier;
         public static ConfigEntry<float> NumberOfCustomersMultiplier;
         public static ConfigEntry<int> MinGroupSize;
         public static ConfigEntry<int> MaxGroupSize;
@@ -341,6 +342,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
         {
             MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            PatienceMultiplier = config.Bind("0. General", "PatienceMultiplier", 1f, new ConfigDescription("Multiplier for customer patience, 0 = infinite patience.", null, new ConfigurationManagerAttributes { Order = 95 }));
             NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
             MinGroupSize = config.Bind("0. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxGroupSize = config.Bind("0. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
