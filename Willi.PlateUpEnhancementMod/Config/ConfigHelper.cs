@@ -1,6 +1,8 @@
 ﻿using BepInEx.Configuration;
+using BepInEx.Logging;
 using System.Collections.Generic;
 using UnityEngine;
+using Willi.PlateUpEnhancementMod.Helpers;
 
 namespace Willi.PlateUpEnhancementMod.Config
 {
@@ -8,11 +10,16 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.1.1";
+        public const string ModVersion = "0.2.0";
+
+        public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
         // General
-        public static ConfigEntry<bool> LogItemIdsOnStartup;
         public static ConfigEntry<float> MoneyRewardMultiplier;
+        public static ConfigEntry<float> PatienceMultiplier;
+        public static ConfigEntry<float> NumberOfCustomersMultiplier;
+        public static ConfigEntry<int> MinGroupSize;
+        public static ConfigEntry<int> MaxGroupSize;
 
         // Default shop
         public static ConfigEntry<int> DefaultShopNumberOfItems;
@@ -23,11 +30,13 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> CustomShopNumItemsToSpawn;
         public static ConfigEntry<float> CustomShopPriceMultiplier;
 
-
         // Spawn Items
         public static ConfigEntry<string> SpawnItemId;
         public static ConfigEntry<int> SpawnItemPrice;
         public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut;
+
+        // Debug
+        public static ConfigEntry<bool> LogItemIdsOnStartup;
 
         #region Item Id's Config
         public static ConfigEntry<int> HeatedMixerId;
@@ -302,13 +311,14 @@ namespace Willi.PlateUpEnhancementMod.Config
                 .BindDefaultShopConfig()
                 .BindCustomShopConfig()
                 .BindAllItemsConfig()
-                .BindGeneralConfig();
+                .BindGeneralConfig()
+                .BindDebugConfig();
         }
 
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
             SpawnItemId = config.Bind("1. Spawn Any Item", "ItemIdToSpawn:", "-571205127",
-                new ConfigDescription("Enter an item id to spawn it", null, new ConfigurationManagerAttributes { CustomDrawer = PlateUpEnhancement.HandleSpawnItemConfigManager, Order = 100 })
+                new ConfigDescription("Enter an item id to spawn it", null, new ConfigurationManagerAttributes { CustomDrawer = HandleSpawnItems.HandleSpawnItemConfigManager, Order = 100 })
             );
             SpawnItemPrice = config.Bind("1. Spawn Any Item", "PriceOfItem", 10, new ConfigDescription("The price of the item when spawned", null, new ConfigurationManagerAttributes { Order = 90 }));
             SpawnItemKeyboardShortcut = config.Bind("1. Spawn Any Item", "KeyboardShortcut", new KeyboardShortcut(KeyCode.J), new ConfigDescription("Use this keyboard shortcut to spawn the item", null, new ConfigurationManagerAttributes { Order = 80 }));
@@ -318,8 +328,8 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindDefaultShopConfig(this ConfigFile config)
         {
-            DefaultShopOverrideSettings = config.Bind("2. Default Shop", "OverrideDefaultShopSettings", false, new ConfigDescription("Whether or not to override the shop settings with these custom settings", null, new ConfigurationManagerAttributes { Order = 100 }));
-            DefaultShopNumberOfItems = config.Bind("2. Default Shop", "NumberOfItemsToSpawn", 5, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
+            DefaultShopOverrideSettings = config.Bind("2. Default Shop", "OverrideDefaultShopSettings", true, new ConfigDescription("Whether or not to override the shop settings with these custom settings", null, new ConfigurationManagerAttributes { Order = 100 }));
+            DefaultShopNumberOfItems = config.Bind("2. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
             DefaultShopUpgradedChance = config.Bind("2. Default Shop", "UpgradeChance", 0.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
@@ -333,12 +343,21 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
         {
-            MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
-            LogItemIdsOnStartup = config.Bind("0. General", "ShouldLogItemIdsOnStartup", false, new ConfigDescription("Whether or not to log the item IDs in the console on startup", null, new ConfigurationManagerAttributes { Order = 80 }));
-
+            MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1.25f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            PatienceMultiplier = config.Bind("0. General", "PatienceMultiplier", 1f, new ConfigDescription("Multiplier for customer patience, 0 = infinite patience.", null, new ConfigurationManagerAttributes { Order = 95 }));
+            NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            MinGroupSize = config.Bind("0. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
+            MaxGroupSize = config.Bind("0. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
+            
             return config;
         }
 
+        private static ConfigFile BindDebugConfig(this ConfigFile config)
+        {
+            LogItemIdsOnStartup = config.Bind("9. Debug", "ShouldLogItemIdsOnStartup", false, new ConfigDescription("Whether or not to log the item IDs in the console on startup", null, new ConfigurationManagerAttributes { Order = 80, IsAdvanced = true }));
+
+            return config;
+        }
 
         public static List<int> GetCustomShopItemsIdList()
         {
