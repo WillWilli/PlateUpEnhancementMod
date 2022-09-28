@@ -1,6 +1,8 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Willi.PlateUpEnhancementMod.Helpers;
 
@@ -33,7 +35,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         // Spawn Items
         public static ConfigEntry<string> SpawnItemId;
         public static ConfigEntry<int> SpawnItemPrice;
-        public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut;
+        public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut { get; set; }
 
         // Debug
         public static ConfigEntry<bool> LogItemIdsOnStartup;
@@ -169,6 +171,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> SinkId;
         public static ConfigEntry<int> PowerSinkId;
         public static ConfigEntry<int> SoakingSinkId;
+
+        public static ConfigEntry<int> TestId;
         #endregion
 
         #region Item Spawn Rates Config
@@ -361,7 +365,7 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         public static List<int> GetCustomShopItemsIdList()
         {
-            var allItemsConfig = GetAllItemsConfig();
+            var allItemsConfig = GetItemSpawnRatesById();
             var itemIdSpawnList = new List<int>();
             foreach (KeyValuePair<int, int> itemConfig in allItemsConfig)
             {
@@ -373,7 +377,164 @@ namespace Willi.PlateUpEnhancementMod.Config
             return itemIdSpawnList;
         }
 
-        private static Dictionary<int, int> GetAllItemsConfig()
+        public static int ToItemId(this string itemName)
+        {
+            var itemIdsDict = GetItemIdsByName();
+            try
+            {
+                return itemIdsDict[itemName];
+            }
+            catch
+            {
+                throw new ArgumentException($"ItemName {itemName} does not exist.", "itemName");
+            }
+        }
+
+        public static List<string> GetItemNames()
+        {
+            var itemIdsByName = GetItemIdsByName();
+            return itemIdsByName.Select(itemName => itemName.Key).ToList();
+        }
+
+        private static Dictionary<string, int> GetItemIdsByName()
+        {
+            return new Dictionary<string, int>()
+            {
+                { "HeatedMixer", HeatedMixerId.Value },
+                { "ConveyorMixer", ConveyorMixerId.Value },
+                { "RapidMixer", RapidMixerId.Value },
+                { "Mixer", MixerId.Value },
+                { "Supplies", SuppliesId.Value },
+                { "CompactorBin", CompactorBinId.Value },
+                { "ComposterBin", ComposterBinId.Value },
+                { "ExpandedBin", ExpandedBinId.Value },
+                { "Bin", BinId.Value },
+                { "FireExtinguisher", FireExtinguisherId.Value },
+                { "FloorBuffer", FloorBufferId.Value },
+                { "KitchenFloorProtector", KitchenFloorProtectorId.Value },
+                { "FastMop", FastMopId.Value },
+                { "LastingMop", LastingMopId.Value },
+                { "Mop", MopId.Value },
+                { "RobotBuffer", RobotBufferId.Value },
+                { "RobotMop", RobotMopId.Value },
+                { "CoffeeMachine", CoffeeMachineId.Value },
+                { "Conveyor", ConveyorId.Value },
+                { "Combiner", CombinerId.Value },
+                { "SmartGrabber", SmartGrabberId.Value },
+                { "Grabber", GrabberId.Value },
+                { "Portioner", PortionerId.Value },
+                { "Counter", CounterId.Value },
+                { "Workstation", WorkstationId.Value },
+                { "AffordableBin", AffordableBinId.Value },
+                { "GumballMachine", GumballMachineId.Value },
+                { "NeonSign", NeonSignId.Value },
+                { "NeonSign2", NeonSign2Id.Value },
+                { "CeilingLight", CeilingLightId.Value },
+                { "StockPicture", StockPictureId.Value },
+                { "DirtyFloorSign", DirtyFloorSignId.Value },
+                { "Barrel", BarrelId.Value },
+                { "Bookcase", BookcaseId.Value },
+                { "Dartboard", DartboardId.Value },
+                { "Fireplace", FireplaceId.Value },
+                { "Rug", RugId.Value },
+                { "WallLight", WallLightId.Value },
+                { "Candelabra", CandelabraId.Value },
+                { "Chandelier", ChandelierId.Value },
+                { "PreciousFlower", PreciousFlowerId.Value },
+                { "ClassicalGlobe", ClassicalGlobeId.Value },
+                { "Painting", PaintingId.Value },
+                { "Rug2", Rug2Id.Value },
+                { "Statue", StatueId.Value },
+                { "BrandMascot", BrandMascotId.Value },
+                { "TidyPlant", TidyPlantId.Value },
+                { "CeilingLight2", CeilingLight2Id.Value },
+                { "AbstractLamp", AbstractLampId.Value },
+                { "Vase", VaseId.Value },
+                { "Indoorfountain", IndoorfountainId.Value },
+                { "CalmPainting", CalmPaintingId.Value },
+                { "Plant", PlantId.Value },
+                { "Dumbwaiter", DumbwaiterId.Value },
+                { "GasLimiter", GasLimiterId.Value },
+                { "GasOveride", GasOverrideId.Value },
+                { "DangerHob", DangerHobId.Value },
+                { "SafetyHob", SafetyHobId.Value },
+                { "Hob", HobId.Value },
+                { "DisplayStand", DisplayStandId.Value },
+                { "BlueprintCabinet", BlueprintCabinetId.Value },
+                { "CopyingDesk", CopyingDeskId.Value },
+                { "DiscountDesk", DiscountDeskId.Value },
+                { "BlueprintDesk", BlueprintDeskId.Value },
+                { "ResearchDesk", ResearchDeskId.Value },
+                { "SpecialsTerminal", SpecialsTerminalId.Value },
+                { "OrderingTerminal", OrderingTerminalId.Value },
+                { "Microwave", MicrowaveId.Value },
+                { "Oven", OvenId.Value },
+                { "Apples", ApplesId.Value },
+                { "Beans", BeansId.Value },
+                { "Broccoli", BroccoliId.Value },
+                { "BurgerBuns", BurgerBunsId.Value },
+                { "Carrots", CarrotsId.Value },
+                { "Cheese", CheeseId.Value },
+                { "ChristmasCrackers", ChristmasCrackersId.Value },
+                { "Eggs", EggsId.Value },
+                { "Flour", FlourId.Value },
+                { "Hotdogbun", HotdogbunId.Value },
+                { "HotDogs", HotDogsId.Value },
+                { "IceCream", IceCreamId.Value },
+                { "ExtraKetchup", ExtraKetchupId.Value },
+                { "Lettuce", LettuceId.Value },
+                { "Meat", MeatId.Value },
+                { "Mushrooms", MushroomsId.Value },
+                { "ExtraMustard", ExtraMustardId.Value },
+                { "Nuts", NutsId.Value },
+                { "Oil", OilId.Value },
+                { "Olives", OlivesId.Value },
+                { "Onion", OnionId.Value },
+                { "Potato", PotatoId.Value },
+                { "Rice", RiceId.Value },
+                { "Thickcutmeat", ThickcutmeatId.Value },
+                { "Thincutmeat", ThincutmeatId.Value },
+                { "Tomato", TomatoId.Value },
+                { "Turkey", TurkeyId.Value },
+                { "Wine", WineId.Value },
+                { "AutoPlater", AutoPlaterId.Value },
+                { "DishRack", DishRackId.Value },
+                { "Plates", PlatesId.Value },
+                { "PotStack", PotStackId.Value },
+                { "ServingBoards", ServingBoardsId.Value },
+                { "Woks", WoksId.Value },
+                { "Freezer", FreezerId.Value },
+                { "FrozenPrepStation", FrozenPrepStationId.Value },
+                { "PrepStation", PrepStationId.Value },
+                { "Breadsticks", BreadsticksId.Value },
+                { "CandleBox", CandleBoxId.Value },
+                { "FlowerPot", FlowerPotId.Value },
+                { "Napkins", NapkinsId.Value },
+                { "SharpCutlery", SharpCutleryId.Value },
+                { "SpecialsMenu", SpecialsMenuId.Value },
+                { "CoffeeTable", CoffeeTableId.Value },
+                { "BarTable", BarTableId.Value },
+                { "TableSimpleCloth", TableSimpleClothId.Value },
+                { "MetalTable", MetalTableId.Value },
+                { "TableFancyCloth", TableFancyClothId.Value },
+                { "DiningTable", DiningTableId.Value },
+                { "RollingPin", RollingPinId.Value },
+                { "ScrubbingBrush", ScrubbingBrushId.Value },
+                { "SharpKnife", SharpKnifeId.Value },
+                { "Trainers", TrainersId.Value },
+                { "Wellies", WelliesId.Value },
+                { "WorkBoots", WorkBootsId.Value },
+                { "TrayStand", TrayStandId.Value },
+                { "DishWasher", DishWasherId.Value },
+                { "WashBasin", WashBasinId.Value },
+                { "Sink", SinkId.Value },
+                { "PowerSink", PowerSinkId.Value },
+                { "SoakingSink", SoakingSinkId.Value },
+            };
+        }
+
+
+        private static Dictionary<int, int> GetItemSpawnRatesById()
         {
             return new Dictionary<int, int>()
             {
@@ -773,6 +934,8 @@ namespace Willi.PlateUpEnhancementMod.Config
             SinkId = config.Bind("5. Item IDs", "SinkId", 1083874952);
             PowerSinkId = config.Bind("5. Item IDs", "PowerSinkId", 1467371088);
             SoakingSinkId = config.Bind("5. Item IDs", "SoakingSinkId", 1860904347);
+
+            TestId = config.Bind("5. Item IDs", "SoakingSinkId", 1860904347);
 
             return config;
         }

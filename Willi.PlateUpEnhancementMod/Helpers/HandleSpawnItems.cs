@@ -29,10 +29,10 @@ namespace Willi.PlateUpEnhancementMod.Helpers
 
         private static void HandleSpawnItemKeyboardShortcut()
         {
-            if (SpawnItemKeyboardShortcut.Value.IsDown() && ValidateItemIdUserInput(out int inputId))
-            {
-                SpawnItem(inputId, SpawnItemPrice.Value);
-            }
+            //if (SpawnItemKeyboardShortcut.Value.IsDown() && ValidateItemIdUserInput(out int inputId))
+            //{
+            //    SpawnItem(inputId, SpawnItemPrice.Value);
+            //}
         }
 
         private static bool ValidateItemIdUserInput(out int inputId)
@@ -52,7 +52,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             return true;
         }
 
-        private static void SpawnItem(int itemId, int price)
+        public static void SpawnItem(int itemId, int price)
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
