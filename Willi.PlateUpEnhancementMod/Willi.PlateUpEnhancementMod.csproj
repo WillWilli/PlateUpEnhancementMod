@@ -93,13 +93,11 @@
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>libs\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
+    <Compile Include="Config\ItemConfig.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\CreateShopOptionsPatch.cs" />

@@ -12,16 +12,20 @@ namespace Willi.PlateUpEnhancementMod.Helpers
     public static class HandleSpawnItems
     {
         private static bool isWindowActive = false;
-        private static Rect windowRect = new Rect(Screen.width - 180, 80, 180, ItemSpawnerWindowHeight.Value);
+
+        private static int initialXPosition = Screen.width - 190;
+        private static int initialYPosition = 80;
+        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ItemSpawnerWindowHeight.Value);
+
         private static Vector2 scrollPosition;
         private static string searchText = string.Empty;
-        private static List<string> _itemNames = GetItemNames();
+        private static List<string> _itemNames = GetItemNamesSorted();
 
         public static void OnGui()
         {
             if (isWindowActive)
             {
-                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "SpawnItems", GUILayout.Width(180), GUILayout.Height(ItemSpawnerWindowHeight.Value));
+                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(180), GUILayout.Height(ItemSpawnerWindowHeight.Value));
             }
         }
 
@@ -30,14 +34,13 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             if (SpawnItemMenuKeyboardShortcut.Value.IsDown())
             {
                 isWindowActive = !isWindowActive;
-                Log.LogError($"isActive: {isWindowActive}");
             }
         }
 
         private static void DraggableWindow(int windowID)
         {
+            GUILayout.Space(2);
             searchText = GUILayout.TextField(searchText);
-            GUILayout.Space(5);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
             for (int i = 0; i < _itemNames.Count; i++)
             {
