@@ -17,25 +17,25 @@ namespace Willi.PlateUpEnhancementMod.Config
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
         // General
-        public static ConfigEntry<float> MoneyRewardMultiplier;
-        public static ConfigEntry<float> PatienceMultiplier;
-        public static ConfigEntry<float> NumberOfCustomersMultiplier;
-        public static ConfigEntry<int> MinGroupSize;
-        public static ConfigEntry<int> MaxGroupSize;
+        public static ConfigEntry<float> MoneyRewardMultiplier { get; set; }
+        public static ConfigEntry<float> PatienceMultiplier { get; set; }
+        public static ConfigEntry<float> NumberOfCustomersMultiplier { get; set; }
+        public static ConfigEntry<int> MinGroupSize { get; set; }
+        public static ConfigEntry<int> MaxGroupSize { get; set; }
 
         // Default shop
-        public static ConfigEntry<int> DefaultShopNumberOfItems;
-        public static ConfigEntry<bool> DefaultShopOverrideSettings;
-        public static ConfigEntry<float> DefaultShopUpgradedChance;
+        public static ConfigEntry<int> DefaultShopNumberOfItems { get; set; }
+        public static ConfigEntry<bool> DefaultShopOverrideSettings { get; set; }
+        public static ConfigEntry<float> DefaultShopUpgradedChance { get; set; }
 
         // Custom shop
-        public static ConfigEntry<int> CustomShopNumItemsToSpawn;
-        public static ConfigEntry<float> CustomShopPriceMultiplier;
+        public static ConfigEntry<int> CustomShopNumItemsToSpawn { get; set; }
+        public static ConfigEntry<float> CustomShopPriceMultiplier { get; set; }
 
         // Spawn Items
-        public static ConfigEntry<string> SpawnItemId;
-        public static ConfigEntry<int> SpawnItemPrice;
-        public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut { get; set; }
+        public static ConfigEntry<int> ItemSpawnerWindowHeight { get; set; }
+        public static ConfigEntry<int> ItemSpawnerWindowWidth { get; set; }
+        public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
 
         // Debug
         public static ConfigEntry<bool> LogItemIdsOnStartup;
@@ -321,11 +321,8 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
-            SpawnItemId = config.Bind("1. Spawn Any Item", "ItemIdToSpawn:", "-571205127",
-                new ConfigDescription("Enter an item id to spawn it", null, new ConfigurationManagerAttributes { CustomDrawer = HandleSpawnItems.HandleSpawnItemConfigManager, Order = 100 })
-            );
-            SpawnItemPrice = config.Bind("1. Spawn Any Item", "PriceOfItem", 10, new ConfigDescription("The price of the item when spawned", null, new ConfigurationManagerAttributes { Order = 90 }));
-            SpawnItemKeyboardShortcut = config.Bind("1. Spawn Any Item", "KeyboardShortcut", new KeyboardShortcut(KeyCode.J), new ConfigDescription("Use this keyboard shortcut to spawn the item", null, new ConfigurationManagerAttributes { Order = 80 }));
+            SpawnItemMenuKeyboardShortcut = config.Bind("1. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            ItemSpawnerWindowHeight = config.Bind("1. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
 
             return config;
         }
@@ -673,18 +670,18 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindAllItemsConfig(this ConfigFile config)
         {
-            HeatedMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 0);
-            ConveyorMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 0);
-            RapidMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RapSpawnRateMixerSpawnRate", 0);
+            HeatedMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 1);
+            ConveyorMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 1);
+            RapidMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RapidMixerSpawnRate", 1);
             MixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MixerSpawnRate", 0);
             SuppliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SuppliesSpawnRate", 0);
-            CompactorBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 0);
+            CompactorBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 1);
             ComposterBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ComposterBinSpawnRate", 0);
             ExpandedBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExpandedBinSpawnRate", 0);
             BinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BinSpawnRate", 0);
             FireExtinguisherSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FireExtinguisherSpawnRate", 0);
             FloorBufferSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FloorBufferSpawnRate", 0);
-            KitchenFloorProtectorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 0);
+            KitchenFloorProtectorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 1);
             FastMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FastMopSpawnRate", 0);
             LastingMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "LastingMopSpawnRate", 0);
             MopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MopSpawnRate", 0);
@@ -730,7 +727,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             GasLimiterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasLimiterSpawnRate", 0);
             GasOverideSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasOverrSpawnRateeSpawnRate", 0);
             DangerHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DangerHobSpawnRate", 0);
-            SafetyHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 0);
+            SafetyHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 1);
             HobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HobSpawnRate", 0);
             DisplayStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DisplayStandSpawnRate", 0);
             BlueprintCabinetSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintCabinetSpawnRate", 1);
@@ -739,8 +736,8 @@ namespace Willi.PlateUpEnhancementMod.Config
             BlueprintDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintDeskSpawnRate", 0);
             ResearchDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ResearchDeskSpawnRate", 0);
             SpecialsTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SpecialsTerminalSpawnRate", 0);
-            OrderingTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 0);
-            MicrowaveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 0);
+            OrderingTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 1);
+            MicrowaveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 1);
             OvenSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OvenSpawnRate", 0);
             ApplesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ApplesSpawnRate", 0);
             BeansSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BeansSpawnRate", 0);
@@ -770,14 +767,14 @@ namespace Willi.PlateUpEnhancementMod.Config
             TomatoSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TomatoSpawnRate", 0);
             TurkeySpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TurkeySpawnRate", 0);
             WineSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WineSpawnRate", 0);
-            AutoPlaterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 0);
+            AutoPlaterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 1);
             DishRackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DishRackSpawnRate", 0);
             PlatesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PlatesSpawnRate", 0);
             PotStackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PotStackSpawnRate", 0);
             ServingBoardsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ServingBoardsSpawnRate", 0);
             WoksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WoksSpawnRate", 0);
             FreezerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FreezerSpawnRate", 0);
-            FrozenPrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 0);
+            FrozenPrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 1);
             PrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PrepStationSpawnRate", 0);
             BreadsticksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BreadsticksSpawnRate", 0);
             CandleBoxSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CandleBoxSpawnRate", 0);
@@ -788,11 +785,11 @@ namespace Willi.PlateUpEnhancementMod.Config
             CoffeeTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CoffeeTableSpawnRate", 0);
             BarTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BarTableSpawnRate", 0);
             TableSimpleClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableSimpleClothSpawnRate", 0);
-            MetalTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MetalTableSpawnRate", 0);
+            MetalTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MetalTableSpawnRate", 1);
             TableFancyClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableFancyClothSpawnRate", 0);
             DiningTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DiningTableSpawnRate", 0);
             RollingPinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RollingPinSpawnRate", 0);
-            ScrubbingBrushSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 0);
+            ScrubbingBrushSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 1);
             SharpKnifeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SharpKnifeSpawnRate", 0);
             TrainersSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TrainersSpawnRate", 0);
             WelliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WelliesSpawnRate", 0);
@@ -804,7 +801,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             PowerSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PowerSinkSpawnRate", 0);
             SoakingSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SoakingSinkSpawnRate", 1);
 
-            HeatedMixerId = config.Bind("5. Item IDs", "HeatedMixerId", 505496455);
+            HeatedMixerId = config.Bind("5. Item IDs", "HeatedMixerId", 505496455, new ConfigDescription("Set the Id of items in the game. Hopefully this should never need to change.", null, new ConfigurationManagerAttributes { Order = 80, IsAdvanced = true }));
             ConveyorMixerId = config.Bind("5. Item IDs", "ConveyorMixerId", -1357906425);
             RapidMixerId = config.Bind("5. Item IDs", "RapidMixerId", -1440053805);
             MixerId = config.Bind("5. Item IDs", "MixerId", 1329097317);
