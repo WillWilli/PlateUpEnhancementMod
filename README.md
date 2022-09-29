@@ -4,7 +4,7 @@ Use this mod to make PlateUp easier or effectively play 'creative' mode.
 
 ## Features
 
-- Spawn any item using the custom spawn menu.
+- Spawn any item using the custom spawn menu (open with F2).
 - Set multipliers for the money rewards, patience modifier, customers per day etc.
 - Override the default shop settings: 
     - Set number of items to spawn per day
