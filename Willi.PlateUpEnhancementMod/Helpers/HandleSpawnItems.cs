@@ -1,55 +1,59 @@
-﻿using BepInEx.Configuration;
-using Kitchen;
+﻿using Kitchen;
 using KitchenData;
+using System;
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
+using Willi.PlateUpEnhancementMod.Extensions;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
 
 namespace Willi.PlateUpEnhancementMod.Helpers
 {
     public static class HandleSpawnItems
     {
-        static string SpawnItemInputField { get { return SpawnItemId.Value; } set { SpawnItemId.Value = value; } }
+        private static bool isWindowActive = false;
 
-        public static void HandleSpawnItemConfigManager(ConfigEntryBase itemId)
+        private static int initialXPosition = Screen.width - 190;
+        private static int initialYPosition = 80;
+        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ItemSpawnerWindowHeight.Value);
+
+        private static Vector2 scrollPosition;
+        private static string searchText = string.Empty;
+        private static List<string> _itemNames = GetItemNamesSorted();
+
+        public static void OnGui()
         {
-            SpawnItemInputField = GUILayout.TextField(SpawnItemInputField, GUILayout.ExpandWidth(true));
-            var buttonPressed = GUILayout.Button("spawn", GUILayout.Width(50));
-
-            if (buttonPressed && ValidateItemIdUserInput(out int inputId))
+            if (isWindowActive)
             {
-                SpawnItem(inputId, SpawnItemPrice.Value);
+                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(180), GUILayout.Height(ItemSpawnerWindowHeight.Value));
             }
         }
 
         public static void Update()
         {
-            HandleSpawnItemKeyboardShortcut();
-        }
-
-        private static void HandleSpawnItemKeyboardShortcut()
-        {
-            if (SpawnItemKeyboardShortcut.Value.IsDown() && ValidateItemIdUserInput(out int inputId))
+            if (SpawnItemMenuKeyboardShortcut.Value.IsDown())
             {
-                SpawnItem(inputId, SpawnItemPrice.Value);
+                isWindowActive = !isWindowActive;
             }
         }
 
-        private static bool ValidateItemIdUserInput(out int inputId)
+        private static void DraggableWindow(int windowID)
         {
-            if (!int.TryParse(SpawnItemInputField, out inputId))
+            GUILayout.Space(2);
+            searchText = GUILayout.TextField(searchText);
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
+            for (int i = 0; i < _itemNames.Count; i++)
             {
-                Log.LogWarning("Spawn item id is not an integer.");
-                return false;
+                if (string.IsNullOrEmpty(searchText) || _itemNames[i].Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (GUILayout.Button(new GUIContent(_itemNames[i], $"Click button to spawn {_itemNames[i]}")))
+                    {
+                        SpawnItem(_itemNames[i].ToItemId(), 0);
+                    }
+                }
             }
-
-            if (!GameData.Main.TryGet<Appliance>(inputId, out _, true))
-            {
-                Log.LogWarning($"Item with id {inputId} does not exist.");
-                return false;
-            }
-
-            return true;
+            GUILayout.EndScrollView();
+            GUI.DragWindow();
         }
 
         private static void SpawnItem(int itemId, int price)
@@ -59,6 +63,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             if (!TryFindPlayerPosition(out Vector3 spawnPosition))
             {
                 Log.LogWarning("Unable to find player positon, reverting to default spawn position.");
+                spawnPosition = new Vector3(-2, 0, -4); // default to static positon
             }
 
             var entity = entityManager.CreateEntity();
@@ -76,7 +81,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
 
         private static bool TryFindPlayerPosition(out Vector3 playerPosition)
         {
-            var playerView = Object.FindObjectOfType<PlayerView>();
+            var playerView = UnityEngine.Object.FindObjectOfType<PlayerView>();
             if (playerView != null)
             {
                 playerPosition = playerView.transform.position;

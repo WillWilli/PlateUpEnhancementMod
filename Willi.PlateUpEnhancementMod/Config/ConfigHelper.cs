@@ -1,8 +1,9 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using Willi.PlateUpEnhancementMod.Helpers;
 
 namespace Willi.PlateUpEnhancementMod.Config
 {
@@ -10,318 +11,489 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.2.0";
+        public const string ModVersion = "0.3.0";
 
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
         // General
-        public static ConfigEntry<float> MoneyRewardMultiplier;
-        public static ConfigEntry<float> PatienceMultiplier;
-        public static ConfigEntry<float> NumberOfCustomersMultiplier;
-        public static ConfigEntry<int> MinGroupSize;
-        public static ConfigEntry<int> MaxGroupSize;
+        public static ConfigEntry<float> MoneyRewardMultiplier { get; set; }
+        public static ConfigEntry<float> PatienceMultiplier { get; set; }
+        public static ConfigEntry<float> NumberOfCustomersMultiplier { get; set; }
+        public static ConfigEntry<int> MinGroupSize { get; set; }
+        public static ConfigEntry<int> MaxGroupSize { get; set; }
 
         // Default shop
-        public static ConfigEntry<int> DefaultShopNumberOfItems;
-        public static ConfigEntry<bool> DefaultShopOverrideSettings;
-        public static ConfigEntry<float> DefaultShopUpgradedChance;
+        public static ConfigEntry<int> DefaultShopNumberOfItems { get; set; }
+        public static ConfigEntry<bool> DefaultShopOverrideSettings { get; set; }
+        public static ConfigEntry<float> DefaultShopUpgradedChance { get; set; }
 
         // Custom shop
-        public static ConfigEntry<int> CustomShopNumItemsToSpawn;
-        public static ConfigEntry<float> CustomShopPriceMultiplier;
+        public static ConfigEntry<int> CustomShopNumItemsToSpawn { get; set; }
+        public static ConfigEntry<float> CustomShopPriceMultiplier { get; set; }
 
         // Spawn Items
-        public static ConfigEntry<string> SpawnItemId;
-        public static ConfigEntry<int> SpawnItemPrice;
-        public static ConfigEntry<KeyboardShortcut> SpawnItemKeyboardShortcut;
+        public static ConfigEntry<int> ItemSpawnerWindowHeight { get; set; }
+        public static ConfigEntry<int> ItemSpawnerWindowWidth { get; set; }
+        public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
 
         // Debug
         public static ConfigEntry<bool> LogItemIdsOnStartup;
 
         #region Item Id's Config
-        public static ConfigEntry<int> HeatedMixerId;
-        public static ConfigEntry<int> ConveyorMixerId;
-        public static ConfigEntry<int> RapidMixerId;
-        public static ConfigEntry<int> MixerId;
-        public static ConfigEntry<int> SuppliesId;
-        public static ConfigEntry<int> CompactorBinId;
-        public static ConfigEntry<int> ComposterBinId;
-        public static ConfigEntry<int> ExpandedBinId;
-        public static ConfigEntry<int> BinId;
-        public static ConfigEntry<int> FireExtinguisherId;
-        public static ConfigEntry<int> FloorBufferId;
-        public static ConfigEntry<int> KitchenFloorProtectorId;
-        public static ConfigEntry<int> FastMopId;
-        public static ConfigEntry<int> LastingMopId;
-        public static ConfigEntry<int> MopId;
-        public static ConfigEntry<int> RobotBufferId;
-        public static ConfigEntry<int> RobotMopId;
-        public static ConfigEntry<int> CoffeeMachineId;
-        public static ConfigEntry<int> ConveyorId;
-        public static ConfigEntry<int> CombinerId;
-        public static ConfigEntry<int> SmartGrabberId;
-        public static ConfigEntry<int> GrabberId;
-        public static ConfigEntry<int> PortionerId;
-        public static ConfigEntry<int> CounterId;
-        public static ConfigEntry<int> WorkstationId;
-        public static ConfigEntry<int> AffordableBinId;
-        public static ConfigEntry<int> GumballMachineId;
-        public static ConfigEntry<int> NeonSignId;
-        public static ConfigEntry<int> NeonSign2Id;
-        public static ConfigEntry<int> CeilingLightId;
-        public static ConfigEntry<int> StockPictureId;
-        public static ConfigEntry<int> DirtyFloorSignId;
-        public static ConfigEntry<int> BarrelId;
-        public static ConfigEntry<int> BookcaseId;
-        public static ConfigEntry<int> DartboardId;
-        public static ConfigEntry<int> FireplaceId;
-        public static ConfigEntry<int> RugId;
-        public static ConfigEntry<int> WallLightId;
-        public static ConfigEntry<int> CandelabraId;
-        public static ConfigEntry<int> ChandelierId;
-        public static ConfigEntry<int> PreciousFlowerId;
-        public static ConfigEntry<int> ClassicalGlobeId;
-        public static ConfigEntry<int> PaintingId;
-        public static ConfigEntry<int> Rug2Id;
-        public static ConfigEntry<int> StatueId;
-        public static ConfigEntry<int> BrandMascotId;
-        public static ConfigEntry<int> TidyPlantId;
-        public static ConfigEntry<int> CeilingLight2Id;
-        public static ConfigEntry<int> AbstractLampId;
-        public static ConfigEntry<int> VaseId;
-        public static ConfigEntry<int> IndoorfountainId;
-        public static ConfigEntry<int> CalmPaintingId;
-        public static ConfigEntry<int> PlantId;
-        public static ConfigEntry<int> DumbwaiterId;
-        public static ConfigEntry<int> GasLimiterId;
-        public static ConfigEntry<int> GasOverrideId;
-        public static ConfigEntry<int> DangerHobId;
-        public static ConfigEntry<int> SafetyHobId;
-        public static ConfigEntry<int> HobId;
-        public static ConfigEntry<int> DisplayStandId;
-        public static ConfigEntry<int> BlueprintCabinetId;
-        public static ConfigEntry<int> CopyingDeskId;
-        public static ConfigEntry<int> DiscountDeskId;
-        public static ConfigEntry<int> BlueprintDeskId;
-        public static ConfigEntry<int> ResearchDeskId;
-        public static ConfigEntry<int> SpecialsTerminalId;
-        public static ConfigEntry<int> OrderingTerminalId;
-        public static ConfigEntry<int> MicrowaveId;
-        public static ConfigEntry<int> OvenId;
-        public static ConfigEntry<int> ApplesId;
-        public static ConfigEntry<int> BeansId;
-        public static ConfigEntry<int> BroccoliId;
-        public static ConfigEntry<int> BurgerBunsId;
-        public static ConfigEntry<int> CarrotsId;
-        public static ConfigEntry<int> CheeseId;
-        public static ConfigEntry<int> ChristmasCrackersId;
-        public static ConfigEntry<int> EggsId;
-        public static ConfigEntry<int> FlourId;
-        public static ConfigEntry<int> HotdogbunId;
-        public static ConfigEntry<int> HotDogsId;
-        public static ConfigEntry<int> IceCreamId;
-        public static ConfigEntry<int> ExtraKetchupId;
-        public static ConfigEntry<int> LettuceId;
-        public static ConfigEntry<int> MeatId;
-        public static ConfigEntry<int> MushroomsId;
-        public static ConfigEntry<int> ExtraMustardId;
-        public static ConfigEntry<int> NutsId;
-        public static ConfigEntry<int> OilId;
-        public static ConfigEntry<int> OlivesId;
-        public static ConfigEntry<int> OnionId;
-        public static ConfigEntry<int> PotatoId;
-        public static ConfigEntry<int> RiceId;
-        public static ConfigEntry<int> ThickcutmeatId;
-        public static ConfigEntry<int> ThincutmeatId;
-        public static ConfigEntry<int> TomatoId;
-        public static ConfigEntry<int> TurkeyId;
-        public static ConfigEntry<int> WineId;
-        public static ConfigEntry<int> AutoPlaterId;
-        public static ConfigEntry<int> DishRackId;
-        public static ConfigEntry<int> PlatesId;
-        public static ConfigEntry<int> PotStackId;
-        public static ConfigEntry<int> ServingBoardsId;
-        public static ConfigEntry<int> WoksId;
-        public static ConfigEntry<int> FreezerId;
-        public static ConfigEntry<int> FrozenPrepStationId;
-        public static ConfigEntry<int> PrepStationId;
-        public static ConfigEntry<int> BreadsticksId;
-        public static ConfigEntry<int> CandleBoxId;
-        public static ConfigEntry<int> FlowerPotId;
-        public static ConfigEntry<int> NapkinsId;
-        public static ConfigEntry<int> SharpCutleryId;
-        public static ConfigEntry<int> SpecialsMenuId;
-        public static ConfigEntry<int> CoffeeTableId;
-        public static ConfigEntry<int> BarTableId;
-        public static ConfigEntry<int> TableSimpleClothId;
-        public static ConfigEntry<int> MetalTableId;
-        public static ConfigEntry<int> TableFancyClothId;
-        public static ConfigEntry<int> DiningTableId;
-        public static ConfigEntry<int> RollingPinId;
-        public static ConfigEntry<int> ScrubbingBrushId;
-        public static ConfigEntry<int> SharpKnifeId;
-        public static ConfigEntry<int> TrainersId;
-        public static ConfigEntry<int> WelliesId;
-        public static ConfigEntry<int> WorkBootsId;
-        public static ConfigEntry<int> TrayStandId;
-        public static ConfigEntry<int> DishWasherId;
-        public static ConfigEntry<int> WashBasinId;
-        public static ConfigEntry<int> SinkId;
-        public static ConfigEntry<int> PowerSinkId;
-        public static ConfigEntry<int> SoakingSinkId;
+        private static ConfigEntry<int> HeatedMixerId;
+        private static ConfigEntry<int> ConveyorMixerId;
+        private static ConfigEntry<int> RapidMixerId;
+        private static ConfigEntry<int> MixerId;
+        private static ConfigEntry<int> SuppliesId;
+        private static ConfigEntry<int> CompactorBinId;
+        private static ConfigEntry<int> ComposterBinId;
+        private static ConfigEntry<int> ExpandedBinId;
+        private static ConfigEntry<int> BinId;
+        private static ConfigEntry<int> FireExtinguisherId;
+        private static ConfigEntry<int> FloorBufferId;
+        private static ConfigEntry<int> KitchenFloorProtectorId;
+        private static ConfigEntry<int> FastMopId;
+        private static ConfigEntry<int> LastingMopId;
+        private static ConfigEntry<int> MopId;
+        private static ConfigEntry<int> RobotBufferId;
+        private static ConfigEntry<int> RobotMopId;
+        private static ConfigEntry<int> CoffeeMachineId;
+        private static ConfigEntry<int> ConveyorId;
+        private static ConfigEntry<int> CombinerId;
+        private static ConfigEntry<int> SmartGrabberId;
+        private static ConfigEntry<int> GrabberId;
+        private static ConfigEntry<int> PortionerId;
+        private static ConfigEntry<int> CounterId;
+        private static ConfigEntry<int> WorkstationId;
+        private static ConfigEntry<int> AffordableBinId;
+        private static ConfigEntry<int> GumballMachineId;
+        private static ConfigEntry<int> NeonSignId;
+        private static ConfigEntry<int> NeonSign2Id;
+        private static ConfigEntry<int> CeilingLightId;
+        private static ConfigEntry<int> StockPictureId;
+        private static ConfigEntry<int> DirtyFloorSignId;
+        private static ConfigEntry<int> BarrelId;
+        private static ConfigEntry<int> BookcaseId;
+        private static ConfigEntry<int> DartboardId;
+        private static ConfigEntry<int> FireplaceId;
+        private static ConfigEntry<int> RugId;
+        private static ConfigEntry<int> WallLightId;
+        private static ConfigEntry<int> CandelabraId;
+        private static ConfigEntry<int> ChandelierId;
+        private static ConfigEntry<int> PreciousFlowerId;
+        private static ConfigEntry<int> ClassicalGlobeId;
+        private static ConfigEntry<int> PaintingId;
+        private static ConfigEntry<int> Rug2Id;
+        private static ConfigEntry<int> StatueId;
+        private static ConfigEntry<int> BrandMascotId;
+        private static ConfigEntry<int> TidyPlantId;
+        private static ConfigEntry<int> CeilingLight2Id;
+        private static ConfigEntry<int> AbstractLampId;
+        private static ConfigEntry<int> VaseId;
+        private static ConfigEntry<int> IndoorfountainId;
+        private static ConfigEntry<int> CalmPaintingId;
+        private static ConfigEntry<int> PlantId;
+        private static ConfigEntry<int> DumbwaiterId;
+        private static ConfigEntry<int> GasLimiterId;
+        private static ConfigEntry<int> GasOverrideId;
+        private static ConfigEntry<int> DangerHobId;
+        private static ConfigEntry<int> SafetyHobId;
+        private static ConfigEntry<int> HobId;
+        private static ConfigEntry<int> DisplayStandId;
+        private static ConfigEntry<int> BlueprintCabinetId;
+        private static ConfigEntry<int> CopyingDeskId;
+        private static ConfigEntry<int> DiscountDeskId;
+        private static ConfigEntry<int> BlueprintDeskId;
+        private static ConfigEntry<int> ResearchDeskId;
+        private static ConfigEntry<int> SpecialsTerminalId;
+        private static ConfigEntry<int> OrderingTerminalId;
+        private static ConfigEntry<int> MicrowaveId;
+        private static ConfigEntry<int> OvenId;
+        private static ConfigEntry<int> ApplesId;
+        private static ConfigEntry<int> BeansId;
+        private static ConfigEntry<int> BroccoliId;
+        private static ConfigEntry<int> BurgerBunsId;
+        private static ConfigEntry<int> CarrotsId;
+        private static ConfigEntry<int> CheeseId;
+        private static ConfigEntry<int> ChristmasCrackersId;
+        private static ConfigEntry<int> EggsId;
+        private static ConfigEntry<int> FlourId;
+        private static ConfigEntry<int> HotdogbunId;
+        private static ConfigEntry<int> HotDogsId;
+        private static ConfigEntry<int> IceCreamId;
+        private static ConfigEntry<int> ExtraKetchupId;
+        private static ConfigEntry<int> LettuceId;
+        private static ConfigEntry<int> MeatId;
+        private static ConfigEntry<int> MushroomsId;
+        private static ConfigEntry<int> ExtraMustardId;
+        private static ConfigEntry<int> NutsId;
+        private static ConfigEntry<int> OilId;
+        private static ConfigEntry<int> OlivesId;
+        private static ConfigEntry<int> OnionId;
+        private static ConfigEntry<int> PotatoId;
+        private static ConfigEntry<int> RiceId;
+        private static ConfigEntry<int> ThickcutmeatId;
+        private static ConfigEntry<int> ThincutmeatId;
+        private static ConfigEntry<int> TomatoId;
+        private static ConfigEntry<int> TurkeyId;
+        private static ConfigEntry<int> WineId;
+        private static ConfigEntry<int> AutoPlaterId;
+        private static ConfigEntry<int> DishRackId;
+        private static ConfigEntry<int> PlatesId;
+        private static ConfigEntry<int> PotStackId;
+        private static ConfigEntry<int> ServingBoardsId;
+        private static ConfigEntry<int> WoksId;
+        private static ConfigEntry<int> FreezerId;
+        private static ConfigEntry<int> FrozenPrepStationId;
+        private static ConfigEntry<int> PrepStationId;
+        private static ConfigEntry<int> BreadsticksId;
+        private static ConfigEntry<int> CandleBoxId;
+        private static ConfigEntry<int> FlowerPotId;
+        private static ConfigEntry<int> NapkinsId;
+        private static ConfigEntry<int> SharpCutleryId;
+        private static ConfigEntry<int> SpecialsMenuId;
+        private static ConfigEntry<int> CoffeeTableId;
+        private static ConfigEntry<int> BarTableId;
+        private static ConfigEntry<int> TableSimpleClothId;
+        private static ConfigEntry<int> MetalTableId;
+        private static ConfigEntry<int> TableFancyClothId;
+        private static ConfigEntry<int> DiningTableId;
+        private static ConfigEntry<int> RollingPinId;
+        private static ConfigEntry<int> ScrubbingBrushId;
+        private static ConfigEntry<int> SharpKnifeId;
+        private static ConfigEntry<int> TrainersId;
+        private static ConfigEntry<int> WelliesId;
+        private static ConfigEntry<int> WorkBootsId;
+        private static ConfigEntry<int> TrayStandId;
+        private static ConfigEntry<int> DishWasherId;
+        private static ConfigEntry<int> WashBasinId;
+        private static ConfigEntry<int> SinkId;
+        private static ConfigEntry<int> PowerSinkId;
+        private static ConfigEntry<int> SoakingSinkId;
         #endregion
 
         #region Item Spawn Rates Config
-        public static ConfigEntry<int> HeatedMixerSpawnRate;
-        public static ConfigEntry<int> ConveyorMixerSpawnRate;
-        public static ConfigEntry<int> RapidMixerSpawnRate;
-        public static ConfigEntry<int> MixerSpawnRate;
-        public static ConfigEntry<int> SuppliesSpawnRate;
-        public static ConfigEntry<int> CompactorBinSpawnRate;
-        public static ConfigEntry<int> ComposterBinSpawnRate;
-        public static ConfigEntry<int> ExpandedBinSpawnRate;
-        public static ConfigEntry<int> BinSpawnRate;
-        public static ConfigEntry<int> FireExtinguisherSpawnRate;
-        public static ConfigEntry<int> FloorBufferSpawnRate;
-        public static ConfigEntry<int> KitchenFloorProtectorSpawnRate;
-        public static ConfigEntry<int> FastMopSpawnRate;
-        public static ConfigEntry<int> LastingMopSpawnRate;
-        public static ConfigEntry<int> MopSpawnRate;
-        public static ConfigEntry<int> RobotBufferSpawnRate;
-        public static ConfigEntry<int> RobotMopSpawnRate;
-        public static ConfigEntry<int> CoffeeMachineSpawnRate;
-        public static ConfigEntry<int> ConveyorSpawnRate;
-        public static ConfigEntry<int> CombinerSpawnRate;
-        public static ConfigEntry<int> SmartGrabberSpawnRate;
-        public static ConfigEntry<int> GrabberSpawnRate;
-        public static ConfigEntry<int> PortionerSpawnRate;
-        public static ConfigEntry<int> CounterSpawnRate;
-        public static ConfigEntry<int> WorkstationSpawnRate;
-        public static ConfigEntry<int> AffordableBinSpawnRate;
-        public static ConfigEntry<int> GumballMachineSpawnRate;
-        public static ConfigEntry<int> NeonSignSpawnRate;
-        public static ConfigEntry<int> NeonSign2SpawnRate;
-        public static ConfigEntry<int> CeilingLightSpawnRate;
-        public static ConfigEntry<int> StockPictureSpawnRate;
-        public static ConfigEntry<int> DirtyFloorSignSpawnRate;
-        public static ConfigEntry<int> BarrelSpawnRate;
-        public static ConfigEntry<int> BookcaseSpawnRate;
-        public static ConfigEntry<int> DartboardSpawnRate;
-        public static ConfigEntry<int> FireplaceSpawnRate;
-        public static ConfigEntry<int> RugSpawnRate;
-        public static ConfigEntry<int> WallLightSpawnRate;
-        public static ConfigEntry<int> CandelabraSpawnRate;
-        public static ConfigEntry<int> ChandelierSpawnRate;
-        public static ConfigEntry<int> PreciousFlowerSpawnRate;
-        public static ConfigEntry<int> ClassicalGlobeSpawnRate;
-        public static ConfigEntry<int> PaintingSpawnRate;
-        public static ConfigEntry<int> Rug2SpawnRate;
-        public static ConfigEntry<int> StatueSpawnRate;
-        public static ConfigEntry<int> BrandMascotSpawnRate;
-        public static ConfigEntry<int> TidyPlantSpawnRate;
-        public static ConfigEntry<int> CeilingLight2SpawnRate;
-        public static ConfigEntry<int> AbstractLampSpawnRate;
-        public static ConfigEntry<int> VaseSpawnRate;
-        public static ConfigEntry<int> IndoorfountainSpawnRate;
-        public static ConfigEntry<int> CalmPaintingSpawnRate;
-        public static ConfigEntry<int> PlantSpawnRate;
-        public static ConfigEntry<int> DumbwaiterSpawnRate;
-        public static ConfigEntry<int> GasLimiterSpawnRate;
-        public static ConfigEntry<int> GasOverideSpawnRate;
-        public static ConfigEntry<int> DangerHobSpawnRate;
-        public static ConfigEntry<int> SafetyHobSpawnRate;
-        public static ConfigEntry<int> HobSpawnRate;
-        public static ConfigEntry<int> DisplayStandSpawnRate;
-        public static ConfigEntry<int> BlueprintCabinetSpawnRate;
-        public static ConfigEntry<int> CopyingDeskSpawnRate;
-        public static ConfigEntry<int> DiscountDeskSpawnRate;
-        public static ConfigEntry<int> BlueprintDeskSpawnRate;
-        public static ConfigEntry<int> ResearchDeskSpawnRate;
-        public static ConfigEntry<int> SpecialsTerminalSpawnRate;
-        public static ConfigEntry<int> OrderingTerminalSpawnRate;
-        public static ConfigEntry<int> MicrowaveSpawnRate;
-        public static ConfigEntry<int> OvenSpawnRate;
-        public static ConfigEntry<int> ApplesSpawnRate;
-        public static ConfigEntry<int> BeansSpawnRate;
-        public static ConfigEntry<int> BroccoliSpawnRate;
-        public static ConfigEntry<int> BurgerBunsSpawnRate;
-        public static ConfigEntry<int> CarrotsSpawnRate;
-        public static ConfigEntry<int> CheeseSpawnRate;
-        public static ConfigEntry<int> ChristmasCrackersSpawnRate;
-        public static ConfigEntry<int> EggsSpawnRate;
-        public static ConfigEntry<int> FlourSpawnRate;
-        public static ConfigEntry<int> HotdogbunSpawnRate;
-        public static ConfigEntry<int> HotDogsSpawnRate;
-        public static ConfigEntry<int> IceCreamSpawnRate;
-        public static ConfigEntry<int> ExtraKetchupSpawnRate;
-        public static ConfigEntry<int> LettuceSpawnRate;
-        public static ConfigEntry<int> MeatSpawnRate;
-        public static ConfigEntry<int> MushroomsSpawnRate;
-        public static ConfigEntry<int> ExtraMustardSpawnRate;
-        public static ConfigEntry<int> NutsSpawnRate;
-        public static ConfigEntry<int> OilSpawnRate;
-        public static ConfigEntry<int> OlivesSpawnRate;
-        public static ConfigEntry<int> OnionSpawnRate;
-        public static ConfigEntry<int> PotatoSpawnRate;
-        public static ConfigEntry<int> RiceSpawnRate;
-        public static ConfigEntry<int> ThickcutmeatSpawnRate;
-        public static ConfigEntry<int> ThincutmeatSpawnRate;
-        public static ConfigEntry<int> TomatoSpawnRate;
-        public static ConfigEntry<int> TurkeySpawnRate;
-        public static ConfigEntry<int> WineSpawnRate;
-        public static ConfigEntry<int> AutoPlaterSpawnRate;
-        public static ConfigEntry<int> DishRackSpawnRate;
-        public static ConfigEntry<int> PlatesSpawnRate;
-        public static ConfigEntry<int> PotStackSpawnRate;
-        public static ConfigEntry<int> ServingBoardsSpawnRate;
-        public static ConfigEntry<int> WoksSpawnRate;
-        public static ConfigEntry<int> FreezerSpawnRate;
-        public static ConfigEntry<int> FrozenPrepStationSpawnRate;
-        public static ConfigEntry<int> PrepStationSpawnRate;
-        public static ConfigEntry<int> BreadsticksSpawnRate;
-        public static ConfigEntry<int> CandleBoxSpawnRate;
-        public static ConfigEntry<int> FlowerPotSpawnRate;
-        public static ConfigEntry<int> NapkinsSpawnRate;
-        public static ConfigEntry<int> SharpCutlerySpawnRate;
-        public static ConfigEntry<int> SpecialsMenuSpawnRate;
-        public static ConfigEntry<int> CoffeeTableSpawnRate;
-        public static ConfigEntry<int> BarTableSpawnRate;
-        public static ConfigEntry<int> TableSimpleClothSpawnRate;
-        public static ConfigEntry<int> MetalTableSpawnRate;
-        public static ConfigEntry<int> TableFancyClothSpawnRate;
-        public static ConfigEntry<int> DiningTableSpawnRate;
-        public static ConfigEntry<int> RollingPinSpawnRate;
-        public static ConfigEntry<int> ScrubbingBrushSpawnRate;
-        public static ConfigEntry<int> SharpKnifeSpawnRate;
-        public static ConfigEntry<int> TrainersSpawnRate;
-        public static ConfigEntry<int> WelliesSpawnRate;
-        public static ConfigEntry<int> WorkBootsSpawnRate;
-        public static ConfigEntry<int> TrayStandSpawnRate;
-        public static ConfigEntry<int> DishWasherSpawnRate;
-        public static ConfigEntry<int> WashBasinSpawnRate;
-        public static ConfigEntry<int> SinkSpawnRate;
-        public static ConfigEntry<int> PowerSinkSpawnRate;
-        public static ConfigEntry<int> SoakingSinkSpawnRate;
+        private static ConfigEntry<int> HeatedMixerSpawnRate;
+        private static ConfigEntry<int> ConveyorMixerSpawnRate;
+        private static ConfigEntry<int> RapidMixerSpawnRate;
+        private static ConfigEntry<int> MixerSpawnRate;
+        private static ConfigEntry<int> SuppliesSpawnRate;
+        private static ConfigEntry<int> CompactorBinSpawnRate;
+        private static ConfigEntry<int> ComposterBinSpawnRate;
+        private static ConfigEntry<int> ExpandedBinSpawnRate;
+        private static ConfigEntry<int> BinSpawnRate;
+        private static ConfigEntry<int> FireExtinguisherSpawnRate;
+        private static ConfigEntry<int> FloorBufferSpawnRate;
+        private static ConfigEntry<int> KitchenFloorProtectorSpawnRate;
+        private static ConfigEntry<int> FastMopSpawnRate;
+        private static ConfigEntry<int> LastingMopSpawnRate;
+        private static ConfigEntry<int> MopSpawnRate;
+        private static ConfigEntry<int> RobotBufferSpawnRate;
+        private static ConfigEntry<int> RobotMopSpawnRate;
+        private static ConfigEntry<int> CoffeeMachineSpawnRate;
+        private static ConfigEntry<int> ConveyorSpawnRate;
+        private static ConfigEntry<int> CombinerSpawnRate;
+        private static ConfigEntry<int> SmartGrabberSpawnRate;
+        private static ConfigEntry<int> GrabberSpawnRate;
+        private static ConfigEntry<int> PortionerSpawnRate;
+        private static ConfigEntry<int> CounterSpawnRate;
+        private static ConfigEntry<int> WorkstationSpawnRate;
+        private static ConfigEntry<int> AffordableBinSpawnRate;
+        private static ConfigEntry<int> GumballMachineSpawnRate;
+        private static ConfigEntry<int> NeonSignSpawnRate;
+        private static ConfigEntry<int> NeonSign2SpawnRate;
+        private static ConfigEntry<int> CeilingLightSpawnRate;
+        private static ConfigEntry<int> StockPictureSpawnRate;
+        private static ConfigEntry<int> DirtyFloorSignSpawnRate;
+        private static ConfigEntry<int> BarrelSpawnRate;
+        private static ConfigEntry<int> BookcaseSpawnRate;
+        private static ConfigEntry<int> DartboardSpawnRate;
+        private static ConfigEntry<int> FireplaceSpawnRate;
+        private static ConfigEntry<int> RugSpawnRate;
+        private static ConfigEntry<int> WallLightSpawnRate;
+        private static ConfigEntry<int> CandelabraSpawnRate;
+        private static ConfigEntry<int> ChandelierSpawnRate;
+        private static ConfigEntry<int> PreciousFlowerSpawnRate;
+        private static ConfigEntry<int> ClassicalGlobeSpawnRate;
+        private static ConfigEntry<int> PaintingSpawnRate;
+        private static ConfigEntry<int> Rug2SpawnRate;
+        private static ConfigEntry<int> StatueSpawnRate;
+        private static ConfigEntry<int> BrandMascotSpawnRate;
+        private static ConfigEntry<int> TidyPlantSpawnRate;
+        private static ConfigEntry<int> CeilingLight2SpawnRate;
+        private static ConfigEntry<int> AbstractLampSpawnRate;
+        private static ConfigEntry<int> VaseSpawnRate;
+        private static ConfigEntry<int> IndoorfountainSpawnRate;
+        private static ConfigEntry<int> CalmPaintingSpawnRate;
+        private static ConfigEntry<int> PlantSpawnRate;
+        private static ConfigEntry<int> DumbwaiterSpawnRate;
+        private static ConfigEntry<int> GasLimiterSpawnRate;
+        private static ConfigEntry<int> GasOverideSpawnRate;
+        private static ConfigEntry<int> DangerHobSpawnRate;
+        private static ConfigEntry<int> SafetyHobSpawnRate;
+        private static ConfigEntry<int> HobSpawnRate;
+        private static ConfigEntry<int> DisplayStandSpawnRate;
+        private static ConfigEntry<int> BlueprintCabinetSpawnRate;
+        private static ConfigEntry<int> CopyingDeskSpawnRate;
+        private static ConfigEntry<int> DiscountDeskSpawnRate;
+        private static ConfigEntry<int> BlueprintDeskSpawnRate;
+        private static ConfigEntry<int> ResearchDeskSpawnRate;
+        private static ConfigEntry<int> SpecialsTerminalSpawnRate;
+        private static ConfigEntry<int> OrderingTerminalSpawnRate;
+        private static ConfigEntry<int> MicrowaveSpawnRate;
+        private static ConfigEntry<int> OvenSpawnRate;
+        private static ConfigEntry<int> ApplesSpawnRate;
+        private static ConfigEntry<int> BeansSpawnRate;
+        private static ConfigEntry<int> BroccoliSpawnRate;
+        private static ConfigEntry<int> BurgerBunsSpawnRate;
+        private static ConfigEntry<int> CarrotsSpawnRate;
+        private static ConfigEntry<int> CheeseSpawnRate;
+        private static ConfigEntry<int> ChristmasCrackersSpawnRate;
+        private static ConfigEntry<int> EggsSpawnRate;
+        private static ConfigEntry<int> FlourSpawnRate;
+        private static ConfigEntry<int> HotdogbunSpawnRate;
+        private static ConfigEntry<int> HotDogsSpawnRate;
+        private static ConfigEntry<int> IceCreamSpawnRate;
+        private static ConfigEntry<int> ExtraKetchupSpawnRate;
+        private static ConfigEntry<int> LettuceSpawnRate;
+        private static ConfigEntry<int> MeatSpawnRate;
+        private static ConfigEntry<int> MushroomsSpawnRate;
+        private static ConfigEntry<int> ExtraMustardSpawnRate;
+        private static ConfigEntry<int> NutsSpawnRate;
+        private static ConfigEntry<int> OilSpawnRate;
+        private static ConfigEntry<int> OlivesSpawnRate;
+        private static ConfigEntry<int> OnionSpawnRate;
+        private static ConfigEntry<int> PotatoSpawnRate;
+        private static ConfigEntry<int> RiceSpawnRate;
+        private static ConfigEntry<int> ThickcutmeatSpawnRate;
+        private static ConfigEntry<int> ThincutmeatSpawnRate;
+        private static ConfigEntry<int> TomatoSpawnRate;
+        private static ConfigEntry<int> TurkeySpawnRate;
+        private static ConfigEntry<int> WineSpawnRate;
+        private static ConfigEntry<int> AutoPlaterSpawnRate;
+        private static ConfigEntry<int> DishRackSpawnRate;
+        private static ConfigEntry<int> PlatesSpawnRate;
+        private static ConfigEntry<int> PotStackSpawnRate;
+        private static ConfigEntry<int> ServingBoardsSpawnRate;
+        private static ConfigEntry<int> WoksSpawnRate;
+        private static ConfigEntry<int> FreezerSpawnRate;
+        private static ConfigEntry<int> FrozenPrepStationSpawnRate;
+        private static ConfigEntry<int> PrepStationSpawnRate;
+        private static ConfigEntry<int> BreadsticksSpawnRate;
+        private static ConfigEntry<int> CandleBoxSpawnRate;
+        private static ConfigEntry<int> FlowerPotSpawnRate;
+        private static ConfigEntry<int> NapkinsSpawnRate;
+        private static ConfigEntry<int> SharpCutlerySpawnRate;
+        private static ConfigEntry<int> SpecialsMenuSpawnRate;
+        private static ConfigEntry<int> CoffeeTableSpawnRate;
+        private static ConfigEntry<int> BarTableSpawnRate;
+        private static ConfigEntry<int> TableSimpleClothSpawnRate;
+        private static ConfigEntry<int> MetalTableSpawnRate;
+        private static ConfigEntry<int> TableFancyClothSpawnRate;
+        private static ConfigEntry<int> DiningTableSpawnRate;
+        private static ConfigEntry<int> RollingPinSpawnRate;
+        private static ConfigEntry<int> ScrubbingBrushSpawnRate;
+        private static ConfigEntry<int> SharpKnifeSpawnRate;
+        private static ConfigEntry<int> TrainersSpawnRate;
+        private static ConfigEntry<int> WelliesSpawnRate;
+        private static ConfigEntry<int> WorkBootsSpawnRate;
+        private static ConfigEntry<int> TrayStandSpawnRate;
+        private static ConfigEntry<int> DishWasherSpawnRate;
+        private static ConfigEntry<int> WashBasinSpawnRate;
+        private static ConfigEntry<int> SinkSpawnRate;
+        private static ConfigEntry<int> PowerSinkSpawnRate;
+        private static ConfigEntry<int> SoakingSinkSpawnRate;
         #endregion
 
         public static void BindAllConfig(this ConfigFile config)
         {
             config
+                .BindAllItemsUserConfig()
+                .BindGeneralConfig()
                 .BindItemSpawnerConfig()
                 .BindDefaultShopConfig()
                 .BindCustomShopConfig()
-                .BindAllItemsConfig()
-                .BindGeneralConfig()
                 .BindDebugConfig();
+        }
+
+        public static List<int> GetCustomShopItemsIdList()
+        {
+            var itemIdSpawnList = new List<int>();
+
+            foreach(var config in GetAllItemsConfigs())
+            {
+                for (int i = 0; i < config.SpawnRate; i++)
+                {
+                    itemIdSpawnList.Add(config.Id);
+                }
+            }
+
+            return itemIdSpawnList;
+        }
+
+        public static int ToItemId(this string itemName)
+        {
+            try
+            {
+                return GetAllItemsConfigs()
+                    .First(config => config.Name == itemName)
+                    .Id;
+            }
+            catch
+            {
+                throw new ArgumentException($"ItemName {itemName} does not exist.", "itemName");
+            }
+        }
+
+        public static List<string> GetItemNamesSorted()
+        {
+            var allItemNames = GetAllItemsConfigs().Select(config => config.Name).ToList();
+            allItemNames.Sort();
+            return allItemNames;
+        }
+
+
+        private static List<ItemConfig> GetAllItemsConfigs()
+        {
+            return new List<ItemConfig>
+            {
+                new ItemConfig("HeatedMixer", HeatedMixerId.Value, HeatedMixerSpawnRate.Value),
+                new ItemConfig("ConveyorMixer", ConveyorMixerId.Value, ConveyorMixerSpawnRate.Value),
+                new ItemConfig("RapidMixer", RapidMixerId.Value, RapidMixerSpawnRate.Value),
+                new ItemConfig("Mixer", MixerId.Value, MixerSpawnRate.Value),
+                new ItemConfig("Supplies", SuppliesId.Value, SuppliesSpawnRate.Value),
+                new ItemConfig("CompactorBin", CompactorBinId.Value, CompactorBinSpawnRate.Value),
+                new ItemConfig("ComposterBin", ComposterBinId.Value, ComposterBinSpawnRate.Value),
+                new ItemConfig("ExpandedBin", ExpandedBinId.Value, ExpandedBinSpawnRate.Value),
+                new ItemConfig("Bin", BinId.Value, BinSpawnRate.Value),
+                new ItemConfig("FireExtinguisher", FireExtinguisherId.Value, FireExtinguisherSpawnRate.Value),
+                new ItemConfig("FloorBuffer", FloorBufferId.Value, FloorBufferSpawnRate.Value),
+                new ItemConfig("KitchenFloorProtector", KitchenFloorProtectorId.Value, KitchenFloorProtectorSpawnRate.Value),
+                new ItemConfig("FastMop", FastMopId.Value, FastMopSpawnRate.Value),
+                new ItemConfig("LastingMop", LastingMopId.Value, LastingMopSpawnRate.Value),
+                new ItemConfig("Mop", MopId.Value, MopSpawnRate.Value),
+                new ItemConfig("RobotBuffer", RobotBufferId.Value, RobotBufferSpawnRate.Value),
+                new ItemConfig("RobotMop", RobotMopId.Value, RobotMopSpawnRate.Value),
+                new ItemConfig("CoffeeMachine", CoffeeMachineId.Value, CoffeeMachineSpawnRate.Value),
+                new ItemConfig("Conveyor", ConveyorId.Value, ConveyorSpawnRate.Value),
+                new ItemConfig("Combiner", CombinerId.Value, CombinerSpawnRate.Value),
+                new ItemConfig("SmartGrabber", SmartGrabberId.Value, SmartGrabberSpawnRate.Value),
+                new ItemConfig("Grabber", GrabberId.Value, GrabberSpawnRate.Value),
+                new ItemConfig("Portioner", PortionerId.Value, PortionerSpawnRate.Value),
+                new ItemConfig("Counter", CounterId.Value, CounterSpawnRate.Value),
+                new ItemConfig("Workstation", WorkstationId.Value, WorkstationSpawnRate.Value),
+                new ItemConfig("AffordableBin", AffordableBinId.Value, AffordableBinSpawnRate.Value),
+                new ItemConfig("GumballMachine", GumballMachineId.Value, GumballMachineSpawnRate.Value),
+                new ItemConfig("NeonSign", NeonSignId.Value, NeonSignSpawnRate.Value),
+                new ItemConfig("NeonSign2", NeonSign2Id.Value, NeonSign2SpawnRate.Value),
+                new ItemConfig("CeilingLight", CeilingLightId.Value, CeilingLightSpawnRate.Value),
+                new ItemConfig("StockPicture", StockPictureId.Value, StockPictureSpawnRate.Value),
+                new ItemConfig("DirtyFloorSign", DirtyFloorSignId.Value, DirtyFloorSignSpawnRate.Value),
+                new ItemConfig("Barrel", BarrelId.Value, BarrelSpawnRate.Value),
+                new ItemConfig("Bookcase", BookcaseId.Value, BookcaseSpawnRate.Value),
+                new ItemConfig("Dartboard", DartboardId.Value, DartboardSpawnRate.Value),
+                new ItemConfig("Fireplace", FireplaceId.Value, FireplaceSpawnRate.Value),
+                new ItemConfig("Rug", RugId.Value, RugSpawnRate.Value),
+                new ItemConfig("WallLight", WallLightId.Value, WallLightSpawnRate.Value),
+                new ItemConfig("Candelabra", CandelabraId.Value, CandelabraSpawnRate.Value),
+                new ItemConfig("Chandelier", ChandelierId.Value, ChandelierSpawnRate.Value),
+                new ItemConfig("PreciousFlower", PreciousFlowerId.Value, PreciousFlowerSpawnRate.Value),
+                new ItemConfig("ClassicalGlobe", ClassicalGlobeId.Value, ClassicalGlobeSpawnRate.Value),
+                new ItemConfig("Painting", PaintingId.Value, PaintingSpawnRate.Value),
+                new ItemConfig("Rug2", Rug2Id.Value, Rug2SpawnRate.Value),
+                new ItemConfig("Statue", StatueId.Value, StatueSpawnRate.Value),
+                new ItemConfig("BrandMascot", BrandMascotId.Value, BrandMascotSpawnRate.Value),
+                new ItemConfig("TidyPlant", TidyPlantId.Value, TidyPlantSpawnRate.Value),
+                new ItemConfig("CeilingLight2", CeilingLight2Id.Value, CeilingLight2SpawnRate.Value),
+                new ItemConfig("AbstractLamp", AbstractLampId.Value, AbstractLampSpawnRate.Value),
+                new ItemConfig("Vase", VaseId.Value, VaseSpawnRate.Value),
+                new ItemConfig("Indoorfountain", IndoorfountainId.Value, IndoorfountainSpawnRate.Value),
+                new ItemConfig("CalmPainting", CalmPaintingId.Value, CalmPaintingSpawnRate.Value),
+                new ItemConfig("Plant", PlantId.Value, PlantSpawnRate.Value),
+                new ItemConfig("Dumbwaiter", DumbwaiterId.Value, DumbwaiterSpawnRate.Value),
+                new ItemConfig("GasLimiter", GasLimiterId.Value, GasLimiterSpawnRate.Value),
+                new ItemConfig("GasOveride", GasOverrideId.Value, GasOverideSpawnRate.Value),
+                new ItemConfig("DangerHob", DangerHobId.Value, DangerHobSpawnRate.Value),
+                new ItemConfig("SafetyHob", SafetyHobId.Value, SafetyHobSpawnRate.Value),
+                new ItemConfig("Hob", HobId.Value, HobSpawnRate.Value),
+                new ItemConfig("DisplayStand", DisplayStandId.Value, DisplayStandSpawnRate.Value),
+                new ItemConfig("BlueprintCabinet", BlueprintCabinetId.Value, BlueprintCabinetSpawnRate.Value),
+                new ItemConfig("CopyingDesk", CopyingDeskId.Value, CopyingDeskSpawnRate.Value),
+                new ItemConfig("DiscountDesk", DiscountDeskId.Value, DiscountDeskSpawnRate.Value),
+                new ItemConfig("BlueprintDesk", BlueprintDeskId.Value, BlueprintDeskSpawnRate.Value),
+                new ItemConfig("ResearchDesk", ResearchDeskId.Value, ResearchDeskSpawnRate.Value),
+                new ItemConfig("SpecialsTerminal", SpecialsTerminalId.Value, SpecialsTerminalSpawnRate.Value),
+                new ItemConfig("OrderingTerminal", OrderingTerminalId.Value, OrderingTerminalSpawnRate.Value),
+                new ItemConfig("Microwave", MicrowaveId.Value, MicrowaveSpawnRate.Value),
+                new ItemConfig("Oven", OvenId.Value, OvenSpawnRate.Value),
+                new ItemConfig("Apples", ApplesId.Value, ApplesSpawnRate.Value),
+                new ItemConfig("Beans", BeansId.Value, BeansSpawnRate.Value),
+                new ItemConfig("Broccoli", BroccoliId.Value, BroccoliSpawnRate.Value),
+                new ItemConfig("BurgerBuns", BurgerBunsId.Value, BurgerBunsSpawnRate.Value),
+                new ItemConfig("Carrots", CarrotsId.Value, CarrotsSpawnRate.Value),
+                new ItemConfig("Cheese", CheeseId.Value, CheeseSpawnRate.Value),
+                new ItemConfig("ChristmasCrackers", ChristmasCrackersId.Value, ChristmasCrackersSpawnRate.Value),
+                new ItemConfig("Eggs", EggsId.Value, EggsSpawnRate.Value),
+                new ItemConfig("Flour", FlourId.Value, FlourSpawnRate.Value),
+                new ItemConfig("Hotdogbun", HotdogbunId.Value, HotdogbunSpawnRate.Value),
+                new ItemConfig("HotDogs", HotDogsId.Value, HotDogsSpawnRate.Value),
+                new ItemConfig("IceCream", IceCreamId.Value, IceCreamSpawnRate.Value),
+                new ItemConfig("ExtraKetchup", ExtraKetchupId.Value, ExtraKetchupSpawnRate.Value),
+                new ItemConfig("Lettuce", LettuceId.Value, LettuceSpawnRate.Value),
+                new ItemConfig("Meat", MeatId.Value, MeatSpawnRate.Value),
+                new ItemConfig("Mushrooms", MushroomsId.Value, MushroomsSpawnRate.Value),
+                new ItemConfig("ExtraMustard", ExtraMustardId.Value, ExtraMustardSpawnRate.Value),
+                new ItemConfig("Nuts", NutsId.Value, NutsSpawnRate.Value),
+                new ItemConfig("Oil", OilId.Value, OilSpawnRate.Value),
+                new ItemConfig("Olives", OlivesId.Value, OlivesSpawnRate.Value),
+                new ItemConfig("Onion", OnionId.Value, OnionSpawnRate.Value),
+                new ItemConfig("Potato", PotatoId.Value, PotatoSpawnRate.Value),
+                new ItemConfig("Rice", RiceId.Value, RiceSpawnRate.Value),
+                new ItemConfig("Thickcutmeat", ThickcutmeatId.Value, ThickcutmeatSpawnRate.Value),
+                new ItemConfig("Thincutmeat", ThincutmeatId.Value, ThincutmeatSpawnRate.Value),
+                new ItemConfig("Tomato", TomatoId.Value, TomatoSpawnRate.Value),
+                new ItemConfig("Turkey", TurkeyId.Value, TurkeySpawnRate.Value),
+                new ItemConfig("Wine", WineId.Value, WineSpawnRate.Value),
+                new ItemConfig("AutoPlater", AutoPlaterId.Value, AutoPlaterSpawnRate.Value),
+                new ItemConfig("DishRack", DishRackId.Value, DishRackSpawnRate.Value),
+                new ItemConfig("Plates", PlatesId.Value, PlatesSpawnRate.Value),
+                new ItemConfig("PotStack", PotStackId.Value, PotStackSpawnRate.Value),
+                new ItemConfig("ServingBoards", ServingBoardsId.Value, ServingBoardsSpawnRate.Value),
+                new ItemConfig("Woks", WoksId.Value, WoksSpawnRate.Value),
+                new ItemConfig("Freezer", FreezerId.Value, FreezerSpawnRate.Value),
+                new ItemConfig("FrozenPrepStation", FrozenPrepStationId.Value, FrozenPrepStationSpawnRate.Value),
+                new ItemConfig("PrepStation", PrepStationId.Value, PrepStationSpawnRate.Value),
+                new ItemConfig("Breadsticks", BreadsticksId.Value, BreadsticksSpawnRate.Value),
+                new ItemConfig("CandleBox", CandleBoxId.Value, CandleBoxSpawnRate.Value),
+                new ItemConfig("FlowerPot", FlowerPotId.Value, FlowerPotSpawnRate.Value),
+                new ItemConfig("Napkins", NapkinsId.Value, NapkinsSpawnRate.Value),
+                new ItemConfig("SharpCutlery", SharpCutleryId.Value, SharpCutlerySpawnRate.Value),
+                new ItemConfig("SpecialsMenu", SpecialsMenuId.Value, SpecialsMenuSpawnRate.Value),
+                new ItemConfig("CoffeeTable", CoffeeTableId.Value, CoffeeTableSpawnRate.Value),
+                new ItemConfig("BarTable", BarTableId.Value, BarTableSpawnRate.Value),
+                new ItemConfig("TableSimpleCloth", TableSimpleClothId.Value, TableSimpleClothSpawnRate.Value),
+                new ItemConfig("MetalTable", MetalTableId.Value, MetalTableSpawnRate.Value),
+                new ItemConfig("TableFancyCloth", TableFancyClothId.Value, TableFancyClothSpawnRate.Value),
+                new ItemConfig("DiningTable", DiningTableId.Value, DiningTableSpawnRate.Value),
+                new ItemConfig("RollingPin", RollingPinId.Value, RollingPinSpawnRate.Value),
+                new ItemConfig("ScrubbingBrush", ScrubbingBrushId.Value, ScrubbingBrushSpawnRate.Value),
+                new ItemConfig("SharpKnife", SharpKnifeId.Value, SharpKnifeSpawnRate.Value),
+                new ItemConfig("Trainers", TrainersId.Value, TrainersSpawnRate.Value),
+                new ItemConfig("Wellies", WelliesId.Value, WelliesSpawnRate.Value),
+                new ItemConfig("WorkBoots", WorkBootsId.Value, WorkBootsSpawnRate.Value),
+                new ItemConfig("TrayStand", TrayStandId.Value, TrayStandSpawnRate.Value),
+                new ItemConfig("DishWasher", DishWasherId.Value, DishWasherSpawnRate.Value),
+                new ItemConfig("WashBasin", WashBasinId.Value, WashBasinSpawnRate.Value),
+                new ItemConfig("Sink", SinkId.Value, SinkSpawnRate.Value),
+                new ItemConfig("PowerSink", PowerSinkId.Value, PowerSinkSpawnRate.Value),
+                new ItemConfig("SoakingSink", SoakingSinkId.Value, SoakingSinkSpawnRate.Value),
+            };
         }
 
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
-            SpawnItemId = config.Bind("1. Spawn Any Item", "ItemIdToSpawn:", "-571205127",
-                new ConfigDescription("Enter an item id to spawn it", null, new ConfigurationManagerAttributes { CustomDrawer = HandleSpawnItems.HandleSpawnItemConfigManager, Order = 100 })
-            );
-            SpawnItemPrice = config.Bind("1. Spawn Any Item", "PriceOfItem", 10, new ConfigDescription("The price of the item when spawned", null, new ConfigurationManagerAttributes { Order = 90 }));
-            SpawnItemKeyboardShortcut = config.Bind("1. Spawn Any Item", "KeyboardShortcut", new KeyboardShortcut(KeyCode.J), new ConfigDescription("Use this keyboard shortcut to spawn the item", null, new ConfigurationManagerAttributes { Order = 80 }));
+            SpawnItemMenuKeyboardShortcut = config.Bind("1. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            ItemSpawnerWindowHeight = config.Bind("1. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
 
             return config;
         }
@@ -334,6 +506,7 @@ namespace Willi.PlateUpEnhancementMod.Config
 
             return config;
         }
+
         private static ConfigFile BindCustomShopConfig(this ConfigFile config)
         {
             CustomShopNumItemsToSpawn = config.Bind("3. Custom Shop", "NumberOfShopItemsToSpawn", 2, new ConfigDescription("The number of items to spawn in the custom shop", null, new ConfigurationManagerAttributes { Order = 100 }));
@@ -359,171 +532,20 @@ namespace Willi.PlateUpEnhancementMod.Config
             return config;
         }
 
-        public static List<int> GetCustomShopItemsIdList()
+        private static ConfigFile BindAllItemsUserConfig(this ConfigFile config)
         {
-            var allItemsConfig = GetAllItemsConfig();
-            var itemIdSpawnList = new List<int>();
-            foreach (KeyValuePair<int, int> itemConfig in allItemsConfig)
-            {
-                for (int i = 0; i < itemConfig.Value; i++)
-                {
-                    itemIdSpawnList.Add(itemConfig.Key);
-                }
-            }
-            return itemIdSpawnList;
-        }
-
-        private static Dictionary<int, int> GetAllItemsConfig()
-        {
-            return new Dictionary<int, int>()
-            {
-                { HeatedMixerId.Value, HeatedMixerSpawnRate.Value },
-                { ConveyorMixerId.Value, ConveyorMixerSpawnRate.Value },
-                { RapidMixerId.Value, RapidMixerSpawnRate.Value },
-                { MixerId.Value, MixerSpawnRate.Value },
-                { SuppliesId.Value, SuppliesSpawnRate.Value },
-                { CompactorBinId.Value, CompactorBinSpawnRate.Value },
-                { ComposterBinId.Value, ComposterBinSpawnRate.Value },
-                { ExpandedBinId.Value, ExpandedBinSpawnRate.Value },
-                { BinId.Value, BinSpawnRate.Value },
-                { FireExtinguisherId.Value, FireExtinguisherSpawnRate.Value },
-                { FloorBufferId.Value, FloorBufferSpawnRate.Value },
-                { KitchenFloorProtectorId.Value, KitchenFloorProtectorSpawnRate.Value },
-                { FastMopId.Value, FastMopSpawnRate.Value },
-                { LastingMopId.Value, LastingMopSpawnRate.Value },
-                { MopId.Value, MopSpawnRate.Value },
-                { RobotBufferId.Value, RobotBufferSpawnRate.Value },
-                { RobotMopId.Value, RobotMopSpawnRate.Value },
-                { CoffeeMachineId.Value, CoffeeMachineSpawnRate.Value },
-                { ConveyorId.Value, ConveyorSpawnRate.Value },
-                { CombinerId.Value, CombinerSpawnRate.Value },
-                { SmartGrabberId.Value, SmartGrabberSpawnRate.Value },
-                { GrabberId.Value, GrabberSpawnRate.Value },
-                { PortionerId.Value, PortionerSpawnRate.Value },
-                { CounterId.Value, CounterSpawnRate.Value },
-                { WorkstationId.Value, WorkstationSpawnRate.Value },
-                { AffordableBinId.Value, AffordableBinSpawnRate.Value },
-                { GumballMachineId.Value, GumballMachineSpawnRate.Value },
-                { NeonSignId.Value, NeonSignSpawnRate.Value },
-                { NeonSign2Id.Value, NeonSign2SpawnRate.Value },
-                { CeilingLightId.Value, CeilingLightSpawnRate.Value },
-                { StockPictureId.Value, StockPictureSpawnRate.Value },
-                { DirtyFloorSignId.Value, DirtyFloorSignSpawnRate.Value },
-                { BarrelId.Value, BarrelSpawnRate.Value },
-                { BookcaseId.Value, BookcaseSpawnRate.Value },
-                { DartboardId.Value, DartboardSpawnRate.Value },
-                { FireplaceId.Value, FireplaceSpawnRate.Value },
-                { RugId.Value, RugSpawnRate.Value },
-                { WallLightId.Value, WallLightSpawnRate.Value },
-                { CandelabraId.Value, CandelabraSpawnRate.Value },
-                { ChandelierId.Value, ChandelierSpawnRate.Value },
-                { PreciousFlowerId.Value, PreciousFlowerSpawnRate.Value },
-                { ClassicalGlobeId.Value, ClassicalGlobeSpawnRate.Value },
-                { PaintingId.Value, PaintingSpawnRate.Value },
-                { Rug2Id.Value, Rug2SpawnRate.Value },
-                { StatueId.Value, StatueSpawnRate.Value },
-                { BrandMascotId.Value, BrandMascotSpawnRate.Value },
-                { TidyPlantId.Value, TidyPlantSpawnRate.Value },
-                { CeilingLight2Id.Value, CeilingLight2SpawnRate.Value },
-                { AbstractLampId.Value, AbstractLampSpawnRate.Value },
-                { VaseId.Value, VaseSpawnRate.Value },
-                { IndoorfountainId.Value, IndoorfountainSpawnRate.Value },
-                { CalmPaintingId.Value, CalmPaintingSpawnRate.Value },
-                { PlantId.Value, PlantSpawnRate.Value },
-                { DumbwaiterId.Value, DumbwaiterSpawnRate.Value },
-                { GasLimiterId.Value, GasLimiterSpawnRate.Value },
-                { GasOverrideId.Value, GasOverideSpawnRate.Value },
-                { DangerHobId.Value, DangerHobSpawnRate.Value },
-                { SafetyHobId.Value, SafetyHobSpawnRate.Value },
-                { HobId.Value, HobSpawnRate.Value },
-                { DisplayStandId.Value, DisplayStandSpawnRate.Value },
-                { BlueprintCabinetId.Value, BlueprintCabinetSpawnRate.Value },
-                { CopyingDeskId.Value, CopyingDeskSpawnRate.Value },
-                { DiscountDeskId.Value, DiscountDeskSpawnRate.Value },
-                { BlueprintDeskId.Value, BlueprintDeskSpawnRate.Value },
-                { ResearchDeskId.Value, ResearchDeskSpawnRate.Value },
-                { SpecialsTerminalId.Value, SpecialsTerminalSpawnRate.Value },
-                { OrderingTerminalId.Value, OrderingTerminalSpawnRate.Value },
-                { MicrowaveId.Value, MicrowaveSpawnRate.Value },
-                { OvenId.Value, OvenSpawnRate.Value },
-                { ApplesId.Value, ApplesSpawnRate.Value },
-                { BeansId.Value, BeansSpawnRate.Value },
-                { BroccoliId.Value, BroccoliSpawnRate.Value },
-                { BurgerBunsId.Value, BurgerBunsSpawnRate.Value },
-                { CarrotsId.Value, CarrotsSpawnRate.Value },
-                { CheeseId.Value, CheeseSpawnRate.Value },
-                { ChristmasCrackersId.Value, ChristmasCrackersSpawnRate.Value },
-                { EggsId.Value, EggsSpawnRate.Value },
-                { FlourId.Value, FlourSpawnRate.Value },
-                { HotdogbunId.Value, HotdogbunSpawnRate.Value },
-                { HotDogsId.Value, HotDogsSpawnRate.Value },
-                { IceCreamId.Value, IceCreamSpawnRate.Value },
-                { ExtraKetchupId.Value, ExtraKetchupSpawnRate.Value },
-                { LettuceId.Value, LettuceSpawnRate.Value },
-                { MeatId.Value, MeatSpawnRate.Value },
-                { MushroomsId.Value, MushroomsSpawnRate.Value },
-                { ExtraMustardId.Value, ExtraMustardSpawnRate.Value },
-                { NutsId.Value, NutsSpawnRate.Value },
-                { OilId.Value, OilSpawnRate.Value },
-                { OlivesId.Value, OlivesSpawnRate.Value },
-                { OnionId.Value, OnionSpawnRate.Value },
-                { PotatoId.Value, PotatoSpawnRate.Value },
-                { RiceId.Value, RiceSpawnRate.Value },
-                { ThickcutmeatId.Value, ThickcutmeatSpawnRate.Value },
-                { ThincutmeatId.Value, ThincutmeatSpawnRate.Value },
-                { TomatoId.Value, TomatoSpawnRate.Value },
-                { TurkeyId.Value, TurkeySpawnRate.Value },
-                { WineId.Value, WineSpawnRate.Value },
-                { AutoPlaterId.Value, AutoPlaterSpawnRate.Value },
-                { DishRackId.Value, DishRackSpawnRate.Value },
-                { PlatesId.Value, PlatesSpawnRate.Value },
-                { PotStackId.Value, PotStackSpawnRate.Value },
-                { ServingBoardsId.Value, ServingBoardsSpawnRate.Value },
-                { WoksId.Value, WoksSpawnRate.Value },
-                { FreezerId.Value, FreezerSpawnRate.Value },
-                { FrozenPrepStationId.Value, FrozenPrepStationSpawnRate.Value },
-                { PrepStationId.Value, PrepStationSpawnRate.Value },
-                { BreadsticksId.Value, BreadsticksSpawnRate.Value },
-                { CandleBoxId.Value, CandleBoxSpawnRate.Value },
-                { FlowerPotId.Value, FlowerPotSpawnRate.Value },
-                { NapkinsId.Value, NapkinsSpawnRate.Value },
-                { SharpCutleryId.Value, SharpCutlerySpawnRate.Value },
-                { SpecialsMenuId.Value, SpecialsMenuSpawnRate.Value },
-                { CoffeeTableId.Value, CoffeeTableSpawnRate.Value },
-                { BarTableId.Value, BarTableSpawnRate.Value },
-                { TableSimpleClothId.Value, TableSimpleClothSpawnRate.Value },
-                { MetalTableId.Value, MetalTableSpawnRate.Value },
-                { TableFancyClothId.Value, TableFancyClothSpawnRate.Value },
-                { DiningTableId.Value, DiningTableSpawnRate.Value },
-                { RollingPinId.Value, RollingPinSpawnRate.Value },
-                { ScrubbingBrushId.Value, ScrubbingBrushSpawnRate.Value },
-                { SharpKnifeId.Value, SharpKnifeSpawnRate.Value },
-                { TrainersId.Value, TrainersSpawnRate.Value },
-                { WelliesId.Value, WelliesSpawnRate.Value },
-                { WorkBootsId.Value, WorkBootsSpawnRate.Value },
-                { TrayStandId.Value, TrayStandSpawnRate.Value },
-                { DishWasherId.Value, DishWasherSpawnRate.Value },
-                { WashBasinId.Value, WashBasinSpawnRate.Value },
-                { SinkId.Value, SinkSpawnRate.Value },
-                { PowerSinkId.Value, PowerSinkSpawnRate.Value },
-                { SoakingSinkId.Value, SoakingSinkSpawnRate.Value },
-            };
-        }
-
-        private static ConfigFile BindAllItemsConfig(this ConfigFile config)
-        {
-            HeatedMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 0);
-            ConveyorMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 0);
-            RapidMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RapSpawnRateMixerSpawnRate", 0);
+            HeatedMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 1);
+            ConveyorMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 1);
+            RapidMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RapidMixerSpawnRate", 1);
             MixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MixerSpawnRate", 0);
             SuppliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SuppliesSpawnRate", 0);
-            CompactorBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 0);
+            CompactorBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 1);
             ComposterBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ComposterBinSpawnRate", 0);
             ExpandedBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExpandedBinSpawnRate", 0);
             BinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BinSpawnRate", 0);
             FireExtinguisherSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FireExtinguisherSpawnRate", 0);
             FloorBufferSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FloorBufferSpawnRate", 0);
-            KitchenFloorProtectorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 0);
+            KitchenFloorProtectorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 1);
             FastMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FastMopSpawnRate", 0);
             LastingMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "LastingMopSpawnRate", 0);
             MopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MopSpawnRate", 0);
@@ -569,7 +591,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             GasLimiterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasLimiterSpawnRate", 0);
             GasOverideSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasOverrSpawnRateeSpawnRate", 0);
             DangerHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DangerHobSpawnRate", 0);
-            SafetyHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 0);
+            SafetyHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 1);
             HobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HobSpawnRate", 0);
             DisplayStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DisplayStandSpawnRate", 0);
             BlueprintCabinetSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintCabinetSpawnRate", 1);
@@ -578,8 +600,8 @@ namespace Willi.PlateUpEnhancementMod.Config
             BlueprintDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintDeskSpawnRate", 0);
             ResearchDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ResearchDeskSpawnRate", 0);
             SpecialsTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SpecialsTerminalSpawnRate", 0);
-            OrderingTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 0);
-            MicrowaveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 0);
+            OrderingTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 1);
+            MicrowaveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 1);
             OvenSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OvenSpawnRate", 0);
             ApplesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ApplesSpawnRate", 0);
             BeansSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BeansSpawnRate", 0);
@@ -609,14 +631,14 @@ namespace Willi.PlateUpEnhancementMod.Config
             TomatoSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TomatoSpawnRate", 0);
             TurkeySpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TurkeySpawnRate", 0);
             WineSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WineSpawnRate", 0);
-            AutoPlaterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 0);
+            AutoPlaterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 1);
             DishRackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DishRackSpawnRate", 0);
             PlatesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PlatesSpawnRate", 0);
             PotStackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PotStackSpawnRate", 0);
             ServingBoardsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ServingBoardsSpawnRate", 0);
             WoksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WoksSpawnRate", 0);
             FreezerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FreezerSpawnRate", 0);
-            FrozenPrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 0);
+            FrozenPrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 1);
             PrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PrepStationSpawnRate", 0);
             BreadsticksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BreadsticksSpawnRate", 0);
             CandleBoxSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CandleBoxSpawnRate", 0);
@@ -627,11 +649,11 @@ namespace Willi.PlateUpEnhancementMod.Config
             CoffeeTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CoffeeTableSpawnRate", 0);
             BarTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BarTableSpawnRate", 0);
             TableSimpleClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableSimpleClothSpawnRate", 0);
-            MetalTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MetalTableSpawnRate", 0);
+            MetalTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MetalTableSpawnRate", 1);
             TableFancyClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableFancyClothSpawnRate", 0);
             DiningTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DiningTableSpawnRate", 0);
             RollingPinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RollingPinSpawnRate", 0);
-            ScrubbingBrushSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 0);
+            ScrubbingBrushSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 1);
             SharpKnifeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SharpKnifeSpawnRate", 0);
             TrainersSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TrainersSpawnRate", 0);
             WelliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WelliesSpawnRate", 0);
@@ -643,136 +665,136 @@ namespace Willi.PlateUpEnhancementMod.Config
             PowerSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PowerSinkSpawnRate", 0);
             SoakingSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SoakingSinkSpawnRate", 1);
 
-            HeatedMixerId = config.Bind("5. Item IDs", "HeatedMixerId", 505496455);
-            ConveyorMixerId = config.Bind("5. Item IDs", "ConveyorMixerId", -1357906425);
-            RapidMixerId = config.Bind("5. Item IDs", "RapidMixerId", -1440053805);
-            MixerId = config.Bind("5. Item IDs", "MixerId", 1329097317);
-            SuppliesId = config.Bind("5. Item IDs", "SuppliesId", -1013770159);
-            CompactorBinId = config.Bind("5. Item IDs", "CompactorBinId", 2127051779);
-            ComposterBinId = config.Bind("5. Item IDs", "ComposterBinId", -1632826946);
-            ExpandedBinId = config.Bind("5. Item IDs", "ExpandedBinId", -1855909480);
-            BinId = config.Bind("5. Item IDs", "BinId", 1551609169);
-            FireExtinguisherId = config.Bind("5. Item IDs", "FireExtinguisherId", 1286554202);
-            FloorBufferId = config.Bind("5. Item IDs", "FloorBufferId", 1351951642);
-            KitchenFloorProtectorId = config.Bind("5. Item IDs", "KitchenFloorProtectorId", 1765889988);
-            FastMopId = config.Bind("5. Item IDs", "FastMopId", -1495393751);
-            LastingMopId = config.Bind("5. Item IDs", "LastingMopId", 1776760557);
-            MopId = config.Bind("5. Item IDs", "MopId", -1993346570);
-            RobotBufferId = config.Bind("5. Item IDs", "RobotBufferId", -1723340146);
-            RobotMopId = config.Bind("5. Item IDs", "RobotMopId", -2147057861);
-            CoffeeMachineId = config.Bind("5. Item IDs", "CoffeeMachineId", -1609758240);
-            ConveyorId = config.Bind("5. Item IDs", "ConveyorId", 1973114260);
-            CombinerId = config.Bind("5. Item IDs", "CombinerId", -1906799936);
-            SmartGrabberId = config.Bind("5. Item IDs", "SmartGrabberId", -1238047163);
-            GrabberId = config.Bind("5. Item IDs", "GrabberId", -1029710921);
-            PortionerId = config.Bind("5. Item IDs", "PortionerId", -1462602185);
-            CounterId = config.Bind("5. Item IDs", "CounterId", -1248669347);
-            WorkstationId = config.Bind("5. Item IDs", "WorkstationId", -1573577293);
-            AffordableBinId = config.Bind("5. Item IDs", "AffordableBinId", 620400448);
-            GumballMachineId = config.Bind("5. Item IDs", "GumballMachineId", 1830133512);
-            NeonSignId = config.Bind("5. Item IDs", "NeonSignId", 1724963734);
-            NeonSign2Id = config.Bind("5. Item IDs", "NeonSign2Id", 371247235);
-            CeilingLightId = config.Bind("5. Item IDs", "CeilingLightId", 230540973);
-            StockPictureId = config.Bind("5. Item IDs", "StockPictureId", -1472471467);
-            DirtyFloorSignId = config.Bind("5. Item IDs", "DirtyFloorSignId", -2108088224);
-            BarrelId = config.Bind("5. Item IDs", "BarrelId", 1569358344);
-            BookcaseId = config.Bind("5. Item IDs", "BookcaseId", -60168847);
-            DartboardId = config.Bind("5. Item IDs", "DartboardId", -1941237931);
-            FireplaceId = config.Bind("5. Item IDs", "FireplaceId", -441525746);
-            RugId = config.Bind("5. Item IDs", "RugId", 591400026);
-            WallLightId = config.Bind("5. Item IDs", "WallLightId", -1628995120);
-            CandelabraId = config.Bind("5. Item IDs", "CandelabraId", -13481890);
-            ChandelierId = config.Bind("5. Item IDs", "ChandelierId", 1233091186);
-            PreciousFlowerId = config.Bind("5. Item IDs", "PreciousFlowerId", -1180623135);
-            ClassicalGlobeId = config.Bind("5. Item IDs", "ClassicalGlobeId", 642318074);
-            PaintingId = config.Bind("5. Item IDs", "PaintingId", -1486785449);
-            Rug2Id = config.Bind("5. Item IDs", "Rug2Id", 2076966627);
-            StatueId = config.Bind("5. Item IDs", "StatueId", -972644436);
-            BrandMascotId = config.Bind("5. Item IDs", "BrandMascotId", 1551024733);
-            TidyPlantId = config.Bind("5. Item IDs", "TidyPlantId", -1339970600);
-            CeilingLight2Id = config.Bind("5. Item IDs", "CeilingLight2Id", 908498444);
-            AbstractLampId = config.Bind("5. Item IDs", "AbstractLampId", 744277037);
-            VaseId = config.Bind("5. Item IDs", "VaseId", 531866927);
-            IndoorfountainId = config.Bind("5. Item IDs", "IndoorfountainId", 1220439284);
-            CalmPaintingId = config.Bind("5. Item IDs", "CalmPaintingId", 668664567);
-            PlantId = config.Bind("5. Item IDs", "PlantId", 756364626);
-            DumbwaiterId = config.Bind("5. Item IDs", "DumbwaiterId", 532998682);
-            GasLimiterId = config.Bind("5. Item IDs", "GasLimiterId", 1921027834);
-            GasOverrideId = config.Bind("5. Item IDs", "GasOverrideId", -770041014);
-            DangerHobId = config.Bind("5. Item IDs", "DangerHobId", -1448690107);
-            SafetyHobId = config.Bind("5. Item IDs", "SafetyHobId", 1266458729);
-            HobId = config.Bind("5. Item IDs", "HobId", 862493270);
-            DisplayStandId = config.Bind("5. Item IDs", "DisplayStandId", -1813414500);
-            BlueprintCabinetId = config.Bind("5. Item IDs", "BlueprintCabinetId", -571205127);
-            CopyingDeskId = config.Bind("5. Item IDs", "CopyingDeskId", -729493805);
-            DiscountDeskId = config.Bind("5. Item IDs", "DiscountDeskId", 1586911545);
-            BlueprintDeskId = config.Bind("5. Item IDs", "BlueprintDeskId", 1446975727);
-            ResearchDeskId = config.Bind("5. Item IDs", "ResearchDeskId", 1139247360);
-            SpecialsTerminalId = config.Bind("5. Item IDs", "SpecialsTerminalId", -246383526);
-            OrderingTerminalId = config.Bind("5. Item IDs", "OrderingTerminalId", -1610332021);
-            MicrowaveId = config.Bind("5. Item IDs", "MicrowaveId", -1311702572);
-            OvenId = config.Bind("5. Item IDs", "OvenId", -1068749602);
-            ApplesId = config.Bind("5. Item IDs", "ApplesId", -905438738);
-            BeansId = config.Bind("5. Item IDs", "BeansId", 1807525572);
-            BroccoliId = config.Bind("5. Item IDs", "BroccoliId", -1573812073);
-            BurgerBunsId = config.Bind("5. Item IDs", "BurgerBunsId", 759552160);
-            CarrotsId = config.Bind("5. Item IDs", "CarrotsId", -452101383);
-            CheeseId = config.Bind("5. Item IDs", "CheeseId", -117339838);
-            ChristmasCrackersId = config.Bind("5. Item IDs", "ChristmasCrackersId", 303858729);
-            EggsId = config.Bind("5. Item IDs", "EggsId", 961148621);
-            FlourId = config.Bind("5. Item IDs", "FlourId", 925796718);
-            HotdogbunId = config.Bind("5. Item IDs", "HotdogbunId", -1132411297);
-            HotDogsId = config.Bind("5. Item IDs", "HotDogsId", 1799769627);
-            IceCreamId = config.Bind("5. Item IDs", "IceCreamId", -1533430406);
-            ExtraKetchupId = config.Bind("5. Item IDs", "ExtraKetchupId", -965827229);
-            LettuceId = config.Bind("5. Item IDs", "LettuceId", 1193867305);
-            MeatId = config.Bind("5. Item IDs", "MeatId", -484165118);
-            MushroomsId = config.Bind("5. Item IDs", "MushroomsId", -1097889139);
-            ExtraMustardId = config.Bind("5. Item IDs", "ExtraMustardId", -117356585);
-            NutsId = config.Bind("5. Item IDs", "NutsId", 1834063794);
-            OilId = config.Bind("5. Item IDs", "OilId", -1963699221);
-            OlivesId = config.Bind("5. Item IDs", "OlivesId", -1434800013);
-            OnionId = config.Bind("5. Item IDs", "OnionId", -2042103798);
-            PotatoId = config.Bind("5. Item IDs", "PotatoId", 44541785);
-            RiceId = config.Bind("5. Item IDs", "RiceId", -1201769154);
-            ThickcutmeatId = config.Bind("5. Item IDs", "ThickcutmeatId", -1507801323);
-            ThincutmeatId = config.Bind("5. Item IDs", "ThincutmeatId", 1800865634);
-            TomatoId = config.Bind("5. Item IDs", "TomatoId", -712909563);
-            TurkeyId = config.Bind("5. Item IDs", "TurkeyId", -1506824829);
-            WineId = config.Bind("5. Item IDs", "WineId", -1353971407);
-            AutoPlaterId = config.Bind("5. Item IDs", "AutoPlaterId", 739504637);
-            DishRackId = config.Bind("5. Item IDs", "DishRackId", 434150763);
-            PlatesId = config.Bind("5. Item IDs", "PlatesId", 1313469794);
-            PotStackId = config.Bind("5. Item IDs", "PotStackId", -957949759);
-            ServingBoardsId = config.Bind("5. Item IDs", "ServingBoardsId", 235423916);
-            WoksId = config.Bind("5. Item IDs", "WoksId", 314862254);
-            FreezerId = config.Bind("5. Item IDs", "FreezerId", -1857890774);
-            FrozenPrepStationId = config.Bind("5. Item IDs", "FrozenPrepStationId", -759808000);
-            PrepStationId = config.Bind("5. Item IDs", "PrepStationId", 1656358740);
-            BreadsticksId = config.Bind("5. Item IDs", "BreadsticksId", 639111696);
-            CandleBoxId = config.Bind("5. Item IDs", "CandleBoxId", 1358522063);
-            FlowerPotId = config.Bind("5. Item IDs", "FlowerPotId", 221442949);
-            NapkinsId = config.Bind("5. Item IDs", "NapkinsId", 1528688658);
-            SharpCutleryId = config.Bind("5. Item IDs", "SharpCutleryId", 2080633647);
-            SpecialsMenuId = config.Bind("5. Item IDs", "SpecialsMenuId", 446555792);
-            CoffeeTableId = config.Bind("5. Item IDs", "CoffeeTableId", 1648733244);
-            BarTableId = config.Bind("5. Item IDs", "BarTableId", -3721951);
-            TableSimpleClothId = config.Bind("5. Item IDs", "TableSimpleClothId", -34659638);
-            MetalTableId = config.Bind("5. Item IDs", "MetalTableId", -203679687);
-            TableFancyClothId = config.Bind("5. Item IDs", "TableFancyClothId", -2019409936);
-            DiningTableId = config.Bind("5. Item IDs", "DiningTableId", 209074140);
-            RollingPinId = config.Bind("5. Item IDs", "RollingPinId", 1738351766);
-            ScrubbingBrushId = config.Bind("5. Item IDs", "ScrubbingBrushId", 624465484);
-            SharpKnifeId = config.Bind("5. Item IDs", "SharpKnifeId", 2023704259);
-            TrainersId = config.Bind("5. Item IDs", "TrainersId", 723626409);
-            WelliesId = config.Bind("5. Item IDs", "WelliesId", 1796077718);
-            WorkBootsId = config.Bind("5. Item IDs", "WorkBootsId", 230848637);
-            TrayStandId = config.Bind("5. Item IDs", "TrayStandId", 1129858275);
-            DishWasherId = config.Bind("5. Item IDs", "DishWasherId", -823922901);
-            WashBasinId = config.Bind("5. Item IDs", "WashBasinId", -214126192);
-            SinkId = config.Bind("5. Item IDs", "SinkId", 1083874952);
-            PowerSinkId = config.Bind("5. Item IDs", "PowerSinkId", 1467371088);
-            SoakingSinkId = config.Bind("5. Item IDs", "SoakingSinkId", 1860904347);
+            HeatedMixerId = config.Bind("9.1 Debug Item Ids", "HeatedMixerId", 505496455, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ConveyorMixerId = config.Bind("9.1 Debug Item Ids", "ConveyorMixerId", -1357906425, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RapidMixerId = config.Bind("9.1 Debug Item Ids", "RapidMixerId", -1440053805, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MixerId = config.Bind("9.1 Debug Item Ids", "MixerId", 1329097317, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SuppliesId = config.Bind("9.1 Debug Item Ids", "SuppliesId", -1013770159, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CompactorBinId = config.Bind("9.1 Debug Item Ids", "CompactorBinId", 2127051779, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ComposterBinId = config.Bind("9.1 Debug Item Ids", "ComposterBinId", -1632826946, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ExpandedBinId = config.Bind("9.1 Debug Item Ids", "ExpandedBinId", -1855909480, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BinId = config.Bind("9.1 Debug Item Ids", "BinId", 1551609169, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FireExtinguisherId = config.Bind("9.1 Debug Item Ids", "FireExtinguisherId", 1286554202, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FloorBufferId = config.Bind("9.1 Debug Item Ids", "FloorBufferId", 1351951642, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            KitchenFloorProtectorId = config.Bind("9.1 Debug Item Ids", "KitchenFloorProtectorId", 1765889988, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FastMopId = config.Bind("9.1 Debug Item Ids", "FastMopId", -1495393751, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            LastingMopId = config.Bind("9.1 Debug Item Ids", "LastingMopId", 1776760557, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MopId = config.Bind("9.1 Debug Item Ids", "MopId", -1993346570, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RobotBufferId = config.Bind("9.1 Debug Item Ids", "RobotBufferId", -1723340146, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RobotMopId = config.Bind("9.1 Debug Item Ids", "RobotMopId", -2147057861, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CoffeeMachineId = config.Bind("9.1 Debug Item Ids", "CoffeeMachineId", -1609758240, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ConveyorId = config.Bind("9.1 Debug Item Ids", "ConveyorId", 1973114260, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CombinerId = config.Bind("9.1 Debug Item Ids", "CombinerId", -1906799936, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SmartGrabberId = config.Bind("9.1 Debug Item Ids", "SmartGrabberId", -1238047163, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            GrabberId = config.Bind("9.1 Debug Item Ids", "GrabberId", -1029710921, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PortionerId = config.Bind("9.1 Debug Item Ids", "PortionerId", -1462602185, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CounterId = config.Bind("9.1 Debug Item Ids", "CounterId", -1248669347, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WorkstationId = config.Bind("9.1 Debug Item Ids", "WorkstationId", -1573577293, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            AffordableBinId = config.Bind("9.1 Debug Item Ids", "AffordableBinId", 620400448, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            GumballMachineId = config.Bind("9.1 Debug Item Ids", "GumballMachineId", 1830133512, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            NeonSignId = config.Bind("9.1 Debug Item Ids", "NeonSignId", 1724963734, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            NeonSign2Id = config.Bind("9.1 Debug Item Ids", "NeonSign2Id", 371247235, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CeilingLightId = config.Bind("9.1 Debug Item Ids", "CeilingLightId", 230540973, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            StockPictureId = config.Bind("9.1 Debug Item Ids", "StockPictureId", -1472471467, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DirtyFloorSignId = config.Bind("9.1 Debug Item Ids", "DirtyFloorSignId", -2108088224, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BarrelId = config.Bind("9.1 Debug Item Ids", "BarrelId", 1569358344, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BookcaseId = config.Bind("9.1 Debug Item Ids", "BookcaseId", -60168847, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DartboardId = config.Bind("9.1 Debug Item Ids", "DartboardId", -1941237931, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FireplaceId = config.Bind("9.1 Debug Item Ids", "FireplaceId", -441525746, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RugId = config.Bind("9.1 Debug Item Ids", "RugId", 591400026, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WallLightId = config.Bind("9.1 Debug Item Ids", "WallLightId", -1628995120, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CandelabraId = config.Bind("9.1 Debug Item Ids", "CandelabraId", -13481890, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ChandelierId = config.Bind("9.1 Debug Item Ids", "ChandelierId", 1233091186, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PreciousFlowerId = config.Bind("9.1 Debug Item Ids", "PreciousFlowerId", -1180623135, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ClassicalGlobeId = config.Bind("9.1 Debug Item Ids", "ClassicalGlobeId", 642318074, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PaintingId = config.Bind("9.1 Debug Item Ids", "PaintingId", -1486785449, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            Rug2Id = config.Bind("9.1 Debug Item Ids", "Rug2Id", 2076966627, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            StatueId = config.Bind("9.1 Debug Item Ids", "StatueId", -972644436, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BrandMascotId = config.Bind("9.1 Debug Item Ids", "BrandMascotId", 1551024733, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TidyPlantId = config.Bind("9.1 Debug Item Ids", "TidyPlantId", -1339970600, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CeilingLight2Id = config.Bind("9.1 Debug Item Ids", "CeilingLight2Id", 908498444, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            AbstractLampId = config.Bind("9.1 Debug Item Ids", "AbstractLampId", 744277037, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            VaseId = config.Bind("9.1 Debug Item Ids", "VaseId", 531866927, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            IndoorfountainId = config.Bind("9.1 Debug Item Ids", "IndoorfountainId", 1220439284, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CalmPaintingId = config.Bind("9.1 Debug Item Ids", "CalmPaintingId", 668664567, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PlantId = config.Bind("9.1 Debug Item Ids", "PlantId", 756364626, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DumbwaiterId = config.Bind("9.1 Debug Item Ids", "DumbwaiterId", 532998682, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            GasLimiterId = config.Bind("9.1 Debug Item Ids", "GasLimiterId", 1921027834, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            GasOverrideId = config.Bind("9.1 Debug Item Ids", "GasOverrideId", -770041014, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DangerHobId = config.Bind("9.1 Debug Item Ids", "DangerHobId", -1448690107, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SafetyHobId = config.Bind("9.1 Debug Item Ids", "SafetyHobId", 1266458729, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            HobId = config.Bind("9.1 Debug Item Ids", "HobId", 862493270, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DisplayStandId = config.Bind("9.1 Debug Item Ids", "DisplayStandId", -1813414500, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BlueprintCabinetId = config.Bind("9.1 Debug Item Ids", "BlueprintCabinetId", -571205127, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CopyingDeskId = config.Bind("9.1 Debug Item Ids", "CopyingDeskId", -729493805, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DiscountDeskId = config.Bind("9.1 Debug Item Ids", "DiscountDeskId", 1586911545, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BlueprintDeskId = config.Bind("9.1 Debug Item Ids", "BlueprintDeskId", 1446975727, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ResearchDeskId = config.Bind("9.1 Debug Item Ids", "ResearchDeskId", 1139247360, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SpecialsTerminalId = config.Bind("9.1 Debug Item Ids", "SpecialsTerminalId", -246383526, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            OrderingTerminalId = config.Bind("9.1 Debug Item Ids", "OrderingTerminalId", -1610332021, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MicrowaveId = config.Bind("9.1 Debug Item Ids", "MicrowaveId", -1311702572, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            OvenId = config.Bind("9.1 Debug Item Ids", "OvenId", -1068749602, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ApplesId = config.Bind("9.1 Debug Item Ids", "ApplesId", -905438738, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BeansId = config.Bind("9.1 Debug Item Ids", "BeansId", 1807525572, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BroccoliId = config.Bind("9.1 Debug Item Ids", "BroccoliId", -1573812073, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BurgerBunsId = config.Bind("9.1 Debug Item Ids", "BurgerBunsId", 759552160, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CarrotsId = config.Bind("9.1 Debug Item Ids", "CarrotsId", -452101383, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CheeseId = config.Bind("9.1 Debug Item Ids", "CheeseId", -117339838, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ChristmasCrackersId = config.Bind("9.1 Debug Item Ids", "ChristmasCrackersId", 303858729, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            EggsId = config.Bind("9.1 Debug Item Ids", "EggsId", 961148621, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FlourId = config.Bind("9.1 Debug Item Ids", "FlourId", 925796718, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            HotdogbunId = config.Bind("9.1 Debug Item Ids", "HotdogbunId", -1132411297, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            HotDogsId = config.Bind("9.1 Debug Item Ids", "HotDogsId", 1799769627, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            IceCreamId = config.Bind("9.1 Debug Item Ids", "IceCreamId", -1533430406, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ExtraKetchupId = config.Bind("9.1 Debug Item Ids", "ExtraKetchupId", -965827229, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            LettuceId = config.Bind("9.1 Debug Item Ids", "LettuceId", 1193867305, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MeatId = config.Bind("9.1 Debug Item Ids", "MeatId", -484165118, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MushroomsId = config.Bind("9.1 Debug Item Ids", "MushroomsId", -1097889139, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ExtraMustardId = config.Bind("9.1 Debug Item Ids", "ExtraMustardId", -117356585, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            NutsId = config.Bind("9.1 Debug Item Ids", "NutsId", 1834063794, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            OilId = config.Bind("9.1 Debug Item Ids", "OilId", -1963699221, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            OlivesId = config.Bind("9.1 Debug Item Ids", "OlivesId", -1434800013, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            OnionId = config.Bind("9.1 Debug Item Ids", "OnionId", -2042103798, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PotatoId = config.Bind("9.1 Debug Item Ids", "PotatoId", 44541785, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RiceId = config.Bind("9.1 Debug Item Ids", "RiceId", -1201769154, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ThickcutmeatId = config.Bind("9.1 Debug Item Ids", "ThickcutmeatId", -1507801323, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ThincutmeatId = config.Bind("9.1 Debug Item Ids", "ThincutmeatId", 1800865634, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TomatoId = config.Bind("9.1 Debug Item Ids", "TomatoId", -712909563, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TurkeyId = config.Bind("9.1 Debug Item Ids", "TurkeyId", -1506824829, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WineId = config.Bind("9.1 Debug Item Ids", "WineId", -1353971407, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            AutoPlaterId = config.Bind("9.1 Debug Item Ids", "AutoPlaterId", 739504637, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DishRackId = config.Bind("9.1 Debug Item Ids", "DishRackId", 434150763, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PlatesId = config.Bind("9.1 Debug Item Ids", "PlatesId", 1313469794, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PotStackId = config.Bind("9.1 Debug Item Ids", "PotStackId", -957949759, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ServingBoardsId = config.Bind("9.1 Debug Item Ids", "ServingBoardsId", 235423916, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WoksId = config.Bind("9.1 Debug Item Ids", "WoksId", 314862254, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FreezerId = config.Bind("9.1 Debug Item Ids", "FreezerId", -1857890774, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FrozenPrepStationId = config.Bind("9.1 Debug Item Ids", "FrozenPrepStationId", -759808000, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PrepStationId = config.Bind("9.1 Debug Item Ids", "PrepStationId", 1656358740, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BreadsticksId = config.Bind("9.1 Debug Item Ids", "BreadsticksId", 639111696, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CandleBoxId = config.Bind("9.1 Debug Item Ids", "CandleBoxId", 1358522063, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            FlowerPotId = config.Bind("9.1 Debug Item Ids", "FlowerPotId", 221442949, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            NapkinsId = config.Bind("9.1 Debug Item Ids", "NapkinsId", 1528688658, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SharpCutleryId = config.Bind("9.1 Debug Item Ids", "SharpCutleryId", 2080633647, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SpecialsMenuId = config.Bind("9.1 Debug Item Ids", "SpecialsMenuId", 446555792, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            CoffeeTableId = config.Bind("9.1 Debug Item Ids", "CoffeeTableId", 1648733244, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            BarTableId = config.Bind("9.1 Debug Item Ids", "BarTableId", -3721951, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TableSimpleClothId = config.Bind("9.1 Debug Item Ids", "TableSimpleClothId", -34659638, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            MetalTableId = config.Bind("9.1 Debug Item Ids", "MetalTableId", -203679687, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TableFancyClothId = config.Bind("9.1 Debug Item Ids", "TableFancyClothId", -2019409936, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DiningTableId = config.Bind("9.1 Debug Item Ids", "DiningTableId", 209074140, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            RollingPinId = config.Bind("9.1 Debug Item Ids", "RollingPinId", 1738351766, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            ScrubbingBrushId = config.Bind("9.1 Debug Item Ids", "ScrubbingBrushId", 624465484, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SharpKnifeId = config.Bind("9.1 Debug Item Ids", "SharpKnifeId", 2023704259, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TrainersId = config.Bind("9.1 Debug Item Ids", "TrainersId", 723626409, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WelliesId = config.Bind("9.1 Debug Item Ids", "WelliesId", 1796077718, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WorkBootsId = config.Bind("9.1 Debug Item Ids", "WorkBootsId", 230848637, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            TrayStandId = config.Bind("9.1 Debug Item Ids", "TrayStandId", 1129858275, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            DishWasherId = config.Bind("9.1 Debug Item Ids", "DishWasherId", -823922901, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            WashBasinId = config.Bind("9.1 Debug Item Ids", "WashBasinId", -214126192, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SinkId = config.Bind("9.1 Debug Item Ids", "SinkId", 1083874952, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            PowerSinkId = config.Bind("9.1 Debug Item Ids", "PowerSinkId", 1467371088, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+            SoakingSinkId = config.Bind("9.1 Debug Item Ids", "SoakingSinkId", 1860904347, new ConfigDescription("Set the id's used when spawning items. Hopefully this should never change.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
 
             return config;
         }
