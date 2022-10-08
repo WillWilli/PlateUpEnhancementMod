@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
+using Willi.PlateUpEnhancementMod.Config;
 using Willi.PlateUpEnhancementMod.Extensions;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
 
@@ -14,7 +15,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
         private static bool isWindowActive = false;
 
         private static int initialXPosition = Screen.width - 190;
-        private static int initialYPosition = 80;
+        private static int initialYPosition = 130;
         private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ItemSpawnerWindowHeight.Value);
 
         private static Vector2 scrollPosition;
@@ -67,7 +68,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             }
 
             var entity = entityManager.CreateEntity();
-            entityManager.AddComponentData(entity, new CCreateAppliance { ID = 1553046198 });
+            entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference.BlueprintLetter });
             entityManager.AddComponentData(entity, new CPosition(spawnPosition));
             entityManager.AddComponentData(entity, default(CLetter));
             entityManager.AddComponentData(entity, new CLetterBlueprint
