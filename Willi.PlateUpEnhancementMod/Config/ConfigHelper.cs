@@ -21,6 +21,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<float> NumberOfCustomersMultiplier { get; set; }
         public static ConfigEntry<int> MinGroupSize { get; set; }
         public static ConfigEntry<int> MaxGroupSize { get; set; }
+        public static ConfigEntry<bool> IsNoClip { get; set; }
+
 
         // Default shop
         public static ConfigEntry<int> DefaultShopNumberOfItems { get; set; }
@@ -264,7 +266,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         }
 
 
-        private static List<ItemConfig> GetAllItemsConfigs()
+        private static List<ItemConfig> GetAllItemsConfigs() 
         {
             return new List<ItemConfig>
             {
@@ -507,7 +509,8 @@ namespace Willi.PlateUpEnhancementMod.Config
             NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
             MinGroupSize = config.Bind("0. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxGroupSize = config.Bind("0. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
-            
+            IsNoClip = config.Bind("0. General", "MaxGroupSize", false, new ConfigDescription("Enable walking through walls.", null, new ConfigurationManagerAttributes { Order = 80 }));
+
             return config;
         }
 

@@ -6,11 +6,12 @@ using Unity.Entities;
 using UnityEngine;
 using Willi.PlateUpEnhancementMod.Config;
 using Willi.PlateUpEnhancementMod.Extensions;
+using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
 
-namespace Willi.PlateUpEnhancementMod.Helpers
+namespace Willi.PlateUpEnhancementMod.EventHandlers
 {
-    public static class HandleSpawnItems
+    public static class SpawnItemsHandler
     {
         private static bool isWindowActive = false;
 
@@ -60,12 +61,7 @@ namespace Willi.PlateUpEnhancementMod.Helpers
         private static void SpawnItem(int itemId, int price)
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-            if (!TryFindPlayerPosition(out Vector3 spawnPosition))
-            {
-                Log.LogWarning("Unable to find player positon, reverting to default spawn position.");
-                spawnPosition = new Vector3(-2, 0, -4); // default to static positon
-            }
+            var spawnPosition = FindPlayerPosition();
 
             var entity = entityManager.CreateEntity();
             entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference.BlueprintLetter });
@@ -80,31 +76,15 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             entityManager.AddComponentData(entity, default(CShopEntity));
         }
 
-        private static bool TryFindPlayerPosition(out Vector3 playerPosition)
+        private static Vector3 FindPlayerPosition()
         {
-            var playerView = UnityEngine.Object.FindObjectOfType<PlayerView>();
-            if (playerView != null)
+            if (PlayerHelper.TryFindPlayer(out GameObject player))
             {
-                playerPosition = playerView.transform.position;
-                return true;
+                return player.transform.position;
             }
 
-            var playerClone = GameObject.Find("Player(Clone)");
-            if (playerClone != null)
-            {
-                playerPosition = playerClone.transform.position;
-                return true;
-            }
-
-            var player = GameObject.Find("Player");
-            if (player != null)
-            {
-                playerPosition = player.transform.position;
-                return true;
-            }
-
-            playerPosition = new Vector3(-2, 0, -4); // default to static positon
-            return false;
+            Log.LogWarning("Unable to find player positon, reverting to default spawn position.");
+            return new Vector3(-2, 0, -4); // default to static positon
         }
     }
 }
