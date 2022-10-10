@@ -8,6 +8,8 @@ using Willi.PlateUpEnhancementMod.Config;
 using Willi.PlateUpEnhancementMod.Extensions;
 using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
+using System.Linq;
+
 
 namespace Willi.PlateUpEnhancementMod.EventHandlers
 {
@@ -78,9 +80,9 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
 
         private static Vector3 FindPlayerPosition()
         {
-            if (PlayerHelper.TryFindPlayer(out GameObject player))
+            if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
             {
-                return player.transform.position;
+                return players.First().transform.position;
             }
 
             Log.LogWarning("Unable to find player positon, reverting to default spawn position.");

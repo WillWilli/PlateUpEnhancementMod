@@ -1,34 +1,22 @@
-﻿using Kitchen;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Kitchen;
 using UnityEngine;
 
 namespace Willi.PlateUpEnhancementMod.Helpers
 {
     public static class PlayerHelper
     {
-        public static bool TryFindPlayer(out GameObject foundPlayer)
+        public static bool TryFindPlayers(out List<GameObject> foundPlayers)
         {
-            var playerView = GameObject.FindObjectOfType<PlayerView>();
-            if (playerView != null)
+            var playerViews = GameObject.FindObjectsOfType<PlayerView>();
+            if (playerViews.Count() > 0)
             {
-                foundPlayer = playerView.GameObject;
+                foundPlayers = playerViews.Select(p => p.GameObject).ToList();
                 return true;
             }
 
-            var playerClone = GameObject.Find("Player(Clone)");
-            if (playerClone != null)
-            {
-                foundPlayer = playerClone;
-                return true;
-            }
-
-            var player = GameObject.Find("Player");
-            if (player != null)
-            {
-                foundPlayer = player;
-                return true;
-            }
-
-            foundPlayer = null;
+            foundPlayers = null;
             return false;
         }
     }

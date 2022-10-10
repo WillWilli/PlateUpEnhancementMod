@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
 
@@ -12,12 +13,15 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
         {
             if (IsNoClip.Value != previousIsNoClip)
             {
-                if (PlayerHelper.TryFindPlayer(out GameObject player))
+                if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
                 {
-                    var playerColliders = player.GetComponents<Collider>();
-                    foreach(var collider in playerColliders)
+                    foreach(var player in players)
                     {
-                        collider.enabled = !IsNoClip.Value;
+                        var playerColliders = player.GetComponents<Collider>();
+                        foreach(var collider in playerColliders)
+                        {
+                            collider.enabled = !IsNoClip.Value;
+                        }
                     }
                 }
 
