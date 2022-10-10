@@ -38,9 +38,6 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> ItemSpawnerWindowWidth { get; set; }
         public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
 
-        // Debug
-        public static ConfigEntry<bool> LogItemIdsOnStartup;
-
         #region Item Spawn Rates Config
         private static ConfigEntry<int> HeatedMixerSpawnRate;
         private static ConfigEntry<int> ConveyorMixerSpawnRate;
@@ -225,8 +222,7 @@ namespace Willi.PlateUpEnhancementMod.Config
                 .BindGeneralConfig()
                 .BindItemSpawnerConfig()
                 .BindDefaultShopConfig()
-                .BindCustomShopConfig()
-                .BindDebugConfig();
+                .BindCustomShopConfig();
         }
 
         public static List<int> GetCustomShopItemsIdList()
@@ -510,13 +506,6 @@ namespace Willi.PlateUpEnhancementMod.Config
             MinGroupSize = config.Bind("0. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxGroupSize = config.Bind("0. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
             IsNoClip = config.Bind("0. General", "NoClip", false, new ConfigDescription("Enable walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
-
-            return config;
-        }
-
-        private static ConfigFile BindDebugConfig(this ConfigFile config)
-        {
-            LogItemIdsOnStartup = config.Bind("9. Debug", "ShouldLogItemIdsOnStartup", false, new ConfigDescription("Whether or not to log the item IDs in the console on startup", null, new ConfigurationManagerAttributes { Order = 80, IsAdvanced = true }));
 
             return config;
         }
