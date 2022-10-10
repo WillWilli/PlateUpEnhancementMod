@@ -5,16 +5,8 @@ namespace Willi.PlateUpEnhancementMod.Helpers
 {
     public static class PlayerHelper
     {
-        private static GameObject _player;
-
         public static bool TryFindPlayer(out GameObject foundPlayer)
         {
-            if (_player != null)
-            {
-                foundPlayer = _player;
-                return true;
-            }
-
             var playerView = GameObject.FindObjectOfType<PlayerView>();
             if (playerView != null)
             {
