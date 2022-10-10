@@ -28,6 +28,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> DefaultShopNumberOfItems { get; set; }
         public static ConfigEntry<bool> DefaultShopOverrideSettings { get; set; }
         public static ConfigEntry<float> DefaultShopUpgradedChance { get; set; }
+        public static ConfigEntry<int> RerollShopFixedCost { get; set; }
+
 
         // Custom shop
         public static ConfigEntry<int> CustomShopNumItemsToSpawn { get; set; }
@@ -487,6 +489,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             DefaultShopOverrideSettings = config.Bind("2. Default Shop", "OverrideDefaultShopSettings", true, new ConfigDescription("Whether or not to override the shop settings with these custom settings", null, new ConfigurationManagerAttributes { Order = 100 }));
             DefaultShopNumberOfItems = config.Bind("2. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
             DefaultShopUpgradedChance = config.Bind("2. Default Shop", "UpgradeChance", 0.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
+            RerollShopFixedCost = config.Bind("2. Default Shop", "FixRerollCost", -1, new ConfigDescription("Override the shop reroll cost, set to -1 to ignore", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
         }

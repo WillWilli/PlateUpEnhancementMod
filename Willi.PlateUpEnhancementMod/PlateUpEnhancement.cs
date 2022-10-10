@@ -18,6 +18,14 @@ namespace Willi.PlateUpEnhancementMod
             HarmonyFileLog.Enabled = true;
 
             Config.BindAllConfig();
+
+            ChangeDetector.RegisterConfigToWatch(MaxGroupSize, Test1);
+
+        }
+
+        private void Test1()
+        {
+            Log.LogError("Executing callback...");
         }
 
         private void OnGUI()
@@ -29,6 +37,7 @@ namespace Willi.PlateUpEnhancementMod
         {
             SpawnItemsHandler.Update();
             NoClipHandler.Update();
+            ChangeDetector.Update();
         }
     }
 }

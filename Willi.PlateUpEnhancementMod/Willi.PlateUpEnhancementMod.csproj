@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Config\ChangeDetector.cs" />
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
     <Compile Include="Config\ItemConfig.cs" />
