@@ -49,7 +49,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         {
             if (!config.ConfigEntry.Value.Equals(config.PreviousValue))
             {
-                Log.LogInfo($"'{config.ConfigEntry.Definition}' changed from {config.PreviousValue} to {config.ConfigEntry.Value}");
+                //Log.LogInfo($"'{config.ConfigEntry.Definition}' changed from {config.PreviousValue} to {config.ConfigEntry.Value}");
                 config.PreviousValue = config.ConfigEntry.Value;
                 config.CallbackOnChange.Invoke(config.ConfigEntry.Value);
             }

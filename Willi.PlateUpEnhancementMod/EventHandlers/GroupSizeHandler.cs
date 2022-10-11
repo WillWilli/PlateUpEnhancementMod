@@ -8,7 +8,7 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
     public static class GroupSizeHandler
     {
         private const int MaximumConfigurableGroupSize = 20;
-        private static EntityManager _entityManager;
+        private static EntityManager _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         public static void UpdateGroupSize(int _)
         {

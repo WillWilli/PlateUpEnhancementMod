@@ -37,7 +37,6 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         // Spawn Items
         public static ConfigEntry<int> ItemSpawnerWindowHeight { get; set; }
-        public static ConfigEntry<int> ItemSpawnerWindowWidth { get; set; }
         public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
 
         #region Item Spawn Rates Config

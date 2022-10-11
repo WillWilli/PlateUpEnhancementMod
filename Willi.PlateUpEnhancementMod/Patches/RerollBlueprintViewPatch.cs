@@ -14,14 +14,23 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPostfix]
         public static void UpdateData_Prefix()
         {
-            if (RerollShopFixedCost.Value < 0)
+            SetRerollCost(RerollShopFixedCost.Value);
+        }
+
+        public static void SetRerollCost(int rerollCost)
+        {
+            if (rerollCost < 0)
                 return;
 
             if (_entityManager == null)
                 _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-            var eq = _entityManager.CreateEntityQuery((ComponentType)typeof(SRerollCost));
-            eq.SetSingleton<SRerollCost>(new SRerollCost() { Cost = RerollShopFixedCost.Value });
+            if (_entityManager != null)
+            {
+                var eq = _entityManager.CreateEntityQuery((ComponentType)typeof(SRerollCost));
+                eq.SetSingleton<SRerollCost>(new SRerollCost() { Cost = rerollCost});
+            }
+
         }
     }
 }
