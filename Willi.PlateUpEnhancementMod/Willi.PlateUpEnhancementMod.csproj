@@ -32,17 +32,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Config\ChangeDetector.cs" />
+    <Compile Include="Config\ChangeDetectorRegister.cs" />
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
     <Compile Include="Config\ItemConfig.cs" />
     <Compile Include="Config\ItemId.cs" />
+    <Compile Include="EventHandlers\GroupSizeHandler.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="EventHandlers\NoClipHandler.cs" />
     <Compile Include="Helpers\PlayerHelper.cs" />
     <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\DifficultyHelpersPatch.cs" />
     <Compile Include="Patches\HandleNewShopPatch.cs" />
-    <Compile Include="Patches\ManageParametersPatch.cs" />
     <Compile Include="Patches\RerollBlueprintViewPatch.cs" />
     <Compile Include="PlateUpEnhancement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

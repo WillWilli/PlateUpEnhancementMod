@@ -19,13 +19,7 @@ namespace Willi.PlateUpEnhancementMod
 
             Config.BindAllConfig();
 
-            ChangeDetector.RegisterConfigToWatch(MaxGroupSize, Test1);
-
-        }
-
-        private void Test1()
-        {
-            Log.LogError("Executing callback...");
+            ChangeDetectorRegister.RegisterAllCallbacks();
         }
 
         private void OnGUI()
@@ -36,8 +30,7 @@ namespace Willi.PlateUpEnhancementMod
         private void Update()
         {
             SpawnItemsHandler.Update();
-            NoClipHandler.Update();
-            ChangeDetector.Update();
+            ChangeDetector.InvokeCallbacks();
         }
     }
 }

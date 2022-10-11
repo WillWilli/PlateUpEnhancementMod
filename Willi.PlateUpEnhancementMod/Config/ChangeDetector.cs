@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BepInEx.Configuration;
-using UnityEngine;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
 
 namespace Willi.PlateUpEnhancementMod.Config
@@ -10,59 +9,64 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         private static List<object> _configsToWatch = new List<object>();
 
-        public static void Update()
+        /// <summary>
+        /// Register a  BepInEx ConfigEntry to be watched and invoke a method on change. Supports bool, int, float & string.
+        /// </summary>
+        /// <param name="configEntry">The ConfigEntry to be watched</param>
+        /// <param name="callbackOnChange">The method to be called on config change, new config value passed in</param>
+        /// 
+        public static void RegisterConfigChangeCallback<T>(ConfigEntry<T> configEntry, Action<T> callbackOnChange)
         {
-            DetectChanges(_configsToWatch);
+            _configsToWatch.Add(new ConfigEntryWatcher<T>(configEntry, callbackOnChange));
         }
 
-        public static void RegisterConfigToWatch<T>(ConfigEntry<T> configEntry, Action callbackOnChange)
+        public static void InvokeCallbacks()
         {
-            _configsToWatch.Add(new ConfigChange<T>(configEntry, callbackOnChange));
-        }
-
-        private static void DetectChanges(List<object> configsToWatch)
-        {
-            foreach(var config in configsToWatch)
+            foreach(var config in _configsToWatch)
             {
                 switch(config)
                 {
-                    case ConfigChange<bool> b:
-                        DetectChangeEvent(b);
+                    case ConfigEntryWatcher<bool> configEntryWatcher:
+                        DetectChange(configEntryWatcher);
                         break;
-                    case ConfigChange<int> i:
-                        DetectChangeEvent(i);
+                    case ConfigEntryWatcher<int> configEntryWatcher:
+                        DetectChange(configEntryWatcher);
                         break;
-                    case ConfigChange<float> f:
-                        DetectChangeEvent(f);
+                    case ConfigEntryWatcher<float> configEntryWatcher:
+                        DetectChange(configEntryWatcher);
+                        break;
+                    case ConfigEntryWatcher<string> configEntryWatcher:
+                        DetectChange(configEntryWatcher);
                         break;
                     default:
-                        Log.LogError($"Cannot register config of type {config.GetType()}");
+                        Log.LogError($"Cannot register config of type {config.GetType()}, unsupported type.");
                         break;
                 }
             }
         }
 
-        private static void DetectChangeEvent<T>(ConfigChange<T> config) where T : struct
+        private static void DetectChange<T>(ConfigEntryWatcher<T> config)
         {
             if (!config.ConfigEntry.Value.Equals(config.PreviousValue))
             {
-                Log.LogError($"config changed from {config.PreviousValue} to {config.ConfigEntry.Value}");
+                Log.LogInfo($"'{config.ConfigEntry.Definition}' changed from {config.PreviousValue} to {config.ConfigEntry.Value}");
                 config.PreviousValue = config.ConfigEntry.Value;
+                config.CallbackOnChange.Invoke(config.ConfigEntry.Value);
             }
         }
 
-        private class ConfigChange<T>
+        private class ConfigEntryWatcher<T>
         {
-            public ConfigChange(ConfigEntry<T> configEntry, Action callbackOnChange)
+            public ConfigEntryWatcher(ConfigEntry<T> configEntry, Action<T> callbackOnChange)
             {
                 ConfigEntry = configEntry;
                 PreviousValue = configEntry.Value;
                 CallbackOnChange = callbackOnChange;
             }
 
-            public virtual ConfigEntry<T> ConfigEntry { get; set; }
+            public ConfigEntry<T> ConfigEntry { get; set; }
             public T PreviousValue { get; set; }
-            public Action CallbackOnChange { get; set; }
+            public Action<T> CallbackOnChange { get; set; }
         }
     }
 
