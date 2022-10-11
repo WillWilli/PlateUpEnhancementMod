@@ -11,7 +11,7 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
 
         public static void UpdateGroupSize(int _)
         {
-            if (!ValidateGroupSizes())
+            if (!ValidateGroupSizes() || !IsModEnabled.Value)
                 return;
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;

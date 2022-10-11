@@ -15,6 +15,9 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
+        // On/Off switch
+        public static ConfigEntry<bool> IsModEnabled { get; set; }
+
         // General
         public static ConfigEntry<float> MoneyRewardMultiplier { get; set; }
         public static ConfigEntry<float> PatienceMultiplier { get; set; }
@@ -26,7 +29,6 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         // Default shop
         public static ConfigEntry<int> DefaultShopNumberOfItems { get; set; }
-        public static ConfigEntry<bool> DefaultShopOverrideSettings { get; set; }
         public static ConfigEntry<float> DefaultShopUpgradedChance { get; set; }
         public static ConfigEntry<int> RerollShopFixedCost { get; set; }
 
@@ -262,7 +264,6 @@ namespace Willi.PlateUpEnhancementMod.Config
             return allItemNames;
         }
 
-
         private static List<ItemConfig> GetAllItemsConfigs() 
         {
             return new List<ItemConfig>
@@ -475,219 +476,221 @@ namespace Willi.PlateUpEnhancementMod.Config
             };
         }
 
+        private static ConfigFile BindGeneralConfig(this ConfigFile config)
+        {
+            IsModEnabled = config.Bind("0. Toggle Mod On / Off", "EnableMod", true, new ConfigDescription("Whether or not to apply this mod. Set to 'disabled' to play vanilla.", null, new ConfigurationManagerAttributes { Order = 100 }));
+
+            MoneyRewardMultiplier = config.Bind("1. General", "MoneyRewardMultiplier", 1.25f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            PatienceMultiplier = config.Bind("1. General", "PatienceMultiplier", 1f, new ConfigDescription("Multiplier for customer patience, 0 = infinite patience.", null, new ConfigurationManagerAttributes { Order = 95 }));
+            NumberOfCustomersMultiplier = config.Bind("1. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            MinGroupSize = config.Bind("1. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
+            MaxGroupSize = config.Bind("1. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
+            IsNoClip = config.Bind("1. General", "NoClip", false, new ConfigDescription("Enable walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
+
+            return config;
+        }
+
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
-            SpawnItemMenuKeyboardShortcut = config.Bind("1. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
-            ItemSpawnerWindowHeight = config.Bind("1. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            SpawnItemMenuKeyboardShortcut = config.Bind("2. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            ItemSpawnerWindowHeight = config.Bind("2. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
 
             return config;
         }
 
         private static ConfigFile BindDefaultShopConfig(this ConfigFile config)
         {
-            DefaultShopOverrideSettings = config.Bind("2. Default Shop", "OverrideDefaultShopSettings", true, new ConfigDescription("Whether or not to override the shop settings with these custom settings", null, new ConfigurationManagerAttributes { Order = 100 }));
-            DefaultShopNumberOfItems = config.Bind("2. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
-            DefaultShopUpgradedChance = config.Bind("2. Default Shop", "UpgradeChance", 0.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
-            RerollShopFixedCost = config.Bind("2. Default Shop", "FixRerollCost", -1, new ConfigDescription("Override the shop reroll cost, set to -1 to ignore", null, new ConfigurationManagerAttributes { Order = 80 }));
+            DefaultShopNumberOfItems = config.Bind("3. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
+            DefaultShopUpgradedChance = config.Bind("3. Default Shop", "UpgradeChance", 1.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
+            RerollShopFixedCost = config.Bind("3. Default Shop", "FixRerollCost", -1, new ConfigDescription("Override the shop reroll cost, set to -1 to ignore", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
         }
 
         private static ConfigFile BindCustomShopConfig(this ConfigFile config)
         {
-            CustomShopNumItemsToSpawn = config.Bind("3. Custom Shop", "NumberOfShopItemsToSpawn", 2, new ConfigDescription("The number of items to spawn in the custom shop", null, new ConfigurationManagerAttributes { Order = 100 }));
-            CustomShopPriceMultiplier = config.Bind("3. Custom Shop", "PriceMultiplier", 1f, new ConfigDescription("The price factor of items spawned in the custom shop", new AcceptableValueRange<float>(0f, 10f), new ConfigurationManagerAttributes { Order = 90 }));
+            CustomShopNumItemsToSpawn = config.Bind("4. Custom Shop", "NumberOfShopItemsToSpawn", 2, new ConfigDescription("The number of items to spawn in the custom shop", null, new ConfigurationManagerAttributes { Order = 100 }));
+            CustomShopPriceMultiplier = config.Bind("4. Custom Shop", "PriceMultiplier", 1f, new ConfigDescription("The price factor of items spawned in the custom shop", new AcceptableValueRange<float>(0f, 10f), new ConfigurationManagerAttributes { Order = 90 }));
             return config;
         }
 
-        private static ConfigFile BindGeneralConfig(this ConfigFile config)
-        {
-            MoneyRewardMultiplier = config.Bind("0. General", "MoneyRewardMultiplier", 1.25f, new ConfigDescription("Multiplier for the money rewards.", null, new ConfigurationManagerAttributes { Order = 100 }));
-            PatienceMultiplier = config.Bind("0. General", "PatienceMultiplier", 1f, new ConfigDescription("Multiplier for customer patience, 0 = infinite patience.", null, new ConfigurationManagerAttributes { Order = 95 }));
-            NumberOfCustomersMultiplier = config.Bind("0. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
-            MinGroupSize = config.Bind("0. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
-            MaxGroupSize = config.Bind("0. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
-            IsNoClip = config.Bind("0. General", "NoClip", false, new ConfigDescription("Enable walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
-
-            return config;
-        }
 
         private static ConfigFile BindItemSpawnRates(this ConfigFile config)
         {
-            HeatedMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 1);
-            ConveyorMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 1);
-            RapidMixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RapidMixerSpawnRate", 1);
-            MixerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MixerSpawnRate", 0);
-            SuppliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SuppliesSpawnRate", 0);
-            CompactorBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 1);
-            ComposterBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ComposterBinSpawnRate", 0);
-            ExpandedBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExpandedBinSpawnRate", 0);
-            BinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BinSpawnRate", 0);
-            FireExtinguisherSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FireExtinguisherSpawnRate", 0);
-            FloorBufferSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FloorBufferSpawnRate", 1);
-            KitchenFloorProtectorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 0);
-            FastMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FastMopSpawnRate", 0);
-            LastingMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "LastingMopSpawnRate", 0);
-            MopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MopSpawnRate", 0);
-            RobotBufferSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RobotBufferSpawnRate", 1);
-            RobotMopSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RobotMopSpawnRate", 0);
-            CoffeeMachineSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CoffeeMachineSpawnRate", 0);
-            ColouringBookStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ColouringBookStandSpawnRate", 0);
-            ConveyorSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ConveyorSpawnRate", 1);
-            CombinerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CombinerSpawnRate", 1);
-            SmartGrabberSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SmartGrabberSpawnRate", 1);
-            GrabberSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GrabberSpawnRate", 1);
-            PortionerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PortionerSpawnRate", 1);
-            CounterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CounterSpawnRate", 0);
-            KneadingCounterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "KneadingCounterSpawnRate", 0);
-            WorkstationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WorkstationSpawnRate", 0);
-            AffordableBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AffordableBinSpawnRate", 0);
-            GumballMachineSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GumballMachineSpawnRate", 0);
-            NeonSignSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "NeonSignSpawnRate", 0);
-            NeonSign2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "NeonSign2SpawnRate", 0);
-            CeilingLightSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CeilingLightSpawnRate", 0);
-            StockPictureSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StockPictureSpawnRate", 0);
-            DirtyFloorSignSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DirtyFloorSignSpawnRate", 0);
-            BarrelSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BarrelSpawnRate", 0);
-            BookcaseSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BookcaseSpawnRate", 0);
-            DartboardSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DartboardSpawnRate", 0);
-            FireplaceSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FireplaceSpawnRate", 0);
-            RugSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RugSpawnRate", 0);
-            WallLightSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WallLightSpawnRate", 0);
-            BannerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BannerSpawnRate", 0);
-            ChristmasTreeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ChristmasTreeSpawnRate", 0);
-            FairyLightsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FairyLightsSpawnRate", 0);
-            CandelabraSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CandelabraSpawnRate", 0);
-            ChandelierSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ChandelierSpawnRate", 0);
-            PreciousFlowerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PreciousFlowerSpawnRate", 0);
-            ClassicalGlobeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ClassicalGlobeSpawnRate", 0);
-            PaintingSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PaintingSpawnRate", 0);
-            Rug2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "Rug2SpawnRate", 0);
-            StatueSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StatueSpawnRate", 0);
-            BrandMascotSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BrandMascotSpawnRate", 0);
-            TidyPlantSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TidyPlantSpawnRate", 0);
-            CeilingLight2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CeilingLight2SpawnRate", 0);
-            AbstractLampSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AbstractLampSpawnRate", 0);
-            VaseSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "VaseSpawnRate", 0);
-            IndoorfountainSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "IndoorfountainSpawnRate", 0);
-            CalmPaintingSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CalmPaintingSpawnRate", 0);
-            PlantSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PlantSpawnRate", 0);
-            Rug3SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "Rug3SpawnRate", 0);
-            DrinkTapSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DrinkTapSpawnRate", 0);
-            WineBarrelSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WineBarrelSpawnRate", 0);
-            DumbwaiterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DumbwaiterSpawnRate", 0);
-            FryerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FryerSpawnRate", 0);
-            BeehiveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BeehiveSpawnRate", 0);
-            FlowerSpawnSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FlowerSpawnSpawnRate", 0);
-            GasLimiterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasLimiterSpawnRate", 0);
-            GasOverrideSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "GasOverrideSpawnRate", 0);
-            DangerHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DangerHobSpawnRate", 0);
-            SafetyHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 1);
-            StarterHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StarterHobSpawnRate", 0);
-            HobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HobSpawnRate", 0);
-            ManualHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ManualHobSpawnRate", 0);
-            TutorialHobSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TutorialHobSpawnRate", 0);
-            BookingsStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BookingsStandSpawnRate", 0);
-            HostingStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HostingStandSpawnRate", 0);
-            DisplayStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DisplayStandSpawnRate", 0);
-            NameplateSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "NameplateSpawnRate", 0);
-            AccountingDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AccountingDeskSpawnRate", 0);
-            BlueprintCabinetSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintCabinetSpawnRate", 0);
-            CopyingDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CopyingDeskSpawnRate", 0);
-            DiscountDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DiscountDeskSpawnRate", 0);
-            DiscountDesk2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DiscountDesk2SpawnRate", 0);
-            BlueprintDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BlueprintDeskSpawnRate", 0);
-            ResearchDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ResearchDeskSpawnRate", 0);
-            BookingDeskSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BookingDeskSpawnRate", 0);
-            ExtraLifeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExtraLifeSpawnRate", 0);
-            FastFoodTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FastFoodTerminalSpawnRate", 0);
-            SpecialsTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SpecialsTerminalSpawnRate", 0);
-            OrderingTerminalSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 0);
-            DoubleOvenSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DoubleOvenSpawnRate", 0);
-            MicrowaveSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 0);
-            OvenSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OvenSpawnRate", 0);
-            BalloonsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BalloonsSpawnRate", 0);
-            BirthdayBannerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BirthdayBannerSpawnRate", 0);
-            PianoSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PianoSpawnRate", 0);
-            ApplesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ApplesSpawnRate", 0);
-            BeansSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BeansSpawnRate", 0);
-            BroccoliSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BroccoliSpawnRate", 0);
-            BurgerBunsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BurgerBunsSpawnRate", 0);
-            PattiesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PattiesSpawnRate", 0);
-            CarrotsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CarrotsSpawnRate", 0);
-            CheeseSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CheeseSpawnRate", 0);
-            ChristmasCrackersSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ChristmasCrackersSpawnRate", 0);
-            EggsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "EggsSpawnRate", 0);
-            FishSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FishSpawnRate", 0);
-            Fish2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "Fish2SpawnRate", 0);
-            FlourSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FlourSpawnRate", 0);
-            HotdogbunSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HotdogbunSpawnRate", 0);
-            HotDogsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "HotDogsSpawnRate", 0);
-            IceCreamSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "IceCreamSpawnRate", 0);
-            ExtraKetchupSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExtraKetchupSpawnRate", 0);
-            LettuceSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "LettuceSpawnRate", 0);
-            MeatSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MeatSpawnRate", 0);
-            MushroomsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MushroomsSpawnRate", 0);
-            ExtraMustardSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ExtraMustardSpawnRate", 0);
-            NutsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "NutsSpawnRate", 0);
-            OilSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OilSpawnRate", 0);
-            OlivesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OlivesSpawnRate", 0);
-            OnionSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "OnionSpawnRate", 0);
-            PotatoSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PotatoSpawnRate", 0);
-            RiceSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RiceSpawnRate", 0);
-            ThickcutmeatSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ThickcutmeatSpawnRate", 0);
-            ThincutmeatSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ThincutmeatSpawnRate", 0);
-            TomatoSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TomatoSpawnRate", 0);
-            TurkeySpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TurkeySpawnRate", 0);
-            WineSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WineSpawnRate", 0);
-            Counter2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "Counter2SpawnRate", 0);
-            PracticeModeTriggerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PracticeModeTriggerSpawnRate", 0);
-            RerollShopTriggerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RerollShopTriggerSpawnRate", 0);
-            TutorialTriggerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TutorialTriggerSpawnRate", 0);
-            AutoPlaterSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 0);
-            DishRackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DishRackSpawnRate", 0);
-            DishRack2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DishRack2SpawnRate", 0);
-            ItemSourceReservationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ItemSourceReservationSpawnRate", 0);
-            ItemSourceSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ItemSourceSpawnRate", 0);
-            StarterPlatesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StarterPlatesSpawnRate", 0);
-            PlatesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PlatesSpawnRate", 0);
-            PotStackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PotStackSpawnRate", 0);
-            ServingBoardsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ServingBoardsSpawnRate", 0);
-            WoksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WoksSpawnRate", 0);
-            FreezerSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FreezerSpawnRate", 0);
-            FrozenPrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 0);
-            PrepStationSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PrepStationSpawnRate", 0);
-            RackSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RackSpawnRate", 0);
-            StorageCupboardSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StorageCupboardSpawnRate", 0);
-            BreadsticksSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BreadsticksSpawnRate", 0);
-            CandleBoxSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CandleBoxSpawnRate", 0);
-            FlowerPotSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "FlowerPotSpawnRate", 0);
-            NapkinsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "NapkinsSpawnRate", 0);
-            SharpCutlerySpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SharpCutlerySpawnRate", 0);
-            SpecialsMenuSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SpecialsMenuSpawnRate", 0);
-            ChairSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ChairSpawnRate", 0);
-            CoffeeTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "CoffeeTableSpawnRate", 0);
-            Chair2SpawnRate = config.Bind("4. Custom Shop Spawn Rates", "Chair2SpawnRate", 0);
-            BarTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BarTableSpawnRate", 0);
-            TableSimpleClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableSimpleClothSpawnRate", 0);
-            MetalTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "MetalTableSpawnRate", 0);
-            TableFancyClothSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TableFancyClothSpawnRate", 0);
-            DiningTableSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DiningTableSpawnRate", 0);
-            RollingPinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "RollingPinSpawnRate", 0);
-            ScrubbingBrushSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 0);
-            SharpKnifeSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SharpKnifeSpawnRate", 0);
-            TrainersSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TrainersSpawnRate", 0);
-            WelliesSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WelliesSpawnRate", 0);
-            WorkBootsSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WorkBootsSpawnRate", 0);
-            TrayStandSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "TrayStandSpawnRate", 0);
-            DishWasherSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "DishWasherSpawnRate", 0);
-            WashBasinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WashBasinSpawnRate", 0);
-            SinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SinkSpawnRate", 0);
-            PowerSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "PowerSinkSpawnRate", 0);
-            SoakingSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "SoakingSinkSpawnRate", 0);
-            StarterSinkSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "StarterSinkSpawnRate", 0);
-            WheelieBinSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "WheelieBinSpawnRate", 0);
-            BedSpawnRate = config.Bind("4. Custom Shop Spawn Rates", "BedSpawnRate", 0);
+            HeatedMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 1);
+            ConveyorMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 1);
+            RapidMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RapidMixerSpawnRate", 1);
+            MixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MixerSpawnRate", 0);
+            SuppliesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SuppliesSpawnRate", 0);
+            CompactorBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CompactorBinSpawnRate", 1);
+            ComposterBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ComposterBinSpawnRate", 0);
+            ExpandedBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ExpandedBinSpawnRate", 0);
+            BinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BinSpawnRate", 0);
+            FireExtinguisherSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FireExtinguisherSpawnRate", 0);
+            FloorBufferSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FloorBufferSpawnRate", 1);
+            KitchenFloorProtectorSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 0);
+            FastMopSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FastMopSpawnRate", 0);
+            LastingMopSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "LastingMopSpawnRate", 0);
+            MopSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MopSpawnRate", 0);
+            RobotBufferSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RobotBufferSpawnRate", 1);
+            RobotMopSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RobotMopSpawnRate", 0);
+            CoffeeMachineSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CoffeeMachineSpawnRate", 0);
+            ColouringBookStandSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ColouringBookStandSpawnRate", 0);
+            ConveyorSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ConveyorSpawnRate", 1);
+            CombinerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CombinerSpawnRate", 1);
+            SmartGrabberSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SmartGrabberSpawnRate", 1);
+            GrabberSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GrabberSpawnRate", 1);
+            PortionerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PortionerSpawnRate", 1);
+            CounterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CounterSpawnRate", 0);
+            KneadingCounterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "KneadingCounterSpawnRate", 0);
+            WorkstationSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WorkstationSpawnRate", 0);
+            AffordableBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "AffordableBinSpawnRate", 0);
+            GumballMachineSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GumballMachineSpawnRate", 0);
+            NeonSignSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "NeonSignSpawnRate", 0);
+            NeonSign2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "NeonSign2SpawnRate", 0);
+            CeilingLightSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CeilingLightSpawnRate", 0);
+            StockPictureSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StockPictureSpawnRate", 0);
+            DirtyFloorSignSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DirtyFloorSignSpawnRate", 0);
+            BarrelSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BarrelSpawnRate", 0);
+            BookcaseSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BookcaseSpawnRate", 0);
+            DartboardSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DartboardSpawnRate", 0);
+            FireplaceSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FireplaceSpawnRate", 0);
+            RugSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RugSpawnRate", 0);
+            WallLightSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WallLightSpawnRate", 0);
+            BannerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BannerSpawnRate", 0);
+            ChristmasTreeSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ChristmasTreeSpawnRate", 0);
+            FairyLightsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FairyLightsSpawnRate", 0);
+            CandelabraSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CandelabraSpawnRate", 0);
+            ChandelierSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ChandelierSpawnRate", 0);
+            PreciousFlowerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PreciousFlowerSpawnRate", 0);
+            ClassicalGlobeSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ClassicalGlobeSpawnRate", 0);
+            PaintingSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PaintingSpawnRate", 0);
+            Rug2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Rug2SpawnRate", 0);
+            StatueSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StatueSpawnRate", 0);
+            BrandMascotSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BrandMascotSpawnRate", 0);
+            TidyPlantSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TidyPlantSpawnRate", 0);
+            CeilingLight2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CeilingLight2SpawnRate", 0);
+            AbstractLampSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "AbstractLampSpawnRate", 0);
+            VaseSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "VaseSpawnRate", 0);
+            IndoorfountainSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "IndoorfountainSpawnRate", 0);
+            CalmPaintingSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CalmPaintingSpawnRate", 0);
+            PlantSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PlantSpawnRate", 0);
+            Rug3SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Rug3SpawnRate", 0);
+            DrinkTapSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DrinkTapSpawnRate", 0);
+            WineBarrelSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WineBarrelSpawnRate", 0);
+            DumbwaiterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DumbwaiterSpawnRate", 0);
+            FryerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FryerSpawnRate", 0);
+            BeehiveSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BeehiveSpawnRate", 0);
+            FlowerSpawnSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FlowerSpawnSpawnRate", 0);
+            GasLimiterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GasLimiterSpawnRate", 0);
+            GasOverrideSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GasOverrideSpawnRate", 0);
+            DangerHobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DangerHobSpawnRate", 0);
+            SafetyHobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SafetyHobSpawnRate", 1);
+            StarterHobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StarterHobSpawnRate", 0);
+            HobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HobSpawnRate", 0);
+            ManualHobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ManualHobSpawnRate", 0);
+            TutorialHobSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TutorialHobSpawnRate", 0);
+            BookingsStandSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BookingsStandSpawnRate", 0);
+            HostingStandSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HostingStandSpawnRate", 0);
+            DisplayStandSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DisplayStandSpawnRate", 0);
+            NameplateSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "NameplateSpawnRate", 0);
+            AccountingDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "AccountingDeskSpawnRate", 0);
+            BlueprintCabinetSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BlueprintCabinetSpawnRate", 0);
+            CopyingDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CopyingDeskSpawnRate", 0);
+            DiscountDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DiscountDeskSpawnRate", 0);
+            DiscountDesk2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DiscountDesk2SpawnRate", 0);
+            BlueprintDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BlueprintDeskSpawnRate", 0);
+            ResearchDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ResearchDeskSpawnRate", 0);
+            BookingDeskSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BookingDeskSpawnRate", 0);
+            ExtraLifeSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ExtraLifeSpawnRate", 0);
+            FastFoodTerminalSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FastFoodTerminalSpawnRate", 0);
+            SpecialsTerminalSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SpecialsTerminalSpawnRate", 0);
+            OrderingTerminalSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "OrderingTerminalSpawnRate", 0);
+            DoubleOvenSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DoubleOvenSpawnRate", 0);
+            MicrowaveSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MicrowaveSpawnRate", 0);
+            OvenSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "OvenSpawnRate", 0);
+            BalloonsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BalloonsSpawnRate", 0);
+            BirthdayBannerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BirthdayBannerSpawnRate", 0);
+            PianoSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PianoSpawnRate", 0);
+            ApplesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ApplesSpawnRate", 0);
+            BeansSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BeansSpawnRate", 0);
+            BroccoliSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BroccoliSpawnRate", 0);
+            BurgerBunsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BurgerBunsSpawnRate", 0);
+            PattiesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PattiesSpawnRate", 0);
+            CarrotsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CarrotsSpawnRate", 0);
+            CheeseSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CheeseSpawnRate", 0);
+            ChristmasCrackersSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ChristmasCrackersSpawnRate", 0);
+            EggsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "EggsSpawnRate", 0);
+            FishSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FishSpawnRate", 0);
+            Fish2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Fish2SpawnRate", 0);
+            FlourSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FlourSpawnRate", 0);
+            HotdogbunSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HotdogbunSpawnRate", 0);
+            HotDogsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HotDogsSpawnRate", 0);
+            IceCreamSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "IceCreamSpawnRate", 0);
+            ExtraKetchupSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ExtraKetchupSpawnRate", 0);
+            LettuceSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "LettuceSpawnRate", 0);
+            MeatSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MeatSpawnRate", 0);
+            MushroomsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MushroomsSpawnRate", 0);
+            ExtraMustardSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ExtraMustardSpawnRate", 0);
+            NutsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "NutsSpawnRate", 0);
+            OilSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "OilSpawnRate", 0);
+            OlivesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "OlivesSpawnRate", 0);
+            OnionSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "OnionSpawnRate", 0);
+            PotatoSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PotatoSpawnRate", 0);
+            RiceSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RiceSpawnRate", 0);
+            ThickcutmeatSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ThickcutmeatSpawnRate", 0);
+            ThincutmeatSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ThincutmeatSpawnRate", 0);
+            TomatoSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TomatoSpawnRate", 0);
+            TurkeySpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TurkeySpawnRate", 0);
+            WineSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WineSpawnRate", 0);
+            Counter2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Counter2SpawnRate", 0);
+            PracticeModeTriggerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PracticeModeTriggerSpawnRate", 0);
+            RerollShopTriggerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RerollShopTriggerSpawnRate", 0);
+            TutorialTriggerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TutorialTriggerSpawnRate", 0);
+            AutoPlaterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "AutoPlaterSpawnRate", 0);
+            DishRackSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DishRackSpawnRate", 0);
+            DishRack2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DishRack2SpawnRate", 0);
+            ItemSourceReservationSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ItemSourceReservationSpawnRate", 0);
+            ItemSourceSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ItemSourceSpawnRate", 0);
+            StarterPlatesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StarterPlatesSpawnRate", 0);
+            PlatesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PlatesSpawnRate", 0);
+            PotStackSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PotStackSpawnRate", 0);
+            ServingBoardsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ServingBoardsSpawnRate", 0);
+            WoksSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WoksSpawnRate", 0);
+            FreezerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FreezerSpawnRate", 0);
+            FrozenPrepStationSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FrozenPrepStationSpawnRate", 0);
+            PrepStationSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PrepStationSpawnRate", 0);
+            RackSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RackSpawnRate", 0);
+            StorageCupboardSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StorageCupboardSpawnRate", 0);
+            BreadsticksSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BreadsticksSpawnRate", 0);
+            CandleBoxSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CandleBoxSpawnRate", 0);
+            FlowerPotSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FlowerPotSpawnRate", 0);
+            NapkinsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "NapkinsSpawnRate", 0);
+            SharpCutlerySpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SharpCutlerySpawnRate", 0);
+            SpecialsMenuSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SpecialsMenuSpawnRate", 0);
+            ChairSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ChairSpawnRate", 0);
+            CoffeeTableSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CoffeeTableSpawnRate", 0);
+            Chair2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Chair2SpawnRate", 0);
+            BarTableSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BarTableSpawnRate", 0);
+            TableSimpleClothSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TableSimpleClothSpawnRate", 0);
+            MetalTableSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MetalTableSpawnRate", 0);
+            TableFancyClothSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TableFancyClothSpawnRate", 0);
+            DiningTableSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DiningTableSpawnRate", 0);
+            RollingPinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RollingPinSpawnRate", 0);
+            ScrubbingBrushSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ScrubbingBrushSpawnRate", 0);
+            SharpKnifeSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SharpKnifeSpawnRate", 0);
+            TrainersSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TrainersSpawnRate", 0);
+            WelliesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WelliesSpawnRate", 0);
+            WorkBootsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WorkBootsSpawnRate", 0);
+            TrayStandSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TrayStandSpawnRate", 0);
+            DishWasherSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "DishWasherSpawnRate", 0);
+            WashBasinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WashBasinSpawnRate", 0);
+            SinkSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SinkSpawnRate", 0);
+            PowerSinkSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PowerSinkSpawnRate", 0);
+            SoakingSinkSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SoakingSinkSpawnRate", 0);
+            StarterSinkSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StarterSinkSpawnRate", 0);
+            WheelieBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WheelieBinSpawnRate", 0);
+            BedSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BedSpawnRate", 0);
 
             return config;
         }

@@ -17,7 +17,7 @@ namespace Willi.PlateUpEnhancementMod.Patches
 
         public static void SetRerollCost(int rerollCost)
         {
-            if (rerollCost < 0)
+            if (rerollCost < 0 || !IsModEnabled.Value)
                 return;
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
