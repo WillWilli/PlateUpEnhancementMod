@@ -39,7 +39,7 @@ namespace Willi.PlateUpEnhancementMod.Config
                         DetectChange(configEntryWatcher);
                         break;
                     default:
-                        Log.LogError($"Cannot register config of type {config.GetType()}, unsupported type.");
+                        Log.LogError($"Registered type of {config.GetType()} is not supported.");
                         break;
                 }
             }

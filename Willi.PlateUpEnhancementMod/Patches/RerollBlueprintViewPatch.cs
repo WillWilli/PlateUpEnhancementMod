@@ -8,8 +8,6 @@ namespace Willi.PlateUpEnhancementMod.Patches
     [HarmonyPatch(typeof(RerollBlueprintView))]
     public static class RerollBlueprintViewPatch
     {
-        private static EntityManager _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
         [HarmonyPatch("UpdateData")]
         [HarmonyPostfix]
         public static void UpdateData_Prefix()
@@ -22,15 +20,12 @@ namespace Willi.PlateUpEnhancementMod.Patches
             if (rerollCost < 0)
                 return;
 
-            if (_entityManager == null)
-                _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-            if (_entityManager != null)
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            var rerollCostEQ = entityManager.CreateEntityQuery((ComponentType)typeof(SRerollCost));
+            if (!rerollCostEQ.IsEmpty)
             {
-                var eq = _entityManager.CreateEntityQuery((ComponentType)typeof(SRerollCost));
-                eq.SetSingleton<SRerollCost>(new SRerollCost() { Cost = rerollCost});
+                rerollCostEQ.SetSingleton<SRerollCost>(new SRerollCost() { Cost = rerollCost});
             }
-
         }
     }
 }

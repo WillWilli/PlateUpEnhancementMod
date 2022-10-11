@@ -8,20 +8,17 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
     public static class GroupSizeHandler
     {
         private const int MaximumConfigurableGroupSize = 20;
-        private static EntityManager _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         public static void UpdateGroupSize(int _)
         {
             if (!ValidateGroupSizes())
                 return;
 
-            if (_entityManager == null)
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            var kitchenParametersEQ = entityManager.CreateEntityQuery(typeof(SKitchenParameters));
+
+            if (!kitchenParametersEQ.IsEmpty)
             {
-                _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            }
-            if (_entityManager != null)
-            {
-                var kitchenParametersEQ = _entityManager.CreateEntityQuery(typeof(SKitchenParameters));
                 var newKitchenParameters = kitchenParametersEQ.GetSingleton<SKitchenParameters>();
                 newKitchenParameters.Parameters.MaximumGroupSize = MaxGroupSize.Value;
                 newKitchenParameters.Parameters.MinimumGroupSize = MinGroupSize.Value;

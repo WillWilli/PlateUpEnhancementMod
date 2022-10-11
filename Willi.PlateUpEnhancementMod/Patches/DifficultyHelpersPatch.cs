@@ -11,7 +11,6 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPrefix]
         public static bool TotalShopCountPrefix(ref int __result)
         {
-
             if (DefaultShopOverrideSettings.Value)
             {
                 __result = DefaultShopNumberOfItems.Value;
