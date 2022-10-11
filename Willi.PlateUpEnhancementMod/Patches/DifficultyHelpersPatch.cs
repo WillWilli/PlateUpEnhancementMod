@@ -11,8 +11,7 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPrefix]
         public static bool TotalShopCountPrefix(ref int __result)
         {
-
-            if (DefaultShopOverrideSettings.Value)
+            if (IsModEnabled.Value)
             {
                 __result = DefaultShopNumberOfItems.Value;
                 return false;
@@ -25,16 +24,19 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPostfix]
         public static void UpgradedShopChance_Postfix(ref float __result, int day)
         {
-            if (DefaultShopOverrideSettings.Value)
-            {
-                __result = DefaultShopUpgradedChance.Value;
-            }
+            if (!IsModEnabled.Value)
+                return;
+
+            __result = DefaultShopUpgradedChance.Value;
         }
 
         [HarmonyPatch("MoneyRewardPlayerModifier")]
         [HarmonyPostfix]
         public static void MoneyRewardPlayerModifier_Postfix(ref float __result, int player_count)
         {
+            if (!IsModEnabled.Value)
+                return;
+
             __result *= MoneyRewardMultiplier.Value;
         }
 
@@ -42,6 +44,9 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyPostfix]
         public static void PatiencePlayerCountModifier_Postfix(ref float __result, int player_count)
         {
+            if (!IsModEnabled.Value)
+                return;
+
             __result *= PatienceMultiplier.Value;
         }
     }

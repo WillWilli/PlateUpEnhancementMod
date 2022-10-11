@@ -4,17 +4,21 @@ using System;
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
+using Willi.PlateUpEnhancementMod.Config;
 using Willi.PlateUpEnhancementMod.Extensions;
+using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
+using System.Linq;
 
-namespace Willi.PlateUpEnhancementMod.Helpers
+
+namespace Willi.PlateUpEnhancementMod.EventHandlers
 {
-    public static class HandleSpawnItems
+    public static class SpawnItemsHandler
     {
         private static bool isWindowActive = false;
 
         private static int initialXPosition = Screen.width - 190;
-        private static int initialYPosition = 80;
+        private static int initialYPosition = 130;
         private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ItemSpawnerWindowHeight.Value);
 
         private static Vector2 scrollPosition;
@@ -59,15 +63,10 @@ namespace Willi.PlateUpEnhancementMod.Helpers
         private static void SpawnItem(int itemId, int price)
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-            if (!TryFindPlayerPosition(out Vector3 spawnPosition))
-            {
-                Log.LogWarning("Unable to find player positon, reverting to default spawn position.");
-                spawnPosition = new Vector3(-2, 0, -4); // default to static positon
-            }
+            var spawnPosition = FindPlayerPosition();
 
             var entity = entityManager.CreateEntity();
-            entityManager.AddComponentData(entity, new CCreateAppliance { ID = 1553046198 });
+            entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference.BlueprintLetter });
             entityManager.AddComponentData(entity, new CPosition(spawnPosition));
             entityManager.AddComponentData(entity, default(CLetter));
             entityManager.AddComponentData(entity, new CLetterBlueprint
@@ -79,31 +78,15 @@ namespace Willi.PlateUpEnhancementMod.Helpers
             entityManager.AddComponentData(entity, default(CShopEntity));
         }
 
-        private static bool TryFindPlayerPosition(out Vector3 playerPosition)
+        private static Vector3 FindPlayerPosition()
         {
-            var playerView = UnityEngine.Object.FindObjectOfType<PlayerView>();
-            if (playerView != null)
+            if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
             {
-                playerPosition = playerView.transform.position;
-                return true;
+                return players.First().transform.position;
             }
 
-            var playerClone = GameObject.Find("Player(Clone)");
-            if (playerClone != null)
-            {
-                playerPosition = playerClone.transform.position;
-                return true;
-            }
-
-            var player = GameObject.Find("Player");
-            if (player != null)
-            {
-                playerPosition = player.transform.position;
-                return true;
-            }
-
-            playerPosition = new Vector3(-2, 0, -4); // default to static positon
-            return false;
+            Log.LogWarning("Unable to find player positon, reverting to default spawn position.");
+            return new Vector3(-2, 0, -4); // default to static positon
         }
     }
 }

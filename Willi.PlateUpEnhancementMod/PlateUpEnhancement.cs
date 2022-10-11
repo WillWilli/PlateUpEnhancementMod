@@ -3,8 +3,8 @@ using HarmonyLib;
 using System.Reflection;
 using HarmonyLib.Tools;
 using Willi.PlateUpEnhancementMod.Config;
-using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
+using Willi.PlateUpEnhancementMod.EventHandlers;
 
 namespace Willi.PlateUpEnhancementMod
 {
@@ -18,16 +18,19 @@ namespace Willi.PlateUpEnhancementMod
             HarmonyFileLog.Enabled = true;
 
             Config.BindAllConfig();
+
+            ChangeDetectorRegister.RegisterAllCallbacks();
         }
 
         private void OnGUI()
         {
-            HandleSpawnItems.OnGui();
+            SpawnItemsHandler.OnGui();
         }
 
         private void Update()
         {
-            HandleSpawnItems.Update();
+            SpawnItemsHandler.Update();
+            ChangeDetector.InvokeCallbacks();
         }
     }
 }

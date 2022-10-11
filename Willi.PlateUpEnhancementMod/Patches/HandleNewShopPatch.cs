@@ -27,6 +27,9 @@ namespace Willi.PlateUpEnhancementMod.Patches
             ref EntityQuery ___ShopOptions
             )
         {
+            if (!IsModEnabled.Value)
+                return true;
+
             if (___Blockers.IsEmpty && (!___NewShops.IsEmpty || !___NewDecorShops.IsEmpty))
             {
                 int placedTile = 0;
