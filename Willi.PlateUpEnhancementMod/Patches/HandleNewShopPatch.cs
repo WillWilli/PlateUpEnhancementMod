@@ -15,7 +15,7 @@ namespace Willi.PlateUpEnhancementMod.Patches
         [HarmonyReversePatch]
         [HarmonyPatch(typeof(GenericSystemBase), "GetPostTiles")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        static List<Vector3> GetPostTilesDummy(HandleNewShop instance) { return null; }
+        static List<Vector3> GetPostTilesDummy(HandleNewShop instance, bool force_inside) { return null; }
 
         [HarmonyPatch(typeof(HandleNewShop), "OnUpdate")]
         public static bool Prefix(
@@ -33,7 +33,7 @@ namespace Willi.PlateUpEnhancementMod.Patches
             if (___Blockers.IsEmpty && (!___NewShops.IsEmpty || !___NewDecorShops.IsEmpty))
             {
                 int placedTile = 0;
-                var floorTiles = GetPostTilesDummy(__instance);
+                var floorTiles = GetPostTilesDummy(__instance, false);
 
                 var idList = GetCustomShopItemsIdList();
 
