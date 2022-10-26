@@ -11,7 +11,7 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.4.1";
+        public const string ModVersion = "0.4.2";
 
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
@@ -216,6 +216,18 @@ namespace Willi.PlateUpEnhancementMod.Config
         private static ConfigEntry<int> StarterSinkSpawnRate;
         private static ConfigEntry<int> WheelieBinSpawnRate;
         private static ConfigEntry<int> BedSpawnRate;
+
+        private static ConfigEntry<int> GrabberRotatingSpawnRate;
+        private static ConfigEntry<int> TeleporterSpawnRate;
+        private static ConfigEntry<int> CobwebsSpawnRate;
+        private static ConfigEntry<int> GhostStatueSpawnRate;
+        private static ConfigEntry<int> PumpkinSpawnRate;
+        private static ConfigEntry<int> SkeletonSpawnRate;
+        private static ConfigEntry<int> CornSpawnRate;
+        private static ConfigEntry<int> BananasSpawnRate;
+        private static ConfigEntry<int> StrawberriesSpawnRate;
+        private static ConfigEntry<int> Pumpkin2SpawnRate;
+        private static ConfigEntry<int> UpgradeKitSpawnRate;
         #endregion
 
         public static void BindAllConfig(this ConfigFile config)
@@ -473,6 +485,20 @@ namespace Willi.PlateUpEnhancementMod.Config
                 new ItemConfig("StarterSink", ItemIdReference.StarterSink, StarterSinkSpawnRate.Value),
                 new ItemConfig("WheelieBin", ItemIdReference.WheelieBin, WheelieBinSpawnRate.Value),
                 new ItemConfig("Bed", ItemIdReference.Bed, BedSpawnRate.Value),
+
+                // Halloween update
+                new ItemConfig("GrabberRotating", ItemIdReference.GrabberRotating, GrabberRotatingSpawnRate.Value),
+                new ItemConfig("Teleporter", ItemIdReference.Teleporter, TeleporterSpawnRate.Value),
+                new ItemConfig("Cobwebs", ItemIdReference.Cobwebs, CobwebsSpawnRate.Value),
+                new ItemConfig("GhostStatue", ItemIdReference.GhostStatue, GhostStatueSpawnRate.Value),
+                new ItemConfig("Pumpkin", ItemIdReference.Pumpkin, PumpkinSpawnRate.Value),
+                new ItemConfig("Skeleton", ItemIdReference.Skeleton, SkeletonSpawnRate.Value),
+                new ItemConfig("Corn", ItemIdReference.Corn, CornSpawnRate.Value),
+                new ItemConfig("Bananas", ItemIdReference.Bananas, BananasSpawnRate.Value),
+                new ItemConfig("Strawberries", ItemIdReference.Strawberries, StrawberriesSpawnRate.Value),
+                new ItemConfig("Pumpkin2", ItemIdReference.Pumpkin2, Pumpkin2SpawnRate.Value),
+                new ItemConfig("UpgradeKit", ItemIdReference.UpgradeKit, UpgradeKitSpawnRate.Value),
+
             };
         }
 
@@ -691,6 +717,19 @@ namespace Willi.PlateUpEnhancementMod.Config
             StarterSinkSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StarterSinkSpawnRate", 0);
             WheelieBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WheelieBinSpawnRate", 0);
             BedSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BedSpawnRate", 0);
+            //Halloween update
+            GrabberRotatingSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GrabberRotatingSpawnRate", 1);
+            TeleporterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TeleporterSpawnRate", 1);
+            CobwebsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CobwebsSpawnRate", 0);
+            GhostStatueSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GhostStatueSpawnRate", 0);
+            PumpkinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PumpkinSpawnRate", 0);
+            SkeletonSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SkeletonSpawnRate", 0);
+            CornSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CornSpawnRate", 0);
+            BananasSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BananasSpawnRate", 0);
+            StrawberriesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StrawberriesSpawnRate", 0);
+            Pumpkin2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Pumpkin2SpawnRate", 0);
+            UpgradeKitSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "UpgradeKitSpawnRate", 1);
+
 
             return config;
         }
