@@ -209,5 +209,18 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int StarterSink = -266993023;
         public static int WheelieBin = 2073091578;
         public static int Bed = -469149429;
+
+        // Added in v1.0.6 Halloween update 25/10/2022
+        public static int GrabberRotating = -331651461;
+        public static int Teleporter = 459840623;
+        public static int Cobwebs = -636342486;
+        public static int GhostStatue = -1318523640;
+        public static int Pumpkin = -621580281;
+        public static int Skeleton = 115181910;
+        public static int Corn = 976574457;
+        public static int Bananas = 235355384;
+        public static int Strawberries = -699333907;
+        public static int Pumpkin2 = -1055654549;
+        public static int UpgradeKit = -2682711;
     }
 }
