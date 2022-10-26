@@ -6,6 +6,8 @@
 #Custom
 [Ll]ibs/
 *.ps1
+*.js
+.idea/
 
 # User-specific files
 *.rsuser
@@ -16,7 +18,6 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
 # Mono auto generated files
 mono_crash.*
 
