@@ -36,7 +36,7 @@
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
     <Compile Include="Config\ItemConfig.cs" />
-    <Compile Include="Config\ItemId.cs" />
+    <Compile Include="Config\ItemIdReference.cs" />
     <Compile Include="EventHandlers\GroupSizeHandler.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="EventHandlers\NoClipHandler.cs" />
