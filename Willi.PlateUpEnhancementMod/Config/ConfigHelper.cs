@@ -301,21 +301,23 @@ namespace Willi.PlateUpEnhancementMod.Config
             var spawnRateProperties = typeof(ConfigHelper).GetFields()
                 .Where(property => property.Name.Contains("SpawnRate"));
 
-            foreach (var spawnRateProperty in spawnRateProperties)
+            foreach (var itemConfig in itemConfigs)
             {
-                var spawnRateValue = (ConfigEntry<int>)spawnRateProperty.GetValue(typeof(ConfigEntry<int>));
                 try
                 {
-                    var itemConfigMatchingSpawnRate = itemConfigs.First((item) => spawnRateProperty.Name.Contains(item.Name));
-                    itemConfigMatchingSpawnRate.SpawnRate = spawnRateValue.Value;
+                    var spawnRateForConfig = spawnRateProperties.First((spawnRate) =>
+                        spawnRate.Name == itemConfig.Name + "SpawnRate");
+
+                    var spawnRateValue = (ConfigEntry<int>)spawnRateForConfig.GetValue(typeof(ConfigEntry<int>));
+                    itemConfig.SpawnRate = spawnRateValue.Value;
                 }
-                catch(InvalidOperationException ex)
+                catch (InvalidOperationException)
                 {
-                    Log.LogWarning($"No spawn rate configuration found for item ");
+                    Log.LogWarning($"No custom spawn rate found for item '{itemConfig.Name}'");
                 }
             }
 
-            return itemConfigs;
+            return itemConfigs.WithSpawnRates();
         }
 
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
