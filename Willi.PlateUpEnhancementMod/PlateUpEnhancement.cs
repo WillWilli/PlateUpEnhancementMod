@@ -26,7 +26,7 @@ namespace Willi.PlateUpEnhancementMod
         {
             SpawnItemsHandler.OnGui();
         }
-        private void SetNoClipState()
+        private void SetNoClip()
         {
             NoClipHandler.SetNoClipState();
         }
