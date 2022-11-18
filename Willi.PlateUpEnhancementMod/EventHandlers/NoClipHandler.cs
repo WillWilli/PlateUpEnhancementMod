@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Kitchen;
+using System.Collections.Generic;
 using UnityEngine;
 using Willi.PlateUpEnhancementMod.Helpers;
 using static Willi.PlateUpEnhancementMod.Config.ConfigHelper;
@@ -20,9 +21,10 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
                     {
                         collider.enabled = !isNoClip;
                     }
+                    var playerView = player.GetComponent<PlayerView>();
+                    playerView.Speed = isNoClip ? playerView.Speed = 5000f : playerView.Speed = 3000f;
                 }
             }
-            
         }
         public static void Update()
         {
