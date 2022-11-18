@@ -22,7 +22,7 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
                         collider.enabled = !isNoClip;
                     }
                     var playerView = player.GetComponent<PlayerView>();
-                    playerView.Speed = isNoClip ? playerView.Speed = 5000f : playerView.Speed = 3000f;
+                    playerView.Speed = isNoClip ? playerView.Speed = 3000f * SpeedMultiplier.Value : playerView.Speed = 3000f;
                 }
             }
         }
