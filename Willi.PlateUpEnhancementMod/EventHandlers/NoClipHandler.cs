@@ -11,20 +11,18 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
         private static bool isNoClip = false;
         public static void SetNoClipState()
         {
-            if (isNoClip)
+            if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
             {
-                if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
+                foreach (var player in players)
                 {
-                    foreach (var player in players)
+                    var playerColliders = player.GetComponents<Collider>();
+                    foreach (var collider in playerColliders)
                     {
-                        var playerColliders = player.GetComponents<Collider>();
-                        foreach (var collider in playerColliders)
-                        {
-                            collider.enabled = !isNoClip;
-                        }
+                        collider.enabled = !isNoClip;
                     }
                 }
             }
+            
         }
         public static void Update()
         {
