@@ -24,7 +24,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<float> NumberOfCustomersMultiplier { get; set; }
         public static ConfigEntry<int> MinGroupSize { get; set; }
         public static ConfigEntry<int> MaxGroupSize { get; set; }
-        public static ConfigEntry<bool> IsNoClip { get; set; }
+        public static ConfigEntry<KeyboardShortcut> NoClipKeyboardShortcut { get; set; }
 
 
         // Default shop
@@ -40,6 +40,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         // Spawn Items
         public static ConfigEntry<int> ItemSpawnerWindowHeight { get; set; }
         public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
+
 
         #region Item Spawn Rates Config
         private static ConfigEntry<int> HeatedMixerSpawnRate;
@@ -511,7 +512,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             NumberOfCustomersMultiplier = config.Bind("1. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
             MinGroupSize = config.Bind("1. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxGroupSize = config.Bind("1. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
-            IsNoClip = config.Bind("1. General", "NoClip", false, new ConfigDescription("Enable walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
+            NoClipKeyboardShortcut = config.Bind("1. General", "NoClip", new KeyboardShortcut(KeyCode.N), new ConfigDescription("Toggle walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
         }

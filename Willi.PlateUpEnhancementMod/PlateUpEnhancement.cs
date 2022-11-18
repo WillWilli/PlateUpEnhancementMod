@@ -26,10 +26,15 @@ namespace Willi.PlateUpEnhancementMod
         {
             SpawnItemsHandler.OnGui();
         }
+        private void SetNoClipState()
+        {
+            NoClipHandler.SetNoClipState();
+        }
 
         private void Update()
         {
             SpawnItemsHandler.Update();
+            NoClipHandler.Update();
             ChangeDetector.InvokeCallbacks();
         }
     }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Willi.PlateUpEnhancementMod</RootNamespace>
     <AssemblyName>Willi.PlateUpEnhancementMod</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,61 +55,61 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>libs\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>libs\BepInEx.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.Common">
-      <HintPath>libs\Kitchen.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.Common.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.FranchiseBuilderMode">
-      <HintPath>libs\Kitchen.FranchiseBuilderMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.FranchiseBuilderMode.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.FranchiseMode">
-      <HintPath>libs\Kitchen.FranchiseMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.FranchiseMode.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.GameData">
-      <HintPath>libs\Kitchen.GameData.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.GameData.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.Layouts">
-      <HintPath>libs\Kitchen.Layouts.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.Layouts.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.Networking">
-      <HintPath>libs\Kitchen.Networking.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.Networking.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.Persistence">
-      <HintPath>libs\Kitchen.Persistence.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.Persistence.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.PostgameMode">
-      <HintPath>libs\Kitchen.PostgameMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.PostgameMode.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.ResearchMode">
-      <HintPath>libs\Kitchen.ResearchMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.ResearchMode.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.RestaurantMode">
-      <HintPath>libs\Kitchen.RestaurantMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.RestaurantMode.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.TutorialMode">
-      <HintPath>libs\Kitchen.TutorialMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Kitchen.TutorialMode.dll</HintPath>
     </Reference>
     <Reference Include="KitchenMode">
-      <HintPath>libs\KitchenMode.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\KitchenMode.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Entities">
-      <HintPath>libs\Unity.Entities.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\Unity.Entities.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>libs\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>libs\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\My Mods\Libraries\enhancement\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
