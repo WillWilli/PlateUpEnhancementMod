@@ -35,7 +35,7 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
             {
                 defaultPlayerSpeed = playerView.Speed;
             }
-            playerView.Speed = isNoClip ? defaultPlayerSpeed * SpeedMultiplier.Value : defaultPlayerSpeed;
+            playerView.Speed = (float)(isNoClip ? defaultPlayerSpeed * SpeedMultiplier.Value : defaultPlayerSpeed);
         }
 
         public static void Update()
