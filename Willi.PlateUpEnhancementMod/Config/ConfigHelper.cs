@@ -11,7 +11,7 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.4.2";
+        public const string ModVersion = "0.4.3";
 
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
