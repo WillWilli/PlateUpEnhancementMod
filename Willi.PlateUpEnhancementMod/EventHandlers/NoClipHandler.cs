@@ -11,7 +11,17 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
     {
         private static bool isNoClip = false;
         private static float? defaultPlayerSpeed = null;
-        public static void SetNoClipState()
+
+        public static void Update()
+        {
+            if (NoClipKeyboardShortcut.Value.IsDown())
+            {
+                isNoClip = !isNoClip;
+                ToggleNoClip();
+            }
+        }
+
+        private static void ToggleNoClip()
         {
             if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
             {
@@ -31,19 +41,12 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
         private static void SetPlayerSpeed(GameObject player)
         {
             var playerView = player.GetComponent<PlayerView>();
+
             if (defaultPlayerSpeed == null)
             {
                 defaultPlayerSpeed = playerView.Speed;
             }
             playerView.Speed = (float)(isNoClip ? defaultPlayerSpeed * SpeedMultiplier.Value : defaultPlayerSpeed);
-        }
-
-        public static void Update()
-        {
-            if (NoClipKeyboardShortcut.Value.IsDown())
-            {
-                isNoClip = !isNoClip;
-            }
         }
     }
 }

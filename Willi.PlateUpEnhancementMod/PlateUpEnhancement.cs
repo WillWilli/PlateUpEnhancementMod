@@ -29,7 +29,6 @@ namespace Willi.PlateUpEnhancementMod
 
         private void Update()
         {
-            NoClipHandler.SetNoClipState();
             SpawnItemsHandler.Update();
             NoClipHandler.Update();
             ChangeDetector.InvokeCallbacks();

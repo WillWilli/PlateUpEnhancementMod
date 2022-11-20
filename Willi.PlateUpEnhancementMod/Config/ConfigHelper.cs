@@ -520,7 +520,7 @@ namespace Willi.PlateUpEnhancementMod.Config
 
         private static ConfigFile BindNoClip(this ConfigFile config)
         {
-            NoClipKeyboardShortcut = config.Bind("2. NoClip", "NoClip", new KeyboardShortcut(KeyCode.N), new ConfigDescription("Toggle walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            NoClipKeyboardShortcut = config.Bind("2. NoClip", "NoClip", new KeyboardShortcut(KeyCode.N), new ConfigDescription("Toggle walking through walls & objects (stand still to toggle).", null, new ConfigurationManagerAttributes { Order = 90 }));
             SpeedMultiplier = config.Bind("2. NoClip", "NoClipSpeedMultiplier", 1.25f, new ConfigDescription("Multiplier for the walk speed while NoClip is active.", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
