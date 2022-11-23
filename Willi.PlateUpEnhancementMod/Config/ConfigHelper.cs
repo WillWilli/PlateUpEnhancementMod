@@ -11,7 +11,7 @@ namespace Willi.PlateUpEnhancementMod.Config
     {
         public const string ModGuid = "Willi.PlateUpEnhancementMod";
         public const string ModName = "Shop & Item Enhancements by Willi";
-        public const string ModVersion = "0.4.2";
+        public const string ModVersion = "0.4.3";
 
         public readonly static ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource(ModGuid);
 
@@ -24,7 +24,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<float> NumberOfCustomersMultiplier { get; set; }
         public static ConfigEntry<int> MinGroupSize { get; set; }
         public static ConfigEntry<int> MaxGroupSize { get; set; }
-        public static ConfigEntry<bool> IsNoClip { get; set; }
+        public static ConfigEntry<KeyboardShortcut> NoClipKeyboardShortcut { get; set; }
+        public static ConfigEntry<float> SpeedMultiplier { get; set; }
 
 
         // Default shop
@@ -40,6 +41,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         // Spawn Items
         public static ConfigEntry<int> ItemSpawnerWindowHeight { get; set; }
         public static ConfigEntry<KeyboardShortcut> SpawnItemMenuKeyboardShortcut { get; set; }
+
 
         #region Item Spawn Rates Config
         public static ConfigEntry<int> HeatedMixerSpawnRate;
@@ -235,6 +237,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             config
                 .BindItemSpawnRates()
                 .BindGeneralConfig()
+                .BindNoClip()
                 .BindItemSpawnerConfig()
                 .BindDefaultShopConfig()
                 .BindCustomShopConfig();
@@ -329,39 +332,46 @@ namespace Willi.PlateUpEnhancementMod.Config
             NumberOfCustomersMultiplier = config.Bind("1. General", "NumberOfCustomersMultiplier", 1f, new ConfigDescription("Multiplier for the number of customers to arrive each day.", null, new ConfigurationManagerAttributes { Order = 90 }));
             MinGroupSize = config.Bind("1. General", "MinGroupSize", -1, new ConfigDescription("Override the minimum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 89 }));
             MaxGroupSize = config.Bind("1. General", "MaxGroupSize", -1, new ConfigDescription("Override the maximum table size (Max 20), invalid settings will be ignored.", null, new ConfigurationManagerAttributes { Order = 88 }));
-            IsNoClip = config.Bind("1. General", "NoClip", false, new ConfigDescription("Enable walking through walls & objects.", null, new ConfigurationManagerAttributes { Order = 80 }));
+
+            return config;
+        }
+
+        private static ConfigFile BindNoClip(this ConfigFile config)
+        {
+            NoClipKeyboardShortcut = config.Bind("2. NoClip", "NoClip", new KeyboardShortcut(KeyCode.N), new ConfigDescription("Toggle walking through walls & objects (stand still to toggle).", null, new ConfigurationManagerAttributes { Order = 90 }));
+            SpeedMultiplier = config.Bind("2. NoClip", "NoClipSpeedMultiplier", 1.25f, new ConfigDescription("Multiplier for the walk speed while NoClip is active.", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
         }
 
         private static ConfigFile BindItemSpawnerConfig(this ConfigFile config)
         {
-            SpawnItemMenuKeyboardShortcut = config.Bind("2. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
-            ItemSpawnerWindowHeight = config.Bind("2. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
+            SpawnItemMenuKeyboardShortcut = config.Bind("3. Item spawner window", "KeyboardShortcutToOpenWindow", new KeyboardShortcut(KeyCode.F2), new ConfigDescription("Use this keyboard shortcut to show/hide the item spawner window.", null, new ConfigurationManagerAttributes { Order = 100 }));
+            ItemSpawnerWindowHeight = config.Bind("3. Item spawner window", "WindowHeight", 400, new ConfigDescription("The height of the draggable window.", null, new ConfigurationManagerAttributes { Order = 90 }));
 
             return config;
         }
 
         private static ConfigFile BindDefaultShopConfig(this ConfigFile config)
         {
-            DefaultShopNumberOfItems = config.Bind("3. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
-            DefaultShopUpgradedChance = config.Bind("3. Default Shop", "UpgradeChance", 1.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
-            RerollShopFixedCost = config.Bind("3. Default Shop", "FixRerollCost", -1, new ConfigDescription("Override the shop reroll cost, set to -1 to ignore", null, new ConfigurationManagerAttributes { Order = 80 }));
+            DefaultShopNumberOfItems = config.Bind("4. Default Shop", "NumberOfItemsToSpawn", 4, new ConfigDescription("The numbers of items to spawn in each shop", null, new ConfigurationManagerAttributes { Order = 90 }));
+            DefaultShopUpgradedChance = config.Bind("4. Default Shop", "UpgradeChance", 1.5f, new ConfigDescription("The chance of getting an upgraded shop", new AcceptableValueRange<float>(0, 1), new ConfigurationManagerAttributes { Order = 80 }));
+            RerollShopFixedCost = config.Bind("4. Default Shop", "FixRerollCost", -1, new ConfigDescription("Override the shop reroll cost, set to -1 to ignore", null, new ConfigurationManagerAttributes { Order = 80 }));
 
             return config;
         }
 
         private static ConfigFile BindCustomShopConfig(this ConfigFile config)
         {
-            CustomShopNumItemsToSpawn = config.Bind("4. Custom Shop", "NumberOfShopItemsToSpawn", 2, new ConfigDescription("The number of items to spawn in the custom shop", null, new ConfigurationManagerAttributes { Order = 100 }));
-            CustomShopPriceMultiplier = config.Bind("4. Custom Shop", "PriceMultiplier", 1f, new ConfigDescription("The price factor of items spawned in the custom shop", new AcceptableValueRange<float>(0f, 10f), new ConfigurationManagerAttributes { Order = 90 }));
+            CustomShopNumItemsToSpawn = config.Bind("5. Custom Shop", "NumberOfShopItemsToSpawn", 2, new ConfigDescription("The number of items to spawn in the custom shop", null, new ConfigurationManagerAttributes { Order = 100 }));
+            CustomShopPriceMultiplier = config.Bind("5. Custom Shop", "PriceMultiplier", 1f, new ConfigDescription("The price factor of items spawned in the custom shop", new AcceptableValueRange<float>(0f, 10f), new ConfigurationManagerAttributes { Order = 90 }));
             return config;
         }
 
 
         private static ConfigFile BindItemSpawnRates(this ConfigFile config)
         {
-            HeatedMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 3);
+            HeatedMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "HeatedMixerSpawnRate", 1);
             ConveyorMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ConveyorMixerSpawnRate", 1);
             RapidMixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "RapidMixerSpawnRate", 1);
             MixerSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "MixerSpawnRate", 0);
@@ -536,17 +546,17 @@ namespace Willi.PlateUpEnhancementMod.Config
             WheelieBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "WheelieBinSpawnRate", 0);
             BedSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BedSpawnRate", 0);
             //Halloween update
-            GrabberRotatingSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GrabberRotatingSpawnRate", 1);
-            TeleporterSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "TeleporterSpawnRate", 1);
-            CobwebsSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CobwebsSpawnRate", 0);
-            GhostStatueSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "GhostStatueSpawnRate", 0);
-            PumpkinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "PumpkinSpawnRate", 0);
-            SkeletonSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "SkeletonSpawnRate", 0);
-            CornSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "CornSpawnRate", 0);
-            BananasSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BananasSpawnRate", 0);
-            StrawberriesSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StrawberriesSpawnRate", 0);
-            Pumpkin2SpawnRate = config.Bind("5. Custom Shop Spawn Rates", "Pumpkin2SpawnRate", 0);
-            UpgradeKitSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "UpgradeKitSpawnRate", 1);
+            GrabberRotatingSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "GrabberRotatingSpawnRate", 1);
+            TeleporterSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "TeleporterSpawnRate", 1);
+            CobwebsSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CobwebsSpawnRate", 0);
+            GhostStatueSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "GhostStatueSpawnRate", 0);
+            PumpkinSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "PumpkinSpawnRate", 0);
+            SkeletonSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "SkeletonSpawnRate", 0);
+            CornSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CornSpawnRate", 0);
+            BananasSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "BananasSpawnRate", 0);
+            StrawberriesSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "StrawberriesSpawnRate", 0);
+            Pumpkin2SpawnRate = config.Bind("6. Custom Shop Spawn Rates", "Pumpkin2SpawnRate", 0);
+            UpgradeKitSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "UpgradeKitSpawnRate", 1);
 
             return config;
         }

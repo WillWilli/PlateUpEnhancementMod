@@ -30,6 +30,7 @@ namespace Willi.PlateUpEnhancementMod
         private void Update()
         {
             SpawnItemsHandler.Update();
+            NoClipHandler.Update();
             ChangeDetector.InvokeCallbacks();
         }
     }
