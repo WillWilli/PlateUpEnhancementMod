@@ -53,6 +53,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> ComposterBinSpawnRate;
         public static ConfigEntry<int> ExpandedBinSpawnRate;
         public static ConfigEntry<int> BinSpawnRate;
+        public static ConfigEntry<int> StarterBinSpawnRate;
         public static ConfigEntry<int> FireExtinguisherSpawnRate;
         public static ConfigEntry<int> FloorBufferSpawnRate;
         public static ConfigEntry<int> KitchenFloorProtectorSpawnRate;
@@ -230,6 +231,11 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> StrawberriesSpawnRate;
         public static ConfigEntry<int> Pumpkin2SpawnRate;
         public static ConfigEntry<int> UpgradeKitSpawnRate;
+
+        public static ConfigEntry<int> CherrySpawnRate;
+        public static ConfigEntry<int> MilkSpawnRate;
+        public static ConfigEntry<int> SugarSpawnRate;
+        public static ConfigEntry<int> CranberrySpawnRate;
         #endregion
 
         public static void BindAllConfig(this ConfigFile config)
@@ -279,12 +285,6 @@ namespace Willi.PlateUpEnhancementMod.Config
             return allItemNames;
         }
 
-        private static ItemConfig GetItemConfigFromField(System.Reflection.FieldInfo field)
-        {
-            var fieldName = field.Name;
-            var fieldValue = (int)field.GetValue(typeof(int));
-            return new ItemConfig() { Name = fieldName, Id = fieldValue};
-        }
 
         private static List<ItemConfig> GetAllItemsConfigs() 
         {
@@ -293,10 +293,18 @@ namespace Willi.PlateUpEnhancementMod.Config
             var items = new List<ItemConfig>();
             foreach(var field in itemIdFields)
             {
+                if (field.Name.StartsWith("_"))
+                    continue;
                 items.Add(GetItemConfigFromField(field));
             }
 
             return items;
+        }
+        private static ItemConfig GetItemConfigFromField(System.Reflection.FieldInfo field)
+        {
+            var fieldName = field.Name;
+            var fieldValue = (int)field.GetValue(typeof(int));
+            return new ItemConfig() { Name = fieldName, Id = fieldValue};
         }
 
         private static List<ItemConfig> WithSpawnRates(this List<ItemConfig> itemConfigs)
@@ -320,7 +328,7 @@ namespace Willi.PlateUpEnhancementMod.Config
                 }
             }
 
-            return itemConfigs.WithSpawnRates();
+            return itemConfigs;
         }
 
         private static ConfigFile BindGeneralConfig(this ConfigFile config)
@@ -380,6 +388,7 @@ namespace Willi.PlateUpEnhancementMod.Config
             ComposterBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ComposterBinSpawnRate", 0);
             ExpandedBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "ExpandedBinSpawnRate", 0);
             BinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "BinSpawnRate", 0);
+            StarterBinSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "StarterBinSpawnRate", 0);
             FireExtinguisherSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FireExtinguisherSpawnRate", 0);
             FloorBufferSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "FloorBufferSpawnRate", 1);
             KitchenFloorProtectorSpawnRate = config.Bind("5. Custom Shop Spawn Rates", "KitchenFloorProtectorSpawnRate", 0);
@@ -557,6 +566,12 @@ namespace Willi.PlateUpEnhancementMod.Config
             StrawberriesSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "StrawberriesSpawnRate", 0);
             Pumpkin2SpawnRate = config.Bind("6. Custom Shop Spawn Rates", "Pumpkin2SpawnRate", 0);
             UpgradeKitSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "UpgradeKitSpawnRate", 1);
+
+            // Turkey day update
+            CherrySpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CherrySpawnRate", 0);
+            MilkSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "MilkSpawnRate", 0);
+            SugarSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "SugarSpawnRate", 0);
+            CranberrySpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CranberrySpawnRate", 0);
 
             return config;
         }

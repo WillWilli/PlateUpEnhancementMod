@@ -90,7 +90,7 @@ namespace Willi.PlateUpEnhancementMod.Config
         //public static int MopWaterLong = -1424385600;
         //public static int MopWater = 377065033;
         public static int Nameplate = -483535085;
-        public static int BlueprintLetter = 1553046198;
+        public static int _BlueprintLetter = 1553046198;
         //public static int Blueprint = 1063254979;
         //public static int FlooringApplicator = 1732122842;
         //public static int Parcel = -1936421857;
@@ -221,5 +221,11 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int Strawberries = -699333907;
         public static int Pumpkin2 = -1055654549;
         public static int UpgradeKit = -2682711;
+
+        // Added in v1.1.1 Turkey Day update 22/11/2022
+        public static int Cherry = 148543530;
+        public static int Milk = 120342736;
+        public static int Sugar = -2133205155;
+        public static int Cranberry = 735786885;
     }
 }

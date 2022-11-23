@@ -66,7 +66,7 @@ namespace Willi.PlateUpEnhancementMod.EventHandlers
             var spawnPosition = FindPlayerPosition();
 
             var entity = entityManager.CreateEntity();
-            entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference.BlueprintLetter });
+            entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference._BlueprintLetter });
             entityManager.AddComponentData(entity, new CPosition(spawnPosition));
             entityManager.AddComponentData(entity, default(CLetter));
             entityManager.AddComponentData(entity, new CLetterBlueprint
