@@ -231,6 +231,11 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static ConfigEntry<int> StrawberriesSpawnRate;
         public static ConfigEntry<int> Pumpkin2SpawnRate;
         public static ConfigEntry<int> UpgradeKitSpawnRate;
+
+        public static ConfigEntry<int> CherrySpawnRate;
+        public static ConfigEntry<int> MilkSpawnRate;
+        public static ConfigEntry<int> SugarSpawnRate;
+        public static ConfigEntry<int> CranberrySpawnRate;
         #endregion
 
         public static void BindAllConfig(this ConfigFile config)
@@ -561,6 +566,12 @@ namespace Willi.PlateUpEnhancementMod.Config
             StrawberriesSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "StrawberriesSpawnRate", 0);
             Pumpkin2SpawnRate = config.Bind("6. Custom Shop Spawn Rates", "Pumpkin2SpawnRate", 0);
             UpgradeKitSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "UpgradeKitSpawnRate", 1);
+
+            // Turkey day update
+            CherrySpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CherrySpawnRate", 0);
+            MilkSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "MilkSpawnRate", 0);
+            SugarSpawnRate = config.Bind("6. Custom Shop Spawn Rates", "SugarSpawnRate", 0);
+            CranberrySpawnRate = config.Bind("6. Custom Shop Spawn Rates", "CranberrySpawnRate", 0);
 
             return config;
         }

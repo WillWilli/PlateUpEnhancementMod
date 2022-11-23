@@ -221,5 +221,11 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int Strawberries = -699333907;
         public static int Pumpkin2 = -1055654549;
         public static int UpgradeKit = -2682711;
+
+        // Added in v1.1.1 Turkey Day update 22/11/2022
+        public static int Cherry = 148543530;
+        public static int Milk = 120342736;
+        public static int Sugar = -2133205155;
+        public static int Cranberry = 735786885;
     }
 }
