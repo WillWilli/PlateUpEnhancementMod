@@ -1,5 +1,4 @@
-﻿using BepInEx.Configuration;
- 
+﻿
 namespace Willi.PlateUpEnhancementMod.Config
 {
     public static class ItemIdReference
@@ -81,21 +80,21 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int BookingsStand = -60938940;
         public static int HostingStand = -63118559;
         public static int DisplayStand = -1813414500;
-        public static int BuffedFloor = 1630557157;
-        public static int MessCustomer1 = -1324288299;
-        public static int MessCustomer2 = -374077567;
-        public static int MessCustomer3 = 147181555;
-        public static int MessKitchen1 = 31731938;
-        public static int MessKitchen2 = 1419995156;
-        public static int MessKitchen3 = 34773971;
-        public static int MopWaterLong = -1424385600;
-        public static int MopWater = 377065033;
+        //public static int BuffedFloor = 1630557157;
+        //public static int MessCustomer1 = -1324288299;
+        //public static int MessCustomer2 = -374077567;
+        //public static int MessCustomer3 = 147181555;
+        //public static int MessKitchen1 = 31731938;
+        //public static int MessKitchen2 = 1419995156;
+        //public static int MessKitchen3 = 34773971;
+        //public static int MopWaterLong = -1424385600;
+        //public static int MopWater = 377065033;
         public static int Nameplate = -483535085;
-        public static int BlueprintLetter = 1553046198;
-        public static int Blueprint = 1063254979;
-        public static int FlooringApplicator = 1732122842;
-        public static int Parcel = -1936421857;
-        public static int WallpaperApplicator = 2041631136;
+        public static int _BlueprintLetter = 1553046198;
+        //public static int Blueprint = 1063254979;
+        //public static int FlooringApplicator = 1732122842;
+        //public static int Parcel = -1936421857;
+        //public static int WallpaperApplicator = 2041631136;
         public static int AccountingDesk = 949631021;
         public static int BlueprintCabinet = -571205127;
         public static int CopyingDesk = -729493805;
@@ -145,8 +144,8 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int Tomato = -712909563;
         public static int Turkey = -1506824829;
         public static int Wine = -1353971407;
-        public static int BrokenEntity = -101564005;
-        public static int FireEntity = -897970831;
+        //public static int BrokenEntity = -101564005;
+        //public static int FireEntity = -897970831;
         public static int Counter2 = -996680732;
         public static int PracticeModeTrigger = 946079892;
         public static int RerollShopTrigger = 1171429989;
@@ -161,20 +160,20 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int PotStack = -957949759;
         public static int ServingBoards = 235423916;
         public static int Woks = 314862254;
-        public static int AlpineGround = -1291027873;
-        public static int AlpineTree = -214921468;
-        public static int Bush = -2135829561;
-        public static int Cobblestone = -372462424;
-        public static int CountrysideGround = 933445633;
-        public static int Flower = -1555334152;
-        public static int Flowerbed = 1980900762;
-        public static int LogWall = -1265562836;
-        public static int OutdoorMovementBlocker = -2046940874;
-        public static int Rock = -923570273;
-        public static int InternalWallPiece = -488268556;
-        public static int StreetPiece = -548432204;
-        public static int WallPiece = -758567246;
-        public static int Tree = 532701855;
+        //public static int AlpineGround = -1291027873;
+        //public static int AlpineTree = -214921468;
+        //public static int Bush = -2135829561;
+        //public static int Cobblestone = -372462424;
+        //public static int CountrysideGround = 933445633;
+        //public static int Flower = -1555334152;
+        //public static int Flowerbed = 1980900762;
+        //public static int LogWall = -1265562836;
+        //public static int OutdoorMovementBlocker = -2046940874;
+        //public static int Rock = -923570273;
+        //public static int InternalWallPiece = -488268556;
+        //public static int StreetPiece = -548432204;
+        //public static int WallPiece = -758567246;
+        //public static int Tree = 532701855;
         public static int Freezer = -1857890774;
         public static int FrozenPrepStation = -759808000;
         public static int PrepStation = 1656358740;
@@ -218,9 +217,15 @@ namespace Willi.PlateUpEnhancementMod.Config
         public static int Pumpkin = -621580281;
         public static int Skeleton = 115181910;
         public static int Corn = 976574457;
-        public static int Bananas = 235355384;
-        public static int Strawberries = -699333907;
+        // public static int Bananas = 235355384;
+        // public static int Strawberries = -699333907;
         public static int Pumpkin2 = -1055654549;
         public static int UpgradeKit = -2682711;
+
+        // Added in v1.1.1 Turkey Day update 22/11/2022
+        public static int Cherry = 148543530;
+        // public static int Milk = 120342736;
+        // public static int Sugar = -2133205155;
+        // public static int Cranberry = 735786885;
     }
 }
