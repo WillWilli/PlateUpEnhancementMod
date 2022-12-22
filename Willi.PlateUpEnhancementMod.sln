@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Willi.PlateUpEnhancementMod", "Willi.PlateUpEnhancementMod\Willi.PlateUpEnhancementMod.csproj", "{8C50E4C5-C7D3-45D4-A13C-2961CCA06E00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Willi.EnhancementMod.Workshop", "Willi.EnhancementMod.Workshop\Willi.EnhancementMod.Workshop.csproj", "{B14C437D-405F-413B-92EC-365773CD65D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8C50E4C5-C7D3-45D4-A13C-2961CCA06E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C50E4C5-C7D3-45D4-A13C-2961CCA06E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C50E4C5-C7D3-45D4-A13C-2961CCA06E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14C437D-405F-413B-92EC-365773CD65D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14C437D-405F-413B-92EC-365773CD65D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14C437D-405F-413B-92EC-365773CD65D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14C437D-405F-413B-92EC-365773CD65D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
