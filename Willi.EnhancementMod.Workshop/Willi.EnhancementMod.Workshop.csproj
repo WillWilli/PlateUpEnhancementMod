@@ -34,10 +34,19 @@
     <Reference Include="0Harmony">
       <HintPath>libs\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Kitchen.Common">
       <HintPath>libs\Kitchen.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Kitchen.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\Kitchen.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Kitchen.GameData">
+      <HintPath>libs\Kitchen.GameData.dll</HintPath>
+    </Reference>
+    <Reference Include="Kitchen.GameData, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>libs\Kitchen.GameData.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.RestaurantMode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -46,7 +55,13 @@
     <Reference Include="KitchenMode">
       <HintPath>libs\KitchenMode.dll</HintPath>
     </Reference>
+    <Reference Include="KitchenMode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\KitchenMode.dll</HintPath>
+    </Reference>
     <Reference Include="KitchenMods">
+      <HintPath>libs\KitchenMods.dll</HintPath>
+    </Reference>
+    <Reference Include="KitchenMods, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>libs\KitchenMods.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -62,16 +77,31 @@
     <Reference Include="Unity.Collections">
       <HintPath>libs\Unity.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\Unity.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>libs\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>libs\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Entities">
       <HintPath>libs\Unity.Entities.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Entities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\Unity.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -83,15 +113,18 @@
     <Compile Include="Config\ItemConfig.cs" />
     <Compile Include="Config\UserConfig.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\GroupSizeHandler.cs" />
+    <Compile Include="Helpers\Log.cs" />
+    <Compile Include="Mono\UserConfigChangeDetector.cs" />
     <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\DifficultyHelpersPatch.cs" />
     <Compile Include="Patches\RerollBlueprintViewPatch.cs" />
-    <Compile Include="SpawnItemGui.cs" />
+    <Compile Include="Mono\SpawnItemGui.cs" />
     <Compile Include="EnhancementMod.cs" />
     <Compile Include="Helpers\PlayerHelper.cs" />
     <Compile Include="Config\ItemIdReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserSettingsGui.cs" />
+    <Compile Include="Mono\UserSettingsGui.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EnhancementMod.Settings.json">

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Willi.EnhancementMod.Workshop.Helpers;
 
 namespace Willi.EnhancementMod.Workshop.Config
 {
@@ -15,10 +16,18 @@ namespace Willi.EnhancementMod.Workshop.Config
 
         public static UserConfig LoadUserConfig()
         {
-            Debug.LogError($"In Directory {Directory.GetCurrentDirectory()}");
-            var jsonString = File.ReadAllText(UserConfigFileName);
-            Debug.LogError(jsonString);
-            return JsonConvert.DeserializeObject<UserConfig>(jsonString);
+            try
+            {
+                Debug.LogError($"In Directory {Directory.GetCurrentDirectory()}");
+                var jsonString = File.ReadAllText(UserConfigFileName);
+                Debug.LogError(jsonString);
+                return JsonConvert.DeserializeObject<UserConfig>(jsonString);
+            }
+            catch
+            {
+                Log.Warning("No user config found, using default values.");
+                return new UserConfig();
+            }
         }
 
 

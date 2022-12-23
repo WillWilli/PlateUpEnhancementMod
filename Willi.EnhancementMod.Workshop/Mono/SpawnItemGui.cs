@@ -9,7 +9,7 @@ using Willi.EnhancementMod.Workshop.Config;
 using Willi.EnhancementMod.Workshop.Extensions;
 using Willi.EnhancementMod.Workshop.Helpers;
 
-namespace Willi.EnhancementMod.Workshop
+namespace Willi.EnhancementMod.Workshop.Mono
 {
     public class SpawnItemGui : MonoBehaviour
     {
@@ -81,7 +81,8 @@ namespace Willi.EnhancementMod.Workshop
         {
             if (PlayerHelper.TryFindPlayers(out List<GameObject> players))
             {
-                return players.First().transform.position;            }
+                return players.First().transform.position;
+            }
 
             Debug.LogWarning("Unable to find player positon, reverting to default spawn position.");
             return new Vector3(-2, 0, -4); // default to static positon

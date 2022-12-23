@@ -3,6 +3,9 @@ using Kitchen;
 using KitchenMods;
 using Willi.EnhancementMod.Workshop.Config;
 using HarmonyLib;
+using Willi.EnhancementMod.Workshop.Mono;
+using Willi.EnhancementMod.Workshop.Patches;
+using Willi.EnhancementMod.Workshop.Helpers;
 
 namespace Willi.EnhancementMod.Workshop
 {
@@ -12,7 +15,7 @@ namespace Willi.EnhancementMod.Workshop
 
         private static GameObject GameObject { get; set; }
         
-        public static SpawnItemGui GuiManager { get; private set; }
+        //public static SpawnItemGui GuiManager { get; private set; }
         
         public void PostActivate(Mod mod)
         {
@@ -25,8 +28,9 @@ namespace Willi.EnhancementMod.Workshop
 
             GameObject = new GameObject("Enhancement mod");
 
-            GuiManager = GameObject.AddComponent<SpawnItemGui>();
+            GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<UserSettingsGui>();
+            GameObject.AddComponent<UserConfigUpdateDetector>();
 
             Object.DontDestroyOnLoad(GameObject);
 

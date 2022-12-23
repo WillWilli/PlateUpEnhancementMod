@@ -2,9 +2,8 @@
 using System;
 using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
-using Random = System.Random;
 
-namespace Willi.EnhancementMod.Workshop
+namespace Willi.EnhancementMod.Workshop.Mono
 {
     internal class UserSettingsGui : MonoBehaviour
     {
@@ -19,17 +18,38 @@ namespace Willi.EnhancementMod.Workshop
         private static Vector2 scrollPosition;
         private static string searchText = string.Empty;
         private static GUIStyle _guiStyle;
+        private static GUIStyle _textStyle;
 
         private void OnGUI()
         {
             if (isWindowActive)
             {
-                if (_guiStyle == null)
+                if (_guiStyle == null || _textStyle == null)
                 {
-                    _guiStyle = new GUIStyle(GUI.skin.toggle);
+                    _guiStyle = new GUIStyle(GUI.skin.window);
+                    _guiStyle.normal.textColor = Color.black;
+                    _guiStyle.active.textColor = Color.black;
+                    _guiStyle.focused.textColor = Color.black;
+                    _guiStyle.onActive.textColor = Color.black;
+                    var tex = new Texture2D(1, 1);
+                    tex.SetPixel(0, 0, new Color(1, 1, 1, 0f));
+                    _guiStyle.normal.background = tex;
+                    _guiStyle.active.background = tex;
+                    _guiStyle.focused.background = tex;
+                    _guiStyle.hover.background = tex;
+                    _guiStyle.onNormal.background = tex;
+                    _guiStyle.onActive.background = tex;
+                    _guiStyle.onFocused.background = tex;
+                    _guiStyle.onHover.background = tex;
+
+
+                    _textStyle = new GUIStyle(GUI.skin.label);
+                    _textStyle.normal.textColor = Color.black;
+                    _textStyle.onHover.textColor = Color.white;
 
                 }
-                _windowRect = GUILayout.Window(1747174674, _windowRect, DraggableWindow, "Enhancement mod options", GUILayout.Width(WindowWidth), GUILayout.ExpandHeight(true));
+                GUI.backgroundColor = new Color(1, 1, 1, 1);
+                _windowRect = GUILayout.Window(1747174674, _windowRect, DraggableWindow, "Enhancement mod options", _guiStyle, GUILayout.Width(WindowWidth), GUILayout.ExpandHeight(true));
             }
         }
 
@@ -46,14 +66,11 @@ namespace Willi.EnhancementMod.Workshop
         {
             if (ConfigHelper.UserConfig.IsModEnabled)
             {
-                _guiStyle.normal.textColor = Color.green;
-                _guiStyle.active.textColor = Color.green;
-
-                return "Disable all";
+                GUI.backgroundColor = Color.green;
+                return "Enabled";
             }
-            _guiStyle.normal.textColor = Color.red;
-            _guiStyle.active.textColor = Color.red;
-            return "Enable all";
+            GUI.backgroundColor = Color.red;
+            return "Disabled";
         }
 
         private static void DraggableWindow(int windowID)
@@ -62,7 +79,10 @@ namespace Willi.EnhancementMod.Workshop
             searchText = GUILayout.TextField(searchText);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
 
-            ConfigHelper.UserConfig.IsModEnabled = GUILayout.Toggle(ConfigHelper.UserConfig.IsModEnabled, $"{ModEnabledState()}", _guiStyle);
+            var toggleStyle = new GUIStyle(GUI.skin.button);
+            toggleStyle.normal.textColor = Color.black;
+            toggleStyle.active.textColor = Color.black;
+            ConfigHelper.UserConfig.IsModEnabled = GUILayout.Toggle(ConfigHelper.UserConfig.IsModEnabled, new GUIContent($"{ModEnabledState()}", "enable / disable all"), toggleStyle, GUILayout.Width(WindowWidth * 0.2f));
 
             ConfigHelper.UserConfig.MoneyRewardMultiplier = FloatSliderWithText(nameof(ConfigHelper.UserConfig.MoneyRewardMultiplier), ConfigHelper.UserConfig.MoneyRewardMultiplier, 0, 10);
             ConfigHelper.UserConfig.PatienceMultiplier = FloatSliderWithText(nameof(ConfigHelper.UserConfig.PatienceMultiplier), ConfigHelper.UserConfig.PatienceMultiplier, 0, 10);
@@ -75,6 +95,8 @@ namespace Willi.EnhancementMod.Workshop
             ConfigHelper.UserConfig.RerollShopFixedCost = IntSliderWithText(nameof(ConfigHelper.UserConfig.RerollShopFixedCost), ConfigHelper.UserConfig.RerollShopFixedCost, -1, 1000);
             ConfigHelper.UserConfig.ItemSpawnerWindowHeight = IntSliderWithText(nameof(ConfigHelper.UserConfig.ItemSpawnerWindowHeight), ConfigHelper.UserConfig.ItemSpawnerWindowHeight, 0, 1000);
 
+            GUI.backgroundColor = Color.white;
+
             GUILayout.EndScrollView();
             GUI.DragWindow();
         }
@@ -82,21 +104,62 @@ namespace Willi.EnhancementMod.Workshop
         private static float FloatSliderWithText(string label, float configSetting, float minValue, float MaxValue)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label($"{label}: {configSetting:0.00}", GUILayout.ExpandWidth(true));
+            GUILayout.Label(label, _textStyle, GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            configSetting = GUILayout.HorizontalSlider(configSetting, minValue, MaxValue, GUILayout.Width(WindowWidth * 0.4f));
+            string inputText = GUILayout.TextField($"{configSetting:0.00}");
+            if (TryParseFloatWithLimits(inputText, out float value, minValue, MaxValue))
+            {
+                configSetting = value;
+            }
+            configSetting = GUILayout.HorizontalSlider(configSetting, minValue, MaxValue, GUILayout.Width(WindowWidth * 0.35f));
             GUILayout.EndHorizontal();
             return configSetting;
+        }
+
+
+        private static bool TryParseFloatWithLimits(string inputText, out float actualValue, float minValue, float maxValue)
+        {
+            actualValue = 0f;
+            if (float.TryParse(inputText, out float parsedValue))
+            {
+                if (parsedValue < minValue || parsedValue > maxValue)
+                {
+                    return false;
+                }
+                actualValue = parsedValue;
+                return true;
+            }
+            return false;
         }
 
         private static int IntSliderWithText(string label, int configSetting, int minValue, int MaxValue)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label($"{label}: {configSetting}", GUILayout.ExpandWidth(true));
+            GUILayout.Label(label, _textStyle, GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            configSetting = Mathf.RoundToInt(GUILayout.HorizontalSlider(configSetting, minValue, MaxValue, GUILayout.Width(WindowWidth * 0.6f)));
+            string inputText = GUILayout.TextField(configSetting.ToString());
+            if (TryParseIntWithLimits(inputText, out int value, minValue, MaxValue))
+            {
+                configSetting = value;
+            }
+            configSetting = Mathf.RoundToInt(GUILayout.HorizontalSlider(configSetting, minValue, MaxValue, GUILayout.Width(WindowWidth * 0.35f)));
             GUILayout.EndHorizontal();
             return configSetting;
+        }
+
+        private static bool TryParseIntWithLimits(string inputText, out int actualValue, int minValue, int maxValue)
+        {
+            actualValue = 0;
+            if (int.TryParse(inputText, out int parsedValue))
+            {
+                if (parsedValue < minValue || parsedValue > maxValue)
+                {
+                    return false;
+                }
+                actualValue = parsedValue;
+                return true;
+            }
+            return false;
         }
     }
 }

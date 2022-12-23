@@ -9,6 +9,28 @@ namespace Willi.EnhancementMod.Workshop.Config
 {
     public class UserConfig
     {
+        public UserConfig()
+        {
+
+        }
+
+        public UserConfig(UserConfig userConfig)
+        {
+            IsModEnabled = userConfig.IsModEnabled;
+            MoneyRewardMultiplier = userConfig.MoneyRewardMultiplier;
+            PatienceMultiplier = userConfig.PatienceMultiplier;
+            NumberOfCustomersMultiplier = userConfig.NumberOfCustomersMultiplier;
+            MinGroupSize = userConfig.MinGroupSize;
+            MaxGroupSize = userConfig.MaxGroupSize;
+            NoClipKeyboardShortcut = userConfig.NoClipKeyboardShortcut;
+            SpeedMultiplier = userConfig.SpeedMultiplier;
+            DefaultShopNumberOfItems = userConfig.DefaultShopNumberOfItems;
+            DefaultShopUpgradedChance = userConfig.DefaultShopUpgradedChance;
+            RerollShopFixedCost  = userConfig.RerollShopFixedCost;
+            ItemSpawnerWindowHeight = userConfig.ItemSpawnerWindowHeight;
+            SpawnItemMenuKeyboardShortcut = userConfig.SpawnItemMenuKeyboardShortcut;
+        }
+
         public bool IsModEnabled { get; set; } = true;
 
         // General
