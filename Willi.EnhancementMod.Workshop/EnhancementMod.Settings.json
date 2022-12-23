@@ -1,0 +1,15 @@
+﻿{
+  "IsModEnabled": true,
+  "MoneyRewardMultiplier": 1,
+  "PatienceMultiplier": 1,
+  "NumberOfCustomersMultiplier": 1,
+  "MinGroupSize": 1,
+  "MaxGroupSize": 2,
+  "NoClipKeyboardShortcut": 110,
+  "SpeedMultiplier": 1,
+  "DefaultShopNumberOfItems": 5,
+  "DefaultShopUpgradedChance": 1,
+  "RerollShopFixedCost": null,
+  "ItemSpawnerWindowHeight": 400,
+  "SpawnItemMenuKeyboardShortcut": 283
+}

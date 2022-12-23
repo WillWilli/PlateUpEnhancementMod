@@ -17,7 +17,7 @@ namespace Willi.EnhancementMod.Workshop
 
         private static int initialXPosition = Screen.width - 190;
         private static int initialYPosition = 130;
-        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, 400); //TODO: Make configurable
+        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ConfigHelper.UserConfig.ItemSpawnerWindowHeight); //TODO: Make configurable
 
         private static Vector2 scrollPosition;
         private static string searchText = string.Empty;
@@ -27,7 +27,7 @@ namespace Willi.EnhancementMod.Workshop
         {
             if (isWindowActive)
             {
-                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(180), GUILayout.Height(400));
+                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(180), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
             }
         }
 

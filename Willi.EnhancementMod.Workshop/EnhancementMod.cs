@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Kitchen;
 using KitchenMods;
+using Willi.EnhancementMod.Workshop.Config;
+using HarmonyLib;
 
 namespace Willi.EnhancementMod.Workshop
 {
@@ -21,13 +23,16 @@ namespace Willi.EnhancementMod.Workshop
         {
             Debug.Log("EnhancementMod Init");
 
-            GameObject = new GameObject("Kitchen Designer");
+            GameObject = new GameObject("Enhancement mod");
+
             GuiManager = GameObject.AddComponent<SpawnItemGui>();
+            GameObject.AddComponent<UserSettingsGui>();
+
             Object.DontDestroyOnLoad(GameObject);
 
 
-            //var harmony = new Harmony("ONe.KitchenDesigner");
-            //harmony.PatchAll(GetType().Assembly);
+            var harmony = new Harmony("Willi.EnhancementMod");
+            harmony.PatchAll(GetType().Assembly);
         }
 
         public void PostInject()

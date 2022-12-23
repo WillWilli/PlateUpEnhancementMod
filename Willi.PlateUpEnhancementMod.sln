@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Willi.PlateUpEnhancementMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Willi.EnhancementMod.Workshop", "Willi.EnhancementMod.Workshop\Willi.EnhancementMod.Workshop.csproj", "{B14C437D-405F-413B-92EC-365773CD65D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5DD18F26-936A-4D52-A276-B6F1E45DF743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B14C437D-405F-413B-92EC-365773CD65D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B14C437D-405F-413B-92EC-365773CD65D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B14C437D-405F-413B-92EC-365773CD65D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD18F26-936A-4D52-A276-B6F1E45DF743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD18F26-936A-4D52-A276-B6F1E45DF743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD18F26-936A-4D52-A276-B6F1E45DF743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD18F26-936A-4D52-A276-B6F1E45DF743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

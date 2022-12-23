@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>libs\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Kitchen.Common">
       <HintPath>libs\Kitchen.Common.dll</HintPath>
     </Reference>
@@ -46,8 +49,10 @@
     <Reference Include="KitchenMods">
       <HintPath>libs\KitchenMods.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,12 +81,22 @@
   <ItemGroup>
     <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Config\ItemConfig.cs" />
+    <Compile Include="Config\UserConfig.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
+    <Compile Include="Patches\DifficultyHelpersPatch.cs" />
+    <Compile Include="Patches\RerollBlueprintViewPatch.cs" />
     <Compile Include="SpawnItemGui.cs" />
     <Compile Include="EnhancementMod.cs" />
     <Compile Include="Helpers\PlayerHelper.cs" />
-    <Compile Include="ItemIdReference.cs" />
+    <Compile Include="Config\ItemIdReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettingsGui.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EnhancementMod.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

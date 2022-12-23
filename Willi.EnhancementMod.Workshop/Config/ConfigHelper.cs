@@ -1,11 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Willi.EnhancementMod.Workshop.Config
 {
     internal static class ConfigHelper
     {
+        private static string UserConfigFileName = "Mods/Willi/EnhancementMod.Settings.json";
+
+        public static UserConfig UserConfig { get; set; } = LoadUserConfig();
+
+        public static UserConfig LoadUserConfig()
+        {
+            Debug.LogError($"In Directory {Directory.GetCurrentDirectory()}");
+            var jsonString = File.ReadAllText(UserConfigFileName);
+            Debug.LogError(jsonString);
+            return JsonConvert.DeserializeObject<UserConfig>(jsonString);
+        }
+
+
         public static int ToItemId(this string itemName)
         {
             try
@@ -16,7 +32,7 @@ namespace Willi.EnhancementMod.Workshop.Config
             }
             catch
             {
-                throw new ArgumentException($"ID for item {itemName} does not exist.", "itemName");
+                throw new ArgumentException($"ID for item {itemName} does not exist.", itemName);
             }
         }
 

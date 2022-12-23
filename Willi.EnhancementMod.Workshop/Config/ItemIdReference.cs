@@ -1,5 +1,4 @@
-﻿
-namespace Willi.EnhancementMod.Workshop
+﻿namespace Willi.EnhancementMod.Workshop.Config
 {
     public static class ItemIdReference
     {
