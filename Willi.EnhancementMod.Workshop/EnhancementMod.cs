@@ -15,7 +15,6 @@ namespace Willi.EnhancementMod.Workshop
 
         private static GameObject GameObject { get; set; }
         
-        //public static SpawnItemGui GuiManager { get; private set; }
         
         public void PostActivate(Mod mod)
         {
@@ -31,6 +30,7 @@ namespace Willi.EnhancementMod.Workshop
             GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<UserSettingsGui>();
             GameObject.AddComponent<UserConfigUpdateDetector>();
+            GameObject.AddComponent<NoClipHandler>();
 
             Object.DontDestroyOnLoad(GameObject);
 

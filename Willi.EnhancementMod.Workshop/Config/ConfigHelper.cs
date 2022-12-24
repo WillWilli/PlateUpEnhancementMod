@@ -12,21 +12,40 @@ namespace Willi.EnhancementMod.Workshop.Config
     {
         private static string UserConfigFileName = "Mods/Willi/EnhancementMod.Settings.json";
 
-        public static UserConfig UserConfig { get; set; } = LoadUserConfig();
+        static ConfigHelper()
+        {
+            LoadUserConfig();
+        }
 
-        public static UserConfig LoadUserConfig()
+        public static UserConfig UserConfig { get; set; }
+
+        public static void LoadUserConfig()
         {
             try
             {
                 Debug.LogError($"In Directory {Directory.GetCurrentDirectory()}");
                 var jsonString = File.ReadAllText(UserConfigFileName);
                 Debug.LogError(jsonString);
-                return JsonConvert.DeserializeObject<UserConfig>(jsonString);
+                UserConfig = JsonConvert.DeserializeObject<UserConfig>(jsonString);
             }
             catch
             {
                 Log.Warning("No user config found, using default values.");
-                return new UserConfig();
+                UserConfig = new UserConfig();
+            }
+        }
+
+        public static void SaveUserConfig()
+        {
+            try
+            {
+                var jsonString = JsonConvert.SerializeObject(UserConfig, Formatting.Indented);
+                File.WriteAllText(UserConfigFileName, jsonString);
+                Log.Info($"Config file saved to {Path.Combine(Directory.GetCurrentDirectory(), UserConfigFileName)}");
+            }
+            catch
+            {
+                Log.Error("Failed to save user config");
             }
         }
 

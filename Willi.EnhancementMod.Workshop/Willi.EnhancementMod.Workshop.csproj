@@ -107,6 +107,9 @@
     <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\..\Games\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>libs\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigHelper.cs" />
@@ -114,7 +117,9 @@
     <Compile Include="Config\UserConfig.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\GroupSizeHandler.cs" />
+    <Compile Include="Helpers\GuiStyles.cs" />
     <Compile Include="Helpers\Log.cs" />
+    <Compile Include="Mono\NoClipHandler.cs" />
     <Compile Include="Mono\UserConfigChangeDetector.cs" />
     <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\DifficultyHelpersPatch.cs" />

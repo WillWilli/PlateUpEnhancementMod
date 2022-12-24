@@ -17,17 +17,21 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
         private static int initialXPosition = Screen.width - 190;
         private static int initialYPosition = 130;
-        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, 180, ConfigHelper.UserConfig.ItemSpawnerWindowHeight); //TODO: Make configurable
 
-        private static Vector2 scrollPosition;
-        private static string searchText = string.Empty;
+        private static int WindowWidth = 190;
+        private static Rect windowRect = new Rect(initialXPosition, initialYPosition, WindowWidth, ConfigHelper.UserConfig.ItemSpawnerWindowHeight); //TODO: Make configurable
+
+        private static Vector2 _scrollPosition;
+        private static string _itemSearchText = string.Empty;
+        private static string _customIdText = string.Empty;
+
         private static List<string> _itemNames = ConfigHelper.GetItemNamesSorted();
 
         private void OnGUI()
         {
             if (isWindowActive)
             {
-                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(180), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
+                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(WindowWidth), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
             }
         }
 
@@ -43,11 +47,27 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static void DraggableWindow(int windowID)
         {
             GUILayout.Space(2);
-            searchText = GUILayout.TextField(searchText);
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
+            _itemSearchText = GUILayout.TextField(_itemSearchText);
+
+            ScrollableItemList();
+
+            GUILayout.Label("custom id spawn:");
+            GUILayout.BeginHorizontal();
+            _customIdText = GUILayout.TextField(_customIdText);
+            if (GUILayout.Button("spawn", GUILayout.Width(WindowWidth * 0.3f)) && int.TryParse(_customIdText, out int itemId))
+            {
+                SpawnItem(itemId, 0);
+            }
+            GUILayout.EndHorizontal();
+            GUI.DragWindow();
+        }
+
+        private static void ScrollableItemList()
+        {
+            _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
             for (int i = 0; i < _itemNames.Count; i++)
             {
-                if (string.IsNullOrEmpty(searchText) || _itemNames[i].Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(_itemSearchText) || _itemNames[i].Contains(_itemSearchText, StringComparison.OrdinalIgnoreCase))
                 {
                     if (GUILayout.Button(new GUIContent(_itemNames[i], $"Click button to spawn {_itemNames[i]}")))
                     {
@@ -56,7 +76,6 @@ namespace Willi.EnhancementMod.Workshop.Mono
                 }
             }
             GUILayout.EndScrollView();
-            GUI.DragWindow();
         }
 
         private static void SpawnItem(int itemId, int price)
