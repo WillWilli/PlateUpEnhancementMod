@@ -31,7 +31,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
         {
             if (isWindowActive)
             {
-                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GUILayout.Width(WindowWidth), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
+                windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GuiStyles.WindowStyle, GUILayout.Width(WindowWidth), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
             }
         }
 
@@ -40,7 +40,6 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (Input.GetKeyDown(KeyCode.F2))
             {
                 isWindowActive = !isWindowActive;
-                Debug.LogError("Toggle Window");
             }
         }
 
@@ -51,10 +50,10 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
             ScrollableItemList();
 
-            GUILayout.Label("custom id spawn:");
+            GUILayout.Label("custom id spawn:", GuiStyles.LabelStyle);
             GUILayout.BeginHorizontal();
             _customIdText = GUILayout.TextField(_customIdText);
-            if (GUILayout.Button("spawn", GUILayout.Width(WindowWidth * 0.3f)) && int.TryParse(_customIdText, out int itemId))
+            if (GUILayout.Button("spawn", GuiStyles.ButtonStyle, GUILayout.Width(WindowWidth * 0.3f)) && int.TryParse(_customIdText, out int itemId))
             {
                 SpawnItem(itemId, 0);
             }
@@ -69,7 +68,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             {
                 if (string.IsNullOrEmpty(_itemSearchText) || _itemNames[i].Contains(_itemSearchText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (GUILayout.Button(new GUIContent(_itemNames[i], $"Click button to spawn {_itemNames[i]}")))
+                    if (GUILayout.Button(new GUIContent(_itemNames[i], $"Click button to spawn {_itemNames[i]}"), GuiStyles.ButtonStyle))
                     {
                         SpawnItem(_itemNames[i].ToItemId(), 0);
                     }

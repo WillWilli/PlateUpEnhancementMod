@@ -29,8 +29,8 @@ namespace Willi.EnhancementMod.Workshop
 
             GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<UserSettingsGui>();
-            GameObject.AddComponent<UserConfigUpdateDetector>();
             GameObject.AddComponent<NoClipHandler>();
+            GameObject.AddComponent<UserConfigUpdateDetector>();
 
             Object.DontDestroyOnLoad(GameObject);
 
@@ -41,7 +41,7 @@ namespace Willi.EnhancementMod.Workshop
 
         public void PostInject()
         {
-            Debug.LogError("PosInject");
+            ConfigHelper.LoadOrCreateUserConfig();
         }
     }
 }

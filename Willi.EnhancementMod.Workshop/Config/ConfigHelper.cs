@@ -10,28 +10,40 @@ namespace Willi.EnhancementMod.Workshop.Config
 {
     internal static class ConfigHelper
     {
-        private static string UserConfigFileName = "Mods/Willi/EnhancementMod.Settings.json";
+        private static string UserConfigFileLocation;
 
-        static ConfigHelper()
+        public static UserConfig UserConfig { get; set; } = new UserConfig();
+
+        public static void LoadOrCreateUserConfig()
         {
-            LoadUserConfig();
-        }
+            UserConfigFileLocation = Path.Combine(Application.persistentDataPath, "EnhancementMod.Settings.json");
 
-        public static UserConfig UserConfig { get; set; }
+            if (File.Exists(UserConfigFileLocation))
+            {
+                LoadUserConfig();
+            }
+            else
+            {
+                UserConfig = new UserConfig();
+                SaveUserConfig();
+            }
+        }
 
         public static void LoadUserConfig()
         {
             try
             {
-                Debug.LogError($"In Directory {Directory.GetCurrentDirectory()}");
-                var jsonString = File.ReadAllText(UserConfigFileName);
-                Debug.LogError(jsonString);
+                var jsonString = File.ReadAllText(UserConfigFileLocation);
                 UserConfig = JsonConvert.DeserializeObject<UserConfig>(jsonString);
             }
-            catch
+            catch(Exception ex)
             {
-                Log.Warning("No user config found, using default values.");
-                UserConfig = new UserConfig();
+                if (UserConfig == null)
+                {
+                    Log.Warning($"Failed to load user config from {UserConfigFileLocation}, using default values.");
+                    UserConfig = new UserConfig();
+                }
+                Log.Warning($"Failed to load user config from {UserConfigFileLocation}.");
             }
         }
 
@@ -40,15 +52,14 @@ namespace Willi.EnhancementMod.Workshop.Config
             try
             {
                 var jsonString = JsonConvert.SerializeObject(UserConfig, Formatting.Indented);
-                File.WriteAllText(UserConfigFileName, jsonString);
-                Log.Info($"Config file saved to {Path.Combine(Directory.GetCurrentDirectory(), UserConfigFileName)}");
+                File.WriteAllText(UserConfigFileLocation, jsonString);
+                Log.Info($"Config file saved to { UserConfigFileLocation }");
             }
             catch
             {
                 Log.Error("Failed to save user config");
             }
         }
-
 
         public static int ToItemId(this string itemName)
         {

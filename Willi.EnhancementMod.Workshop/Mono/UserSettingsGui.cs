@@ -16,7 +16,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static float WindowWidth = Screen.width * 0.35f;
         private static Rect _windowRect = new Rect(initialXPosition, initialYPosition, WindowWidth, WindowHeight); //TODO: Make configurable
 
-        private static Vector2 scrollPosition;
+        private static Vector2 _scrollPosition;
         private static string searchText = string.Empty;
 
         private void OnGUI()
@@ -33,7 +33,6 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 isWindowActive = !isWindowActive;
-                Debug.LogError("Toggle User settings Window");
             }
         }
 
@@ -51,9 +50,8 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static void DraggableWindow(int windowID)
         {
             GUILayout.Space(2);
-            searchText = GUILayout.TextField(searchText);
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
 
+            // Top bar buttons
             GUILayout.BeginHorizontal();
             ConfigHelper.UserConfig.IsModEnabled = GUILayout.Toggle(ConfigHelper.UserConfig.IsModEnabled, new GUIContent($"{ModEnabledState()}", "enable / disable all"), GuiStyles.ToggleStyle, GUILayout.Width(WindowWidth * 0.2f));
             GUILayout.FlexibleSpace();
@@ -74,6 +72,8 @@ namespace Willi.EnhancementMod.Workshop.Mono
             GUI.backgroundColor = initColour;
             GUILayout.EndHorizontal();
 
+            _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
+            // All options
             ConfigHelper.UserConfig.MoneyRewardMultiplier = FloatSliderWithText(nameof(ConfigHelper.UserConfig.MoneyRewardMultiplier), ConfigHelper.UserConfig.MoneyRewardMultiplier, 0, 10);
             ConfigHelper.UserConfig.PatienceMultiplier = FloatSliderWithText(nameof(ConfigHelper.UserConfig.PatienceMultiplier), ConfigHelper.UserConfig.PatienceMultiplier, 0, 10);
             ConfigHelper.UserConfig.NumberOfCustomersMultiplier = FloatSliderWithText(nameof(ConfigHelper.UserConfig.NumberOfCustomersMultiplier), ConfigHelper.UserConfig.NumberOfCustomersMultiplier, 0, 10);
@@ -84,10 +84,15 @@ namespace Willi.EnhancementMod.Workshop.Mono
             ConfigHelper.UserConfig.DefaultShopUpgradedChance = FloatSliderWithText(nameof(ConfigHelper.UserConfig.DefaultShopUpgradedChance), ConfigHelper.UserConfig.DefaultShopUpgradedChance, 0, 10);
             ConfigHelper.UserConfig.RerollShopFixedCost = IntSliderWithText(nameof(ConfigHelper.UserConfig.RerollShopFixedCost), ConfigHelper.UserConfig.RerollShopFixedCost, -1, 200);
             ConfigHelper.UserConfig.ItemSpawnerWindowHeight = IntSliderWithText(nameof(ConfigHelper.UserConfig.ItemSpawnerWindowHeight), ConfigHelper.UserConfig.ItemSpawnerWindowHeight, 0, 1000);
+            GUILayout.EndScrollView();
 
+            // Footnote
+            GUILayout.Space(1);
+            var labelStyle = GuiStyles.LabelStyle;
+            labelStyle.fontSize = 12;
+            GUILayout.Label("* To ignore a setting, set it to '-1'.", labelStyle);
             GUI.backgroundColor = Color.white;
 
-            GUILayout.EndScrollView();
             GUI.DragWindow();
         }
 
@@ -96,7 +101,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             GUILayout.BeginHorizontal();
             GUILayout.Label(label, GuiStyles.LabelStyle, GUILayout.Width(WindowWidth * 0.4f));
             GUILayout.FlexibleSpace();
-            string inputText = GUILayout.TextField($"{configSetting:0.00}", GUILayout.MinWidth(WindowWidth * 0.05f), GUILayout.ExpandWidth(false));
+            string inputText = GUILayout.TextField($"{configSetting:0.00}", GUILayout.Width(WindowWidth * 0.1f), GUILayout.ExpandWidth(false));
             if (TryParseFloatWithLimits(inputText, out float value, minValue, MaxValue))
             {
                 configSetting = value;
@@ -112,7 +117,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             GUILayout.BeginHorizontal();
             GUILayout.Label(label, GuiStyles.LabelStyle, GUILayout.Width(WindowWidth * 0.4f));
             GUILayout.FlexibleSpace();
-            string inputText = GUILayout.TextField(configSetting.ToString(), GUILayout.MinWidth(WindowWidth * 0.05f), GUILayout.ExpandWidth(false));
+            string inputText = GUILayout.TextField(configSetting.ToString(), GUILayout.Width(WindowWidth * 0.1f), GUILayout.ExpandWidth(false));
             if (TryParseIntWithLimits(inputText, out int value, minValue, MaxValue))
             {
                 configSetting = value;

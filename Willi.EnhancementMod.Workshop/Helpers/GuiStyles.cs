@@ -39,13 +39,13 @@ namespace Willi.EnhancementMod.Workshop.Helpers
             {
                 var textStyle = new GUIStyle(GUI.skin.label);
                 textStyle.normal.textColor = Color.black;
-                textStyle.normal.textColor = Color.black;
                 textStyle.active.textColor = Color.black;
                 textStyle.focused.textColor = Color.black;
                 textStyle.onNormal.textColor = Color.black;
                 textStyle.onActive.textColor = Color.black;
                 textStyle.onFocused.textColor = Color.black;
 
+                textStyle.hover.textColor = Color.grey;
                 textStyle.onHover.textColor = Color.grey;
                 return textStyle;
             }
@@ -64,7 +64,8 @@ namespace Willi.EnhancementMod.Workshop.Helpers
                 buttonStyle.onActive.textColor = Color.black;
                 buttonStyle.onFocused.textColor = Color.black;
 
-                buttonStyle.onHover.textColor = Color.grey;
+                buttonStyle.hover.textColor = Color.yellow;
+                buttonStyle.onHover.textColor = Color.yellow;
                 return buttonStyle;
             }
         }
@@ -81,7 +82,8 @@ namespace Willi.EnhancementMod.Workshop.Helpers
                 toggleStyle.onActive.textColor = Color.black;
                 toggleStyle.onFocused.textColor = Color.black;
 
-                toggleStyle.onHover.textColor = Color.grey;
+                toggleStyle.hover.textColor = Color.yellow;
+                toggleStyle.onHover.textColor = Color.yellow;
                 return toggleStyle;
             }
         }

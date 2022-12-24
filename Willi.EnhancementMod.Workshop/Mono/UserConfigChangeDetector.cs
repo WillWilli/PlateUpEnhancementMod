@@ -9,7 +9,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
     {
         private UserConfig _prevUserConfig;
 
-        private void Awake()
+        private void Start()
         {
             _prevUserConfig = new UserConfig(ConfigHelper.UserConfig);
         }
