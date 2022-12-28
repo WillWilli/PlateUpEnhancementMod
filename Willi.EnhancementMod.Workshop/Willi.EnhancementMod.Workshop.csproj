@@ -123,6 +123,7 @@
     <Compile Include="Mono\UserConfigChangeDetector.cs" />
     <Compile Include="Patches\CreateCustomerSchedulePatch.cs" />
     <Compile Include="Patches\DifficultyHelpersPatch.cs" />
+    <Compile Include="Patches\MainMenuPatch.cs" />
     <Compile Include="Patches\RerollBlueprintViewPatch.cs" />
     <Compile Include="Mono\SpawnItemGui.cs" />
     <Compile Include="EnhancementMod.cs" />

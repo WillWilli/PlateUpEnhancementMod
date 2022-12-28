@@ -11,20 +11,20 @@ namespace Willi.EnhancementMod.Workshop.Patches
         [HarmonyPrefix]
         public static bool TotalShopCountPrefix(ref int __result)
         {
-            if (ConfigHelper.UserConfig.IsModEnabled)
+            if (!ConfigHelper.UserConfig.IsModEnabled || ConfigHelper.UserConfig.DefaultShopNumberOfItems < 0)
             {
-                __result = ConfigHelper.UserConfig.DefaultShopNumberOfItems;
-                return false;
+                return true;
             }
 
-            return true;
+            __result = ConfigHelper.UserConfig.DefaultShopNumberOfItems;
+            return false;
         }
 
         [HarmonyPatch("BaseUpgradedShopChance")]
         [HarmonyPostfix]
         public static void UpgradedShopChance_Postfix(ref float __result, int day)
         {
-            if (!ConfigHelper.UserConfig.IsModEnabled)
+            if (!ConfigHelper.UserConfig.IsModEnabled || ConfigHelper.UserConfig.DefaultShopUpgradedChance < 0)
                 return;
 
             __result = ConfigHelper.UserConfig.DefaultShopUpgradedChance;

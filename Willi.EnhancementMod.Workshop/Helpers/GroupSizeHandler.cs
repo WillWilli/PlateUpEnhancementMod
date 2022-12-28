@@ -10,7 +10,7 @@ namespace Willi.EnhancementMod.Workshop.Helpers
 
         public static void UpdateGroupSize()
         {
-            if (!ValidateGroupSizes() || !ConfigHelper.UserConfig.IsModEnabled)
+            if (!ValidateGroupSizes())
                 return;
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;

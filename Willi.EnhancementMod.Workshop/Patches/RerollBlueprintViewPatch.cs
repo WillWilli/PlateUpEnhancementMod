@@ -12,19 +12,21 @@ namespace Willi.EnhancementMod.Workshop.Patches
         [HarmonyPostfix]
         public static void UpdateData_Prefix()
         {
-            SetRerollCost();
+            if (!ConfigHelper.UserConfig.IsModEnabled)
+                return;
+            SetRerollCost(ConfigHelper.UserConfig.RerollShopFixedCost);
         }
 
-        public static void SetRerollCost()
+        public static void SetRerollCost(int cost)
         {
-            if (ConfigHelper.UserConfig.RerollShopFixedCost < 0 || !ConfigHelper.UserConfig.IsModEnabled)
+            if (cost < 0)
                 return;
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             var rerollCostEQ = entityManager.CreateEntityQuery((ComponentType)typeof(SRerollCost));
             if (!rerollCostEQ.IsEmpty)
             {
-                rerollCostEQ.SetSingleton(new SRerollCost() { Cost = ConfigHelper.UserConfig.RerollShopFixedCost });
+                rerollCostEQ.SetSingleton(new SRerollCost() { Cost = cost });
             }
         }
     }

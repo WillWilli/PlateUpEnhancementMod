@@ -1,4 +1,5 @@
 ﻿using Kitchen;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
@@ -13,7 +14,10 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.N))
+            if (!ConfigHelper.UserConfig.IsModEnabled)
+                return;
+
+            if (Input.GetKeyDown(ConfigHelper.UserConfig.NoClipKeyboardShortcut))
             {
                 isNoClip = !isNoClip;
                 ToggleNoClip();

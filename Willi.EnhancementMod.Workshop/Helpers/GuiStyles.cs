@@ -19,8 +19,9 @@ namespace Willi.EnhancementMod.Workshop.Helpers
                 guiStyle.onFocused.textColor = Color.black;
 
                 // set background
-                var tex = new Texture2D(1, 1);
-                tex.SetPixel(0, 0, new Color(1, 1, 1, 0f));
+                var tex = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
+                tex.SetPixel(0, 0, new Color(0.65f, 0.69f, 1f, 0.85f));
+                tex.Apply();
                 guiStyle.normal.background = tex;
                 guiStyle.active.background = tex;
                 guiStyle.focused.background = tex;
@@ -45,8 +46,20 @@ namespace Willi.EnhancementMod.Workshop.Helpers
                 textStyle.onActive.textColor = Color.black;
                 textStyle.onFocused.textColor = Color.black;
 
-                textStyle.hover.textColor = Color.grey;
-                textStyle.onHover.textColor = Color.grey;
+                //textStyle.hover.textColor = Color.grey;
+                //textStyle.onHover.textColor = Color.grey;
+                return textStyle;
+            }
+        }
+
+        public static GUIStyle LabelTitleStyle
+        {
+            get
+            {
+                var textStyle = LabelStyle;
+                textStyle.richText = true;
+                textStyle.fontSize = 14;
+                
                 return textStyle;
             }
         }

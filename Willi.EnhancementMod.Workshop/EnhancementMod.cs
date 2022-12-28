@@ -13,9 +13,9 @@ namespace Willi.EnhancementMod.Workshop
     {
         public const string Version = "1.0.3";
 
-        private static GameObject GameObject { get; set; }
-        
-        
+        public static GameObject GameObject { get; set; }
+
+
         public void PostActivate(Mod mod)
         {
             
@@ -26,9 +26,8 @@ namespace Willi.EnhancementMod.Workshop
             Debug.Log("EnhancementMod Init");
 
             GameObject = new GameObject("Enhancement mod");
-
-            GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<UserSettingsGui>();
+            GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<NoClipHandler>();
             GameObject.AddComponent<UserConfigUpdateDetector>();
 

@@ -8,6 +8,7 @@ using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
 using Willi.EnhancementMod.Workshop.Extensions;
 using Willi.EnhancementMod.Workshop.Helpers;
+using EventType = UnityEngine.EventType;
 
 namespace Willi.EnhancementMod.Workshop.Mono
 {
@@ -32,12 +33,13 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (isWindowActive)
             {
                 windowRect = GUILayout.Window(0, windowRect, DraggableWindow, "Spawn Items", GuiStyles.WindowStyle, GUILayout.Width(WindowWidth), GUILayout.Height(ConfigHelper.UserConfig.ItemSpawnerWindowHeight));
+                //GUI.FocusControl("SearchInput");
             }
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (Input.GetKeyDown(ConfigHelper.UserConfig.SpawnItemMenuKeyboardShortcut))
             {
                 isWindowActive = !isWindowActive;
             }
@@ -46,6 +48,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static void DraggableWindow(int windowID)
         {
             GUILayout.Space(2);
+            GUI.SetNextControlName("SearchInput");
             _itemSearchText = GUILayout.TextField(_itemSearchText);
 
             ScrollableItemList();

@@ -42,6 +42,7 @@ namespace Willi.EnhancementMod.Workshop.Config
                 {
                     Log.Warning($"Failed to load user config from {UserConfigFileLocation}, using default values.");
                     UserConfig = new UserConfig();
+                    SaveUserConfig();
                 }
                 Log.Warning($"Failed to load user config from {UserConfigFileLocation}.");
             }
