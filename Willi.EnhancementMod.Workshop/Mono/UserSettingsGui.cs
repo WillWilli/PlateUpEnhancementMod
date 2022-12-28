@@ -87,7 +87,6 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (!ConfigHelper.UserConfig.IsModEnabled)
                 GUI.enabled = false;
 
-
             SectionHeading("Shop");
             ConfigHelper.UserConfig.DefaultShopNumberOfItems = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.DefaultShopNumberOfItems), ConfigHelper.UserConfig.DefaultShopNumberOfItems, -1, 10);
             ConfigHelper.UserConfig.DefaultShopUpgradedChance = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.DefaultShopUpgradedChance), ConfigHelper.UserConfig.DefaultShopUpgradedChance, -1, 10f);
@@ -104,11 +103,14 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
             SectionHeading("No Clip");
             NoClipKeybordShortcutWithLabel();
+            GUILayout.EndHorizontal();
             GUI.backgroundColor = initColour;
             ConfigHelper.UserConfig.SpeedMultiplier = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.SpeedMultiplier), ConfigHelper.UserConfig.SpeedMultiplier, 0f, 10f);
 
             SectionHeading("Item Spawner");
             ItemSpawnerKeybordShortcutWithLabel();
+            GUILayout.EndHorizontal();
+            GUI.backgroundColor = initColour;
             ConfigHelper.UserConfig.ItemSpawnerWindowHeight = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.ItemSpawnerWindowHeight), ConfigHelper.UserConfig.ItemSpawnerWindowHeight, 0, 1000);
             GUILayout.EndScrollView();
             GUI.enabled = true;
@@ -130,17 +132,17 @@ namespace Willi.EnhancementMod.Workshop.Mono
             GUILayout.BeginHorizontal();
             GUILayout.Label(new GUIContent("Keyboard shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
             _noClipKeybindInputString = GUILayout.TextField(_noClipKeybindInputString);
-            var capitaliseFirstLetter = string.Concat(_noClipKeybindInputString[0].ToString().ToUpper(), _noClipKeybindInputString.Substring(1));
-            if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))
+            if (_noClipKeybindInputString != string.Empty)
             {
-                ConfigHelper.UserConfig.NoClipKeyboardShortcutString = keyCode.ToString();
-                _isNoClipKeybindValid = true;
+                var capitaliseFirstLetter = string.Concat(_noClipKeybindInputString[0].ToString().ToUpper(), _noClipKeybindInputString.Substring(1));
+                if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))
+                {
+                    ConfigHelper.UserConfig.NoClipKeyboardShortcutString = keyCode.ToString();
+                    _isNoClipKeybindValid = true;
+                    return;
+                }
             }
-            else
-            {
-                _isNoClipKeybindValid = false;
-            }
-            GUILayout.EndHorizontal();
+            _isNoClipKeybindValid = false;
         }
 
         private static void ItemSpawnerKeybordShortcutWithLabel()
@@ -150,17 +152,17 @@ namespace Willi.EnhancementMod.Workshop.Mono
             GUILayout.BeginHorizontal();
             GUILayout.Label(new GUIContent("Keyboard shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
             _itemSpawnerKeybindInputString = GUILayout.TextField(_itemSpawnerKeybindInputString);
-            var capitaliseFirstLetter = string.Concat(_itemSpawnerKeybindInputString[0].ToString().ToUpper(), _itemSpawnerKeybindInputString.Substring(1));
-            if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))
+            if (_itemSpawnerKeybindInputString != string.Empty)
             {
-                ConfigHelper.UserConfig.SpawnItemMenuKeyboardShortcutString = keyCode.ToString();
-                _isItemSpawnerKeybindValid = true;
+                var capitaliseFirstLetter = string.Concat(_itemSpawnerKeybindInputString[0].ToString().ToUpper(), _itemSpawnerKeybindInputString.Substring(1));
+                if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))
+                {
+                    ConfigHelper.UserConfig.SpawnItemMenuKeyboardShortcutString = keyCode.ToString();
+                    _isItemSpawnerKeybindValid = true;
+                    return;
+                }
             }
-            else
-            {
-                _isItemSpawnerKeybindValid = false;
-            }
-            GUILayout.EndHorizontal();
+            _isItemSpawnerKeybindValid = false;
         }
 
         private static void SectionHeading(string headingTitle)
