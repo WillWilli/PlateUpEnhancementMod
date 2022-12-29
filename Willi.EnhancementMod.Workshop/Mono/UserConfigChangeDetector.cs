@@ -31,6 +31,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
                     _savedUserConfig = ConfigHelper.UserConfig;
                     _savedUserConfig.IsModEnabled = true;
                     ConfigHelper.UserConfig = new UserConfig() { IsModEnabled = false };
+                    RerollBlueprintViewPatch.SetRerollCost(ConfigHelper.UserConfig.RerollShopFixedCost);
                 }
                 hasChanged = true;
             }
@@ -45,7 +46,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             // Reroll cost
             if (ConfigHelper.UserConfig.RerollShopFixedCost != _prevUserConfig.RerollShopFixedCost)
             {
-                RerollBlueprintViewPatch.SetRerollCost(10);
+                RerollBlueprintViewPatch.SetRerollCost(ConfigHelper.UserConfig.RerollShopFixedCost);
                 hasChanged = true;
             }
 

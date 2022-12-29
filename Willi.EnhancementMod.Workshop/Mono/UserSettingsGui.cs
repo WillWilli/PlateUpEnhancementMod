@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using Kitchen;
 using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
 using Willi.EnhancementMod.Workshop.Helpers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Willi.EnhancementMod.Workshop.Mono
 {
@@ -11,10 +10,10 @@ namespace Willi.EnhancementMod.Workshop.Mono
     {
         private static bool isWindowActive = false;
 
-        private static int initialXPosition = Screen.width / 4;
-        private static int initialYPosition = Screen.height / 4;
-        private static float WindowHeight = Screen.height * 0.5f;
-        private static float WindowWidth = Screen.width * 0.35f;
+        private static int initialXPosition = (int)((Screen.width / 2) - WindowWidth);
+        private static int initialYPosition = (int)((Screen.height / 4) - WindowHeight);
+        private static float WindowHeight = Screen.height * 0.4f;
+        private static float WindowWidth = Screen.width * 0.25f;
         private static Rect _windowRect = new Rect(initialXPosition, initialYPosition, WindowWidth, WindowHeight); //TODO: Make configurable
 
         private static Vector2 _scrollPosition;
@@ -28,9 +27,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
         {
             if (isWindowActive)
             {
-                //GUI.backgroundColor = new Color(66, 125, 245, 1);
-                
-                _windowRect = GUILayout.Window(1747174674, _windowRect, DraggableWindow, "Enhancement Mod Options - (ESC to close)", GuiStyles.WindowStyle , GUILayout.Width(WindowWidth));
+                _windowRect = GUILayout.Window(1747174674, _windowRect, DraggableWindow, "Enhancement Mod Options - (ESC to close)", GuiStyles.WindowStyle);
             }
         }
 
@@ -88,33 +85,32 @@ namespace Willi.EnhancementMod.Workshop.Mono
                 GUI.enabled = false;
 
             SectionHeading("Shop");
-            ConfigHelper.UserConfig.DefaultShopNumberOfItems = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.DefaultShopNumberOfItems), ConfigHelper.UserConfig.DefaultShopNumberOfItems, -1, 10);
-            ConfigHelper.UserConfig.DefaultShopUpgradedChance = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.DefaultShopUpgradedChance), ConfigHelper.UserConfig.DefaultShopUpgradedChance, -1, 10f);
-            ConfigHelper.UserConfig.MoneyRewardMultiplier = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.MoneyRewardMultiplier), ConfigHelper.UserConfig.MoneyRewardMultiplier, 0f, 10f);
-            ConfigHelper.UserConfig.RerollShopFixedCost = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.RerollShopFixedCost), ConfigHelper.UserConfig.RerollShopFixedCost, -1, 200);
+            ConfigHelper.UserConfig.DefaultShopNumberOfItems = IntSliderWithLabel("Number Of Items Per Shop", ConfigHelper.UserConfig.DefaultShopNumberOfItems, -1, 15);
+            ConfigHelper.UserConfig.DefaultShopUpgradedChance = FloatSliderWithLabel("Upgraded Shop Chance", ConfigHelper.UserConfig.DefaultShopUpgradedChance, -1, 1f);
+            ConfigHelper.UserConfig.MoneyRewardMultiplier = FloatSliderWithLabel("Money Reward Multiplier", ConfigHelper.UserConfig.MoneyRewardMultiplier, 0f, 20f);
+            ConfigHelper.UserConfig.RerollShopFixedCost = IntSliderWithLabel("Override Reroll Cost", ConfigHelper.UserConfig.RerollShopFixedCost, -1, 100);
 
 
             SectionHeading("Customers");
-            ConfigHelper.UserConfig.NumberOfCustomersMultiplier = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.NumberOfCustomersMultiplier), ConfigHelper.UserConfig.NumberOfCustomersMultiplier, 0, 20f);
-            ConfigHelper.UserConfig.PatienceMultiplier = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.PatienceMultiplier), ConfigHelper.UserConfig.PatienceMultiplier, 0f, 10f);
-            ConfigHelper.UserConfig.MinGroupSize = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.MinGroupSize), ConfigHelper.UserConfig.MinGroupSize, 1, 20);
-            ConfigHelper.UserConfig.MaxGroupSize = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.MaxGroupSize), ConfigHelper.UserConfig.MaxGroupSize, 1, 20);
+            ConfigHelper.UserConfig.NumberOfCustomersMultiplier = FloatSliderWithLabel("Number Of Customers Multiplier", ConfigHelper.UserConfig.NumberOfCustomersMultiplier, 0, 20f);
+            ConfigHelper.UserConfig.PatienceMultiplier = FloatSliderWithLabel("Impatience Mutliplier", ConfigHelper.UserConfig.PatienceMultiplier, 0f, 3f);
+            ConfigHelper.UserConfig.MinGroupSize = IntSliderWithLabel("Min Group Size", ConfigHelper.UserConfig.MinGroupSize, 1, 20);
+            ConfigHelper.UserConfig.MaxGroupSize = IntSliderWithLabel("Max Group Size", ConfigHelper.UserConfig.MaxGroupSize, 1, 20);
 
 
             SectionHeading("No Clip");
             NoClipKeybordShortcutWithLabel();
             GUILayout.EndHorizontal();
             GUI.backgroundColor = initColour;
-            ConfigHelper.UserConfig.SpeedMultiplier = FloatSliderWithLabel(nameof(ConfigHelper.UserConfig.SpeedMultiplier), ConfigHelper.UserConfig.SpeedMultiplier, 0f, 10f);
+            ConfigHelper.UserConfig.SpeedMultiplier = FloatSliderWithLabel("Speed Mutliplier", ConfigHelper.UserConfig.SpeedMultiplier, 0f, 10f);
 
             SectionHeading("Item Spawner");
             ItemSpawnerKeybordShortcutWithLabel();
             GUILayout.EndHorizontal();
             GUI.backgroundColor = initColour;
-            ConfigHelper.UserConfig.ItemSpawnerWindowHeight = IntSliderWithLabel(nameof(ConfigHelper.UserConfig.ItemSpawnerWindowHeight), ConfigHelper.UserConfig.ItemSpawnerWindowHeight, 0, 1000);
+            ConfigHelper.UserConfig.ItemSpawnerWindowHeight = IntSliderWithLabel("Window Height", ConfigHelper.UserConfig.ItemSpawnerWindowHeight, 0, 1000);
             GUILayout.EndScrollView();
             GUI.enabled = true;
-
             // Footnote
             GUILayout.Space(1);
             var labelStyle = GuiStyles.LabelStyle;
@@ -130,7 +126,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (!_isNoClipKeybindValid)
                 GUI.backgroundColor = Color.red;
             GUILayout.BeginHorizontal();
-            GUILayout.Label(new GUIContent("Keyboard shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
+            GUILayout.Label(new GUIContent("Keyboard Shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
             _noClipKeybindInputString = GUILayout.TextField(_noClipKeybindInputString);
             if (_noClipKeybindInputString != string.Empty)
             {
@@ -150,12 +146,12 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (!_isItemSpawnerKeybindValid)
                 GUI.backgroundColor = Color.red;
             GUILayout.BeginHorizontal();
-            GUILayout.Label(new GUIContent("Keyboard shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
+            GUILayout.Label(new GUIContent("Keyboard Shortcut", "set the keyboard shortcut, maps to UnityEngine.Keycode enum."), GuiStyles.LabelStyle);
             _itemSpawnerKeybindInputString = GUILayout.TextField(_itemSpawnerKeybindInputString);
             if (_itemSpawnerKeybindInputString != string.Empty)
             {
                 var capitaliseFirstLetter = string.Concat(_itemSpawnerKeybindInputString[0].ToString().ToUpper(), _itemSpawnerKeybindInputString.Substring(1));
-                if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))
+                if (Enum.TryParse<KeyCode>(capitaliseFirstLetter, out var keyCode))  // TODO: This will still parse if an int is passed in.
                 {
                     ConfigHelper.UserConfig.SpawnItemMenuKeyboardShortcutString = keyCode.ToString();
                     _isItemSpawnerKeybindValid = true;

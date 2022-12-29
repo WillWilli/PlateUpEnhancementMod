@@ -8,7 +8,6 @@ using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
 using Willi.EnhancementMod.Workshop.Extensions;
 using Willi.EnhancementMod.Workshop.Helpers;
-using EventType = UnityEngine.EventType;
 
 namespace Willi.EnhancementMod.Workshop.Mono
 {
@@ -53,7 +52,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
             ScrollableItemList();
 
-            GUILayout.Label("custom id spawn:", GuiStyles.LabelStyle);
+            GUILayout.Label("custom id:", GuiStyles.LabelStyle);
             GUILayout.BeginHorizontal();
             _customIdText = GUILayout.TextField(_customIdText);
             if (GUILayout.Button("spawn", GuiStyles.ButtonStyle, GUILayout.Width(WindowWidth * 0.3f)) && int.TryParse(_customIdText, out int itemId))
@@ -105,7 +104,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
                 return players.First().transform.position;
             }
 
-            Debug.LogWarning("Unable to find player positon, reverting to default spawn position.");
+            Log.Warning("Unable to find player positon, reverting to default spawn position.");
             return new Vector3(-2, 0, -4); // default to static positon
         }
     }

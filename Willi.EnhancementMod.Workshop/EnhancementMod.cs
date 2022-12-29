@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
-using Kitchen;
 using KitchenMods;
 using Willi.EnhancementMod.Workshop.Config;
 using HarmonyLib;
 using Willi.EnhancementMod.Workshop.Mono;
-using Willi.EnhancementMod.Workshop.Patches;
 using Willi.EnhancementMod.Workshop.Helpers;
 
 namespace Willi.EnhancementMod.Workshop
 {
     public class EnhancementMod : IModInitializer
     {
-        public const string Version = "1.0.3";
+        public const string Version = "0.5.0";
+        public const string Name = "Willi.EnhancementMod";
+
 
         public static GameObject GameObject { get; set; }
 
@@ -23,9 +23,9 @@ namespace Willi.EnhancementMod.Workshop
 
         public void PreInject()
         {
-            Debug.Log("EnhancementMod Init");
+            Log.Info($"Loading {Name}.v{Version}");
 
-            GameObject = new GameObject("Enhancement mod");
+            GameObject = new GameObject(Name);
             GameObject.AddComponent<UserSettingsGui>();
             GameObject.AddComponent<SpawnItemGui>();
             GameObject.AddComponent<NoClipHandler>();
@@ -34,13 +34,14 @@ namespace Willi.EnhancementMod.Workshop
             Object.DontDestroyOnLoad(GameObject);
 
 
-            var harmony = new Harmony("Willi.EnhancementMod");
+            var harmony = new Harmony(Name);
             harmony.PatchAll(GetType().Assembly);
         }
 
         public void PostInject()
         {
             ConfigHelper.LoadOrCreateUserConfig();
+            Log.Info($"Loaded.");
         }
     }
 }
