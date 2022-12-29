@@ -73,7 +73,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             {
                 ConfigHelper.LoadUserConfig();
             }
-            if (GUILayout.Button("reset", GuiStyles.ButtonStyle))
+            if (GUILayout.Button("reset", GuiStyles.ButtonStyle)) // TODO: Keybinds dont reset
             {
                 ConfigHelper.UserConfig = new UserConfig();
             }
