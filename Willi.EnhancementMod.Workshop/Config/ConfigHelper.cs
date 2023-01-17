@@ -14,7 +14,7 @@ namespace Willi.EnhancementMod.Workshop.Config
         private static string UserConfigFileLocation;
 
         public static UserConfig UserConfig { get; set; } = new UserConfig();
-        public static Dictionary<string, int> AllItems { get; private set; }
+        public static SortedDictionary<string, int> AllItems { get; private set; }
 
         public static void LoadOrCreateUserConfig()
         {
@@ -66,9 +66,9 @@ namespace Willi.EnhancementMod.Workshop.Config
             }
         }
 
-        private static Dictionary<string, int> GetAllItems()
+        private static SortedDictionary<string, int> GetAllItems()
         {
-            var items = new Dictionary<string, int>();
+            var items = new SortedDictionary<string, int>();
 
             var appliances = GameData.Main.Get<Appliance>();
 
@@ -77,7 +77,7 @@ namespace Willi.EnhancementMod.Workshop.Config
                 if (appliance.Name == string.Empty)
                     continue;
 
-                int appendNumber = 1;
+                int appendNumber = 2;
                 var itemPotentialName = appliance.Name;
                 while(items.ContainsKey(itemPotentialName))
                 {
@@ -87,7 +87,16 @@ namespace Willi.EnhancementMod.Workshop.Config
                 items.Add(itemPotentialName, appliance.ID);
             }
 
+            RemoveExcessItems(items);
+
             return items;
+        }
+
+        private static void RemoveExcessItems(SortedDictionary<string, int> items)
+        {
+            items.Remove("Safety Hob2"); // For some reason theres some random building pieces called 'Safety Hob'
+            items.Remove("Safety Hob3");
+            items.Remove("Safety Hob4");
         }
     }
 }
