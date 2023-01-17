@@ -4,6 +4,7 @@ using System.Linq;
 using Kitchen;
 using KitchenData;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 using Willi.EnhancementMod.Workshop.Config;
 using Willi.EnhancementMod.Workshop.Extensions;
@@ -24,8 +25,6 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static Vector2 _scrollPosition;
         private static string _itemSearchText = string.Empty;
         private static string _customIdText = string.Empty;
-
-        private static List<string> _itemNames = ConfigHelper.GetItemNamesSorted();
 
         private void OnGUI()
         {
@@ -66,16 +65,18 @@ namespace Willi.EnhancementMod.Workshop.Mono
         private static void ScrollableItemList()
         {
             _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, false, GUIStyle.none, GUI.skin.verticalScrollbar);
-            for (int i = 0; i < _itemNames.Count; i++)
+
+            foreach(var item in ConfigHelper.AllItems)
             {
-                if (string.IsNullOrEmpty(_itemSearchText) || _itemNames[i].Contains(_itemSearchText, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(_itemSearchText) || item.Key.Contains(_itemSearchText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (GUILayout.Button(new GUIContent(_itemNames[i], $"Click button to spawn {_itemNames[i]}"), GuiStyles.ButtonStyle))
+                    if (GUILayout.Button(new GUIContent(item.Key, $"Click button to spawn {item.Key}"), GuiStyles.ButtonStyle))
                     {
-                        SpawnItem(_itemNames[i].ToItemId(), 0);
+                        SpawnItem(item.Value, 0);
                     }
                 }
             }
+
             GUILayout.EndScrollView();
         }
 
@@ -85,7 +86,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             var spawnPosition = FindPlayerPosition();
 
             var entity = entityManager.CreateEntity();
-            entityManager.AddComponentData(entity, new CCreateAppliance { ID = ItemIdReference._BlueprintLetter });
+            entityManager.AddComponentData(entity, new CCreateAppliance { ID = 1553046198 });
             entityManager.AddComponentData(entity, new CPosition(spawnPosition));
             entityManager.AddComponentData(entity, default(CLetter));
             entityManager.AddComponentData(entity, new CLetterBlueprint

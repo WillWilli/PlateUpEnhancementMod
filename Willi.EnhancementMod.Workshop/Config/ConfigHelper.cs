@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Willi.EnhancementMod.Workshop.Helpers;
+using KitchenData;
 
 namespace Willi.EnhancementMod.Workshop.Config
 {
@@ -13,9 +14,12 @@ namespace Willi.EnhancementMod.Workshop.Config
         private static string UserConfigFileLocation;
 
         public static UserConfig UserConfig { get; set; } = new UserConfig();
+        public static Dictionary<string, int> AllItems { get; private set; }
 
         public static void LoadOrCreateUserConfig()
         {
+            AllItems = GetAllItems();
+
             UserConfigFileLocation = Path.Combine(Application.persistentDataPath, "EnhancementMod.Settings.json");
 
             if (File.Exists(UserConfigFileLocation))
@@ -62,47 +66,28 @@ namespace Willi.EnhancementMod.Workshop.Config
             }
         }
 
-        public static int ToItemId(this string itemName)
+        private static Dictionary<string, int> GetAllItems()
         {
-            try
-            {
-                return GetAllItemsConfigs()
-                    .First(config => config.Name == itemName)
-                    .Id;
-            }
-            catch
-            {
-                throw new ArgumentException($"ID for item {itemName} does not exist.", itemName);
-            }
-        }
+            var items = new Dictionary<string, int>();
 
-        public static List<string> GetItemNamesSorted()
-        {
-            var allItemNames = GetAllItemsConfigs().Select(config => config.Name).ToList();
-            allItemNames.Sort();
-            return allItemNames;
-        }
+            var appliances = GameData.Main.Get<Appliance>();
 
-        private static List<ItemConfig> GetAllItemsConfigs()
-        {
-            var itemIdFields = typeof(ItemIdReference).GetFields();
-
-            var items = new List<ItemConfig>();
-            foreach (var field in itemIdFields)
+            foreach (var appliance in appliances)
             {
-                if (field.Name.StartsWith("_"))
+                if (appliance.Name == string.Empty)
                     continue;
-                items.Add(GetItemConfigFromField(field));
+
+                int appendNumber = 1;
+                var itemPotentialName = appliance.Name;
+                while(items.ContainsKey(itemPotentialName))
+                {
+                    itemPotentialName = appliance.Name + appendNumber++;
+                }
+
+                items.Add(itemPotentialName, appliance.ID);
             }
 
             return items;
-        }
-
-        private static ItemConfig GetItemConfigFromField(System.Reflection.FieldInfo field)
-        {
-            var fieldName = field.Name;
-            var fieldValue = (int)field.GetValue(typeof(int));
-            return new ItemConfig() { Name = fieldName, Id = fieldValue };
         }
     }
 }

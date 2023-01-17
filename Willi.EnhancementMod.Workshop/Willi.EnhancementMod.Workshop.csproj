@@ -12,8 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-	<LangVersion>latest</LangVersion>
-	<Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigHelper.cs" />
-    <Compile Include="Config\ItemConfig.cs" />
     <Compile Include="Config\UserConfig.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\GroupSizeHandler.cs" />
@@ -130,7 +129,6 @@
     <Compile Include="Mono\SpawnItemGui.cs" />
     <Compile Include="EnhancementMod.cs" />
     <Compile Include="Helpers\PlayerHelper.cs" />
-    <Compile Include="Config\ItemIdReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mono\UserSettingsGui.cs" />
   </ItemGroup>
