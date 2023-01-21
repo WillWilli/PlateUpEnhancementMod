@@ -1,4 +1,12 @@
+# !!! USE THE WORKSHOP VERSION INSTEAD !!!
+
+## This mod is now on the Steam workshop, please use that version instead. I am no longer maintaining the BepInEx version. You can find the steam version here: https://steamcommunity.com/sharedfiles/filedetails/?id=2908609256
+
+<br>
+<br>
+
 # PlateUp Enhancement Mod
+
 
 Use this mod to make PlateUp easier or effectively play 'creative' mode.
 
