@@ -39,7 +39,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (ConfigHelper.UserConfig.MaxGroupSize != _prevUserConfig.MaxGroupSize ||
                 ConfigHelper.UserConfig.MinGroupSize != _prevUserConfig.MinGroupSize)
             {
-                GroupSizeHandler.UpdateGroupSize();
+                CustomerParametersHandler.UpdateGroupSize();
                 hasChanged = true;
             }
 
@@ -47,6 +47,14 @@ namespace Willi.EnhancementMod.Workshop.Mono
             if (ConfigHelper.UserConfig.RerollShopFixedCost != _prevUserConfig.RerollShopFixedCost)
             {
                 RerollBlueprintViewPatch.SetRerollCost(ConfigHelper.UserConfig.RerollShopFixedCost);
+                hasChanged = true;
+            }
+
+            // Number of Customers multiplier
+
+            if (ConfigHelper.UserConfig.NumberOfCustomersMultiplier != _prevUserConfig.NumberOfCustomersMultiplier)
+            {
+                CustomerParametersHandler.UpdateNumberOfCustomers();
                 hasChanged = true;
             }
 

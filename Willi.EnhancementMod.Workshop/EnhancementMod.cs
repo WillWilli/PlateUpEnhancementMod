@@ -9,7 +9,7 @@ namespace Willi.EnhancementMod.Workshop
 {
     public class EnhancementMod : IModInitializer
     {
-        public const string Version = "0.5.0";
+        public const string Version = "0.5.1";
         public const string Name = "Willi.EnhancementMod";
 
 

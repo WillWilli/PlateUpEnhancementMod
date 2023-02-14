@@ -92,7 +92,7 @@ namespace Willi.EnhancementMod.Workshop.Mono
 
 
             SectionHeading("Customers");
-            ConfigHelper.UserConfig.NumberOfCustomersMultiplier = FloatSliderWithLabel("Number Of Customers Multiplier", ConfigHelper.UserConfig.NumberOfCustomersMultiplier, 0, 20f);
+            ConfigHelper.UserConfig.NumberOfCustomersMultiplier = FloatSliderWithLabel("Number Of Customers Multiplier", ConfigHelper.UserConfig.NumberOfCustomersMultiplier, 0, 25);
             ConfigHelper.UserConfig.PatienceMultiplier = FloatSliderWithLabel("Impatience Mutliplier", ConfigHelper.UserConfig.PatienceMultiplier, 0f, 3f);
             ConfigHelper.UserConfig.MinGroupSize = IntSliderWithLabel("Min Group Size", ConfigHelper.UserConfig.MinGroupSize, 1, 20);
             ConfigHelper.UserConfig.MaxGroupSize = IntSliderWithLabel("Max Group Size", ConfigHelper.UserConfig.MaxGroupSize, 1, 20);

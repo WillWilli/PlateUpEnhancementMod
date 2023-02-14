@@ -11,7 +11,7 @@ namespace Willi.EnhancementMod.Workshop.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(CreateCustomerSchedule.DetermineTotalCustomers))]
-        public static void DetermineTotalCustomers_Postfix(ref float __result, KitchenParameters parameters, int player_count, int day, GameDifficultySettings difficulty_settings)
+        public static void DetermineTotalCustomers_Postfix(ref float __result, ScheduleParameters schedule_parameters)
         {
             if (!ConfigHelper.UserConfig.IsModEnabled)
                 return;
