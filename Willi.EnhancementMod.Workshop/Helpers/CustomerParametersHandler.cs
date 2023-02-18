@@ -1,4 +1,6 @@
 ﻿using Kitchen;
+using System.Reflection;
+using System;
 using Unity.Entities;
 using Willi.EnhancementMod.Workshop.Config;
 
@@ -7,6 +9,7 @@ namespace Willi.EnhancementMod.Workshop.Helpers
     public static class CustomerParametersHandler
     {
         private const int MaximumConfigurableGroupSize = 20;
+        private static Type sCacheHashType = typeof(CreateCustomerSchedule).GetNestedType("SCacheHash", BindingFlags.NonPublic);
 
         public static void UpdateGroupSize()
         {
@@ -21,28 +24,16 @@ namespace Willi.EnhancementMod.Workshop.Helpers
                 var newKitchenParameters = kitchenParametersEQ.GetSingleton<SKitchenParameters>();
                 newKitchenParameters.Parameters.MaximumGroupSize = ConfigHelper.UserConfig.MaxGroupSize;
                 newKitchenParameters.Parameters.MinimumGroupSize = ConfigHelper.UserConfig.MinGroupSize;
-                newKitchenParameters.Parameters.CustomersPerHour *= 10;
-
 
                 kitchenParametersEQ.SetSingleton(newKitchenParameters);
             }
         }
 
-        // Hack to force CreateCustomerSchedulePatch.DetermineTotalCustomers to update
-        private static bool FlipEachTime = true;
-        public static void UpdateNumberOfCustomers()
+        public static void ForceCustomerScheduleUpdate()
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            var kitchenParametersEQ = entityManager.CreateEntityQuery(typeof(SKitchenParameters));
-
-            var newKitchenParameters = kitchenParametersEQ.GetSingleton<SKitchenParameters>();
-            if (FlipEachTime)
-                newKitchenParameters.Parameters.CustomersPerHour *= 1.00001f;
-            newKitchenParameters.Parameters.CustomersPerHour /= 1.00001f;
-
-            kitchenParametersEQ.SetSingleton(newKitchenParameters);
-
-            FlipEachTime = !FlipEachTime;
+            var eq = entityManager.CreateEntityQuery(sCacheHashType);
+            entityManager.DestroyEntity(eq);
         }
 
         private static bool ValidateGroupSizes()

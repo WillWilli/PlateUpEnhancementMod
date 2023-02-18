@@ -51,10 +51,9 @@ namespace Willi.EnhancementMod.Workshop.Mono
             }
 
             // Number of Customers multiplier
-
             if (ConfigHelper.UserConfig.NumberOfCustomersMultiplier != _prevUserConfig.NumberOfCustomersMultiplier)
             {
-                CustomerParametersHandler.UpdateNumberOfCustomers();
+                CustomerParametersHandler.ForceCustomerScheduleUpdate();
                 hasChanged = true;
             }
 
