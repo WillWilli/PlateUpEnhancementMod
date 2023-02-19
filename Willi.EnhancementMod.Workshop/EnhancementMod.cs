@@ -18,13 +18,14 @@ namespace Willi.EnhancementMod.Workshop
 
         public void PostActivate(Mod mod)
         {
-            
+            Log.Info($"Loading {Name}.v{Version}");
+
+            var harmony = new Harmony(Name);
+            harmony.PatchAll(GetType().Assembly);
         }
 
         public void PreInject()
         {
-            Log.Info($"Loading {Name}.v{Version}");
-
             GameObject = new GameObject(Name);
             GameObject.AddComponent<UserSettingsGui>();
             GameObject.AddComponent<SpawnItemGui>();
@@ -33,14 +34,11 @@ namespace Willi.EnhancementMod.Workshop
 
             Object.DontDestroyOnLoad(GameObject);
 
-
-            var harmony = new Harmony(Name);
-            harmony.PatchAll(GetType().Assembly);
+            ConfigHelper.LoadOrCreateUserConfig();
         }
 
         public void PostInject()
         {
-            ConfigHelper.LoadOrCreateUserConfig();
             Log.Info($"Loaded.");
         }
     }
